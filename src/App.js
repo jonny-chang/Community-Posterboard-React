@@ -1,26 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Pages
+import login from './pages/login';
+import signup from './pages/signup';
+
+// Components
+import Navbar from './components/Navbar';
+
+// Redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { SET_AUTHENTICATED } from './redux/types';
+import { logoutUser, getUserData } from './redux/actions/userActions';
+
+const token = localStorage.FBIdToken;
+if (token){
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()){
+    store.dispatch(logoutUser())
+    window.location.href = '/login';
+  }  
+  else {
+    store.dispatch({ type: SET_AUTHENTICATED });
+    axios.defaults.headers.common['Authorization'] = token;
+    store.dispatch(getUserData());
+  }
 }
 
-export default App;
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#404b60',
+      main: '#404b60',
+      dark: '#3a4c61',
+      contrast: '#fff'
+    },
+    secondary: {
+      light: '#3F67FF',
+      main: '#3F67FF',
+      dark: '#0B3DFF',
+      contrast: '#fff'
+    }
+  }
+})
+
+class App extends Component {
+  render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+          <Router>
+            <Navbar /> 
+            <div className="container">
+              <Switch>
+                <Route exact path='/login' component={login}/>
+                <Route exact path='/signup' component={signup}/>
+              </Switch>
+            </div>
+          </Router>
+      </Provider>
+    </MuiThemeProvider>
+    )
+  }
+}
+
+export default App
