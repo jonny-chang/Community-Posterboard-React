@@ -5,6 +5,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // Mui
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+// Redux
+import { setLocation } from '../redux/actions/userActions';
+import { connect } from 'react-redux';
+
 const styles = {
     loadingContainer: {
         height: 300,
@@ -45,17 +49,23 @@ class UtilLocationPicker extends Component{
             )
         } 
     }
+    setPoint = (point) => {
+        const position = {
+            latitude: point[0],
+            longitude: point[1]
+        }
+        this.props.setLocation(position)
+    }
     render() {
-        const { classes } = this.props
-        const pointVals = [];
+        const { classes, data: { position }} = this.props
+        const pointVals = [[position['latitude'], position['longitude']]];
         const pointMode = {
             banner: false,
             control: {
-            values: pointVals,
-            onClick: point => {
-                pointVals.pop()
-                pointVals.push(point)
-                }
+                values: pointVals,
+                onClick: point => {
+                    this.setPoint(point)
+                }          
             }
         };
         if (!("geolocation" in navigator) || this.state.error === true){
@@ -82,5 +92,12 @@ class UtilLocationPicker extends Component{
     }
 };
 
- 
-export default withStyles(styles)(UtilLocationPicker);
+const mapStateToProps = (state) => ({
+    data: state.data
+})
+
+const mapActionsToProps = {
+    setLocation
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(UtilLocationPicker));

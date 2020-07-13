@@ -50,8 +50,7 @@ class CreatePost extends Component{
         description: '',
         capacity: 0,
         address: '',
-        latitude: 0,
-        longitude: 0,
+        position: {},
         errors: {}
     }
     handleClose = () => {
@@ -69,8 +68,7 @@ class CreatePost extends Component{
                 description: '',
                 capacity: 0,
                 address: '',
-                latitude: 0,
-                longitude: 0
+                position: {},
              });
             this.handleClose();
         }
@@ -85,14 +83,10 @@ class CreatePost extends Component{
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        const newPosition = {
-            latitude: this.state.latitude,
-            longitude: this.state.longitude
-        }
         const newPost = {
             title: this.state.title,
             description: this.state.description,
-            position: newPosition,
+            // position: {},
             locationString: this.state.locationString,
             defaultCapacity: this.state.capacity
         }
@@ -101,7 +95,7 @@ class CreatePost extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading }} = this.props;
+        const { classes, UI: { loading } } = this.props;
         return (
             <Fragment>
                 <UtilButton onClick={this.handleOpen} tip="Create a post">
@@ -174,11 +168,13 @@ class CreatePost extends Component{
 
 CreatePost.propTypes = {
     createPost: PropTypes.func.isRequired,
-    UI: PropTypes.object.isRequired
+    UI: PropTypes.object.isRequired,
+    // data: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    UI: state.UI
+    UI: state.UI,
+    // data: state.data
 })
 
 export default connect(mapStateToProps, { createPost })(withStyles(styles)(CreatePost))
