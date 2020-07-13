@@ -14,10 +14,8 @@ import { createPost } from '../redux/actions/dataActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import CircularProgess from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 
 // Icons
@@ -52,6 +50,8 @@ class CreatePost extends Component{
         description: '',
         capacity: 0,
         address: '',
+        latitude: 0,
+        longitude: 0,
         errors: {}
     }
     handleClose = () => {
@@ -68,7 +68,9 @@ class CreatePost extends Component{
                 title: '',
                 description: '',
                 capacity: 0,
-                address: ''
+                address: '',
+                latitude: 0,
+                longitude: 0
              });
             this.handleClose();
         }
@@ -83,13 +85,19 @@ class CreatePost extends Component{
     }
     handleSubmit = (event) => {
         event.preventDefault();
+        const newPosition = {
+            latitude: this.state.latitude,
+            longitude: this.state.longitude
+        }
         const newPost = {
             title: this.state.title,
             description: this.state.description,
-            defaultCapacity: this.state.capacity,
-            locationString: this.state.locationString
+            position: newPosition,
+            locationString: this.state.locationString,
+            defaultCapacity: this.state.capacity
         }
         this.props.createPost(newPost);
+        console.log(newPost)
     }
     render() {
         const { errors } = this.state;

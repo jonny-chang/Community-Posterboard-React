@@ -3,7 +3,7 @@ import { LOADING_DATA, SET_POSTS , CREATE_POST } from '../types';
 const initialState = {
     posts: [],
     post: {},
-    loading: false,
+    loading: false
 };
 
 export default function(state = initialState, action){
