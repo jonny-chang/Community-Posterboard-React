@@ -5,10 +5,12 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import themeFile from './util/theme';
 
 // Pages
 import login from './pages/login';
 import signup from './pages/signup';
+import home from './pages/home';
 
 // Components
 import Navbar from './components/Navbar';
@@ -33,22 +35,7 @@ if (token){
   }
 }
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#404b60',
-      main: '#404b60',
-      dark: '#3a4c61',
-      contrast: '#fff'
-    },
-    secondary: {
-      light: '#3F67FF',
-      main: '#3F67FF',
-      dark: '#0B3DFF',
-      contrast: '#fff'
-    }
-  }
-})
+const theme = createMuiTheme(themeFile);
 
 class App extends Component {
   render() {
@@ -61,6 +48,7 @@ class App extends Component {
               <Switch>
                 <Route exact path='/login' component={login}/>
                 <Route exact path='/signup' component={signup}/>
+                <Route exact path='/' component={home}/>
               </Switch>
             </div>
           </Router>

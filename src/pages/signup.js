@@ -84,7 +84,7 @@ class signup extends Component {
                     <Card className={classes.card}>
                         <CardContent className={classes.content}>
                             <Typography variant="h3" className={classes.pageTitle}>
-                                Sign Up
+                                Register
                             </Typography>
                             <form noValidate onSubmit={this.handleSubmit}>
                                 <TextField id="email" name="email" type="email" label="Email" 
