@@ -20,3 +20,5 @@ export const createPost = (newPost) => (dispatch) => {
             })
         })
 }
+
+

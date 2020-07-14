@@ -34,12 +34,16 @@ export default function(state = initialState, action){
         case SET_LOCATION:
             return{
                 ...state,
-                position: action.payload
+                position: action.payload,
+                loading: false
             }
         case CLEAR_LOCATION:
             return{
                 ...state,
-                position: {}
+                position: {
+                    latitude: 0,
+                    longitude: 0
+                }
             }
         default:
             return state

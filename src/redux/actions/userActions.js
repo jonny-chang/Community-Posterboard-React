@@ -1,4 +1,7 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER, SET_LOCATION } from '../types';
+import { 
+    SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, 
+    SET_UNAUTHENTICATED, LOADING_USER, SET_LOCATION, CLEAR_LOCATION,  
+} from '../types';
 import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -68,4 +71,8 @@ export const setLocation = (position) => (dispatch) => {
         type: SET_LOCATION,
         payload: position
     })
+}
+
+export const clearLocation = () => (dispatch) => {
+    dispatch({ type: CLEAR_LOCATION })
 }

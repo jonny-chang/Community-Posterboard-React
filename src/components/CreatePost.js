@@ -9,6 +9,7 @@ import UtilLocationPicker from '../util/UtilLocationPicker';
 // Redux
 import { connect } from 'react-redux';
 import { createPost } from '../redux/actions/dataActions';
+import { clearLocation } from '../redux/actions/userActions';
 
 // Mui
 import Button from '@material-ui/core/Button';
@@ -55,15 +56,21 @@ class CreatePost extends Component{
     }
     handleClose = () => {
         this.setState({ open: false, errors: {}})
+        this.props.clearLocation()
     }
+    // setLocation = (event) => (newPosition) => {
+    //     this.setState({
+    //         position: newPosition
+    //     })
+    // }
     componentWillReceiveProps(nextProps){
         if(nextProps.UI.errors){
             this.setState({
                 errors: nextProps.UI.errors
             })
         }
-        if(!nextProps.UI.errors && !nextProps.UI.loading){
-            this.setState({ 
+        if(!nextProps.UI.errors && !nextProps.UI.loading && !nextProps.data.position){
+            this.setState({
                 title: '',
                 description: '',
                 capacity: 0,
@@ -72,13 +79,18 @@ class CreatePost extends Component{
              });
             this.handleClose();
         }
+        if(nextProps.data.position){
+            this.setState({
+                position: nextProps.data.position
+            })
+        }
     }
     handleOpen = () => {
         this.setState({ open: true })
     }
     handleChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
     handleSubmit = (event) => {
@@ -86,8 +98,8 @@ class CreatePost extends Component{
         const newPost = {
             title: this.state.title,
             description: this.state.description,
-            // position: {},
-            locationString: this.state.locationString,
+            position: this.state.position,
+            locationString: this.state.address,
             defaultCapacity: this.state.capacity
         }
         this.props.createPost(newPost);
@@ -95,7 +107,7 @@ class CreatePost extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading } } = this.props;
+        const { classes, UI: { loading }, data: { position } } = this.props;
         return (
             <Fragment>
                 <UtilButton onClick={this.handleOpen} tip="Create a post">
@@ -117,6 +129,7 @@ class CreatePost extends Component{
                             className={classes.textField}
                             onChange={this.handleChange}
                             fullWidth
+                            required
                             />
                             <TextField 
                             name="description"
@@ -128,9 +141,10 @@ class CreatePost extends Component{
                             onChange={this.handleChange}
                             multiline
                             fullWidth
+                            required
                             />
                             <Typography variant="body1" color="textSecondary" className={classes.label}>
-                                Location
+                                Location *
                             </Typography>
                             <UtilLocationPicker className={classes.locationPicker}/>
                             <TextField 
@@ -143,6 +157,7 @@ class CreatePost extends Component{
                             onChange={this.handleChange}
                             multiline
                             fullWidth
+                            required
                             />
                             <TextField
                             label="Capacity"
@@ -153,6 +168,7 @@ class CreatePost extends Component{
                             error={errors.defaultCapacity ? true : false}
                             helperText={errors.defaultCapacity}
                             className={classes.textField}
+                            required
                             />
                             <Button type="submit" variant="contained" color="primary"
                             className={classes.submitButton} disabled={loading}>
@@ -174,7 +190,12 @@ CreatePost.propTypes = {
 
 const mapStateToProps = (state) => ({
     UI: state.UI,
-    // data: state.data
+    data: state.data
 })
 
-export default connect(mapStateToProps, { createPost })(withStyles(styles)(CreatePost))
+const mapActionsToProps = {
+    clearLocation,
+    createPost
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreatePost))

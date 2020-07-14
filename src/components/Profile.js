@@ -41,8 +41,7 @@ class Profile extends Component {
                         </Typography>
                         <Typography variant="body2" color="textSecondary" className={classes.text}>
                             email
-                        </Typography>
-                        
+                        </Typography>                        
                     </div>
                 </Paper>
             </div>
