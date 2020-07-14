@@ -58,11 +58,6 @@ class CreatePost extends Component{
         this.setState({ open: false, errors: {}})
         this.props.clearLocation()
     }
-    // setLocation = (event) => (newPosition) => {
-    //     this.setState({
-    //         position: newPosition
-    //     })
-    // }
     componentWillReceiveProps(nextProps){
         if(nextProps.UI.errors){
             this.setState({
@@ -95,6 +90,9 @@ class CreatePost extends Component{
     }
     handleSubmit = (event) => {
         event.preventDefault();
+        this.setState({
+            errors: {}
+        })
         const newPost = {
             title: this.state.title,
             description: this.state.description,
@@ -146,7 +144,7 @@ class CreatePost extends Component{
                             <Typography variant="body1" color="textSecondary" className={classes.label}>
                                 Location *
                             </Typography>
-                            <UtilLocationPicker className={classes.locationPicker}/>
+                            <UtilLocationPicker className={classes.position}/>
                             <TextField 
                             name="address"
                             type="text"

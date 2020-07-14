@@ -46,6 +46,7 @@ class signup extends Component {
     constructor(){
         super();
         this.state = {
+            name: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -63,6 +64,7 @@ class signup extends Component {
             loading: true
         });
         const newUserData = {
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
@@ -87,6 +89,11 @@ class signup extends Component {
                                 Register
                             </Typography>
                             <form noValidate onSubmit={this.handleSubmit}>
+                                <TextField id="name" name="name" type="name" label="Name" 
+                                className={classes.textField} value={this.state.name} 
+                                onChange={this.handleChange} helperText={errors.name} 
+                                error={errors.name ? true : false} fullWidth
+                                />
                                 <TextField id="email" name="email" type="email" label="Email" 
                                 className={classes.textField} value={this.state.email} 
                                 onChange={this.handleChange} helperText={errors.email} 
