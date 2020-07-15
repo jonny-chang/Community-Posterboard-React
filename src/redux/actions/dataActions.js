@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, SET_POSTS } from '../types';
+import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, SET_POSTS, LOADING_DATA } from '../types';
 
 
 // Create Post
