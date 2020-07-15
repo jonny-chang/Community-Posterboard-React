@@ -45,7 +45,7 @@ const styles = {
     }
 }
 
-class CreatePost extends Component{
+class EditPost extends Component{
     state = {
         open: false,
         title: '',
@@ -203,8 +203,8 @@ class CreatePost extends Component{
     }
 }
 
-CreatePost.propTypes = {
-    createPost: PropTypes.func.isRequired,
+EditPost.propTypes = {
+    editPost: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired
 }
@@ -220,4 +220,4 @@ const mapActionsToProps = {
     editPost
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreatePost))
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(EditPost))

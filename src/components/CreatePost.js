@@ -105,7 +105,7 @@ class CreatePost extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading }, data: { position } } = this.props;
+        const { classes, UI: { loading } } = this.props;
         return (
             <Fragment>
                 <UtilButton onClick={this.handleOpen} tip="Create a post">
