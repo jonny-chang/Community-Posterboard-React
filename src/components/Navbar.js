@@ -27,7 +27,6 @@ class Navbar extends Component {
     handleLogout = () => {
         this.props.logoutUser()
         window.location.href = '/login';
-        console.log('logged out')
     }
     render() {
         const { classes } = this.props

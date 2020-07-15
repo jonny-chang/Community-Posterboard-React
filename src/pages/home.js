@@ -26,7 +26,7 @@ class home extends Component {
         return (
             <Fragment>
                 <Grid container spacing={3} className={classes.posts}>
-                    <Grid item xs={2}/>
+                    <Grid item xs={3}/>
                     <Grid item xs={6}>
                         <Post/>
                         <Post/>
@@ -35,8 +35,7 @@ class home extends Component {
                             <CreatePost/>
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Profile/>
+                    <Grid item xs={3}>
                     </Grid>
                 </Grid>
                 

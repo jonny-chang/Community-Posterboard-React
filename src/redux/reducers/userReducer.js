@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function(state = initialState, action){
-    // Catching types of dispatch
     switch(action.type){
         case SET_AUTHENTICATED:
             return {
