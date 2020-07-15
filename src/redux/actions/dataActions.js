@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, SET_POSTS, LOADING_DATA } from '../types';
+import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, 
+    SET_POSTS, LOADING_DATA, STOP_LOADING_UI, SET_POST 
+} from '../types';
 
 
 // Create Post
@@ -38,4 +40,18 @@ export const getPosts = () => (dispatch) => {
                 payload: []
             })
         })
+}
+
+// Get single post
+export const getPost = (postId) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.get(`/post/${postId}`)
+        .then((res) => {
+            dispatch({
+                type: SET_POST,
+                payload: res.data
+            })
+            dispatch({ type: STOP_LOADING_UI })
+        })
+        .catch((err) => console.log(err))
 }
