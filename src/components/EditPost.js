@@ -8,8 +8,9 @@ import UtilLocationPicker from '../util/UtilLocationPicker';
 
 // Redux
 import { connect } from 'react-redux';
-import { createPost } from '../redux/actions/dataActions';
-import { clearLocation } from '../redux/actions/userActions';
+import { editPost } from '../redux/actions/dataActions';
+import { clearLocation, setLocation } from '../redux/actions/userActions';
+
 
 // Mui
 import Button from '@material-ui/core/Button';
@@ -80,6 +81,20 @@ class CreatePost extends Component{
             })
         }
     }
+    componentDidMount(){
+        const { post } = this.props;
+        mapPostToState(post);
+    }
+    mapPostToState = (post) => {
+        this.setState({
+            title: post.title,
+            description: post.description,
+            capacity: post.capacity,
+            address: post.address,
+            position: post.position,
+        })
+        this.props.setLocation(this.state.posiion)
+    }
     handleOpen = () => {
         this.setState({ open: true })
     }
@@ -100,12 +115,16 @@ class CreatePost extends Component{
             locationString: this.state.address,
             defaultCapacity: this.state.capacity
         }
-        this.props.createPost(newPost);
+        this.props.editPost(newPost);
         console.log(newPost)
     }
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading }, data: { position } } = this.props;
+        const { 
+            classes, 
+            UI: { loading }, 
+            data: { post: { title, description, position, address, capacity } } 
+        } = this.props;
         return (
             <Fragment>
                 <UtilButton onClick={this.handleOpen} tip="Create a post">
@@ -126,6 +145,7 @@ class CreatePost extends Component{
                             helperText={errors.title}
                             className={classes.textField}
                             onChange={this.handleChange}
+                            value={this.state.title}
                             fullWidth
                             required
                             />
@@ -137,6 +157,7 @@ class CreatePost extends Component{
                             helperText={errors.title}
                             className={classes.textField}
                             onChange={this.handleChange}
+                            value={this.state.description}
                             multiline
                             fullWidth
                             required
@@ -153,6 +174,7 @@ class CreatePost extends Component{
                             helperText={errors.locationString}
                             className={classes.textField}
                             onChange={this.handleChange}
+                            value={this.state.address}
                             multiline
                             fullWidth
                             required
@@ -166,6 +188,7 @@ class CreatePost extends Component{
                             error={errors.defaultCapacity ? true : false}
                             helperText={errors.defaultCapacity}
                             className={classes.textField}
+                            value={this.state.capacity}
                             required
                             />
                             <Button type="submit" variant="contained" color="primary"
@@ -193,7 +216,8 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     clearLocation,
-    createPost
+    setLocation,
+    editPost
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreatePost))
