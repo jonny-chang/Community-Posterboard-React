@@ -133,8 +133,8 @@ class CreatePost extends Component{
                             name="description"
                             type="text"
                             label="Description"
-                            error={errors.title ? true : false}
-                            helperText={errors.title}
+                            error={errors.description ? true : false}
+                            helperText={errors.description}
                             className={classes.textField}
                             onChange={this.handleChange}
                             multiline
