@@ -14,6 +14,9 @@ import home from './pages/home';
 
 // Components
 import Navbar from './components/Navbar';
+import AuthRoute from './util/AuthRoute';
+import UnauthRoute from './util/UnauthRoute';
+
 
 // Redux
 import { Provider } from 'react-redux';
