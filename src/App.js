@@ -16,6 +16,7 @@ import home from './pages/home';
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
 import UnauthRoute from './util/UnauthRoute';
+import ExtraRoute from './util/ExtraRoute';
 
 
 // Redux
@@ -52,6 +53,7 @@ class App extends Component {
                 <Route exact path='/login' component={login}/>
                 <Route exact path='/signup' component={signup}/>
                 <Route exact path='/' component={home}/>
+                <ExtraRoute path='/'/>
               </Switch>
             </div>
           </Router>
