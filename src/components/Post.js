@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+// Redux
+import { connect } from 'react-redux';
+import { getPost, getPosts } from '../redux/actions/dataActions';
+
 // Mui
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -24,7 +28,9 @@ const styles = {
 class Post extends Component {
     render() {
         dayjs.extend(relativeTime)
-        const { classes } = this.props
+        const { 
+            classes
+         } = this.props
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
@@ -43,4 +49,13 @@ class Post extends Component {
     }
 }
 
-export default withStyles(styles)(Post);
+const mapStateToProps = (state) => ({
+    data: state.data
+})
+
+const mapActionsToProps = {
+    getPost,
+    getPosts
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Post));

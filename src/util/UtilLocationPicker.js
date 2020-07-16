@@ -75,6 +75,13 @@ class UtilLocationPicker extends Component{
                 startPort={"default"}/>
             )
         }
+        else if (position['latitude'] !== 0 && position['longitude'] !== 0){
+            return (
+                <LocationPicker pointMode={pointMode} showInputs={false} showControls={false} 
+                mapStyle={{ height:300, width:"auto", borderRadius: 10 }} precision={8}
+                startPort={{center: [position['latitude'], position['longitude']], zoom: 12}}/>
+            )
+        }
         else if (this.state.latitude !== null && this.state.longitude !== null){
             return (
                 <LocationPicker pointMode={pointMode} showInputs={false} showControls={false} 

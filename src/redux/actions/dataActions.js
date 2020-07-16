@@ -7,7 +7,7 @@ import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST,
 // Create Post
 export const createPost = (newPost) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    axios.post('/post', newPost)
+    axios.post('/createPost', newPost)
         .then(res => {
             dispatch({
                 type: CREATE_POST,

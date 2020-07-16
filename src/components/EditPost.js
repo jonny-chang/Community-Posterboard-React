@@ -32,7 +32,7 @@ const styles = {
     closeButton: {
         position: 'absolute',
         left: '90%',
-        top: '5%'
+        top: '2%'
     },
     textField: {
         margin: '10px auto 10px auto'
@@ -193,7 +193,11 @@ class EditPost extends Component{
                             />
                             <Button type="submit" variant="contained" color="primary"
                             className={classes.submitButton} disabled={loading}>
-                                Post
+                                Save Changes
+                            </Button>
+                            <Button variant="contained" variant="text" size="small" disabled={loading}
+                            className={classes.cancel} onClick={this.handleClose}>
+                                Cancel
                             </Button>
                         </form>
                     </DialogContent>

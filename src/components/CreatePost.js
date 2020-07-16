@@ -31,7 +31,7 @@ const styles = {
     closeButton: {
         position: 'absolute',
         left: '90%',
-        top: '5%'
+        top: '2%'
     },
     textField: {
         margin: '10px auto 10px auto'
@@ -41,6 +41,10 @@ const styles = {
     },
     locationPicker: {
         margin: '10px auto 10px auto'
+    },
+    cancel: {
+        marginLeft: 20,
+        color: '#ff605C'
     }
 }
 
@@ -171,6 +175,10 @@ class CreatePost extends Component{
                             <Button type="submit" variant="contained" color="primary"
                             className={classes.submitButton} disabled={loading}>
                                 Post
+                            </Button>
+                            <Button variant="contained" variant="text" size="small" disabled={loading}
+                            className={classes.cancel} onClick={this.handleClose}>
+                                Cancel
                             </Button>
                         </form>
                     </DialogContent>
