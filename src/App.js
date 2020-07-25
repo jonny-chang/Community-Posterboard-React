@@ -50,9 +50,9 @@ class App extends Component {
             <Navbar /> 
             <div className="container">
               <Switch>
-                <Route exact path='/login' component={login}/>
-                <Route exact path='/signup' component={signup}/>
-                <Route exact path='/' component={home}/>
+                <UnauthRoute exact path='/login' component={login}/>
+                <UnauthRoute exact path='/signup' component={signup}/>
+                <AuthRoute exact path='/' component={home}/>
                 <ExtraRoute path='/'/>
               </Switch>
             </div>

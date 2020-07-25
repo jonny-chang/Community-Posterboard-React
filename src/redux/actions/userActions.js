@@ -1,5 +1,5 @@
 import { 
-    SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, 
+    SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED,
     SET_UNAUTHENTICATED, LOADING_USER, SET_LOCATION, CLEAR_LOCATION,  
 } from '../types';
 import axios from 'axios';
@@ -8,10 +8,10 @@ export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('/login', userData)
             .then(res => {
-                setAuthorizationHeader(res.data.token)
+                setAuthorizationHeader(res.data.retrievedIdToken ?? res.data.token)
                 dispatch(getUserData());
+                dispatch({ type: SET_AUTHENTICATED })
                 dispatch({ type: CLEAR_ERRORS });
-                // Redirect
                 history.push('/');
             })
             .catch(err => {
@@ -26,10 +26,10 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('/signup', newUserData)
             .then(res => {
-                setAuthorizationHeader(res.data.token)
+                setAuthorizationHeader(res.data.retrievedIdToken ?? res.data.token)
                 dispatch(getUserData());
+                dispatch({ type: SET_AUTHENTICATED })
                 dispatch({ type: CLEAR_ERRORS });
-                // Redirect
                 history.push('/');
             })
             .catch(err => {

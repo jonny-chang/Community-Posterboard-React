@@ -5,9 +5,10 @@ import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST,
 
 
 // Create Post
+
 export const createPost = (newPost) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    axios.post('/createPost', newPost)
+    axios.post('/post', newPost)
         .then(res => {
             dispatch({
                 type: CREATE_POST,
@@ -43,6 +44,7 @@ export const getPosts = () => (dispatch) => {
 }
 
 // Get single post
+
 export const getPost = (postId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.get(`/post/${postId}`)
@@ -54,4 +56,23 @@ export const getPost = (postId) => (dispatch) => {
             dispatch({ type: STOP_LOADING_UI })
         })
         .catch((err) => console.log(err))
+}
+
+// Edit Post
+
+export const editPost = (newPost, postId) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/editPost/${postId}`, newPost)
+        .then(res => {
+            dispatch({
+                type: SET_POSTS,
+            });
+            dispatch({ type: CLEAR_ERRORS })
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            })
+        })
 }

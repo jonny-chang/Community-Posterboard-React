@@ -13,6 +13,7 @@ export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 // Data reducer types
 export const CREATE_POST = 'CREATE_POST';
 export const LOADING_DATA = 'LOADING_DATA';
+export const STOP_LOADING_DATA = 'STOP_LOADING_DATA';
 export const SET_POSTS = 'SET_POSTS';
 export const SET_POST = 'SET_POST';
 export const SET_LOCATION = 'SET_LOCATION';

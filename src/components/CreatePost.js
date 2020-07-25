@@ -63,12 +63,28 @@ class CreatePost extends Component{
         this.props.clearLocation()
     }
     componentWillReceiveProps(nextProps){
+        const { data: { position } } = this.props;
         if(nextProps.UI.errors){
             this.setState({
                 errors: nextProps.UI.errors
             })
         }
-        if(!nextProps.UI.errors && !nextProps.UI.loading && !nextProps.data.position){
+        if(nextProps.data.position){
+            this.setState({
+                position: nextProps.data.position
+            })
+        }
+        if(
+            !nextProps.UI.errors &&
+            !nextProps.UI.loading && !(
+                nextProps.data.position ||
+                !(
+                    position.longitude === nextProps.data.position.longitude &&
+                    position.latitude === nextProps.data.position.latitude
+                )
+            )
+        ){
+            this.handleClose();
             this.setState({
                 title: '',
                 description: '',
@@ -76,12 +92,6 @@ class CreatePost extends Component{
                 address: '',
                 position: {},
              });
-            this.handleClose();
-        }
-        if(nextProps.data.position){
-            this.setState({
-                position: nextProps.data.position
-            })
         }
     }
     handleOpen = () => {
@@ -100,16 +110,17 @@ class CreatePost extends Component{
         const newPost = {
             title: this.state.title,
             description: this.state.description,
-            position: this.state.position,
+            latitude: this.state.position['latitude'],
+            longitude: this.state.position['longitude'],
             locationString: this.state.address,
-            defaultCapacity: this.state.capacity
+            defaultCapacity: parseInt(this.state.capacity)
         }
         this.props.createPost(newPost);
         console.log(newPost)
     }
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading } } = this.props;
+        const { classes, UI: { loading }, data: { position } } = this.props;
         return (
             <Fragment>
                 <UtilButton onClick={this.handleOpen} tip="Create a post">
@@ -149,6 +160,11 @@ class CreatePost extends Component{
                                 Location *
                             </Typography>
                             <UtilLocationPicker className={classes.position}/>
+                            {(errors.longitude || errors.latitude) && (
+                                <Typography variant="subtitle1" color="error">
+                                    Invalid location
+                                </Typography>
+                            )}
                             <TextField 
                             name="address"
                             type="text"
@@ -172,6 +188,12 @@ class CreatePost extends Component{
                             className={classes.textField}
                             required
                             />
+                            {errors.error && (
+                                <Typography variant="subtitle1" color="error">
+                                    Error: {errors.error}
+                                </Typography>
+                            )}
+                            
                             <Button type="submit" variant="contained" color="primary"
                             className={classes.submitButton} disabled={loading}>
                                 Post
@@ -180,6 +202,7 @@ class CreatePost extends Component{
                             className={classes.cancel} onClick={this.handleClose}>
                                 Cancel
                             </Button>
+                            
                         </form>
                     </DialogContent>
                 </Dialog>

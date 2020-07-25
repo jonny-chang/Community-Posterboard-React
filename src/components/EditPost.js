@@ -21,7 +21,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 
 // Icons
-import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 
 const styles = {
@@ -53,6 +52,7 @@ class EditPost extends Component{
         capacity: 0,
         address: '',
         position: {},
+        postId: null,
         errors: {}
     }
     handleClose = () => {
@@ -92,6 +92,7 @@ class EditPost extends Component{
             capacity: post.capacity,
             address: post.address,
             position: post.position,
+            postId: post.postId
         })
         this.props.setLocation(this.state.posiion)
     }
@@ -115,7 +116,7 @@ class EditPost extends Component{
             locationString: this.state.address,
             defaultCapacity: this.state.capacity
         }
-        this.props.editPost(newPost);
+        this.props.editPost(newPost, this.state.postId);
         console.log(newPost)
     }
     render() {
@@ -127,14 +128,14 @@ class EditPost extends Component{
         } = this.props;
         return (
             <Fragment>
-                <UtilButton onClick={this.handleOpen} tip="Create a post">
-                    <AddIcon fontSize="large"/>
-                </UtilButton>
+                <Button onClick={this.handleOpen}>
+                    Edit Post
+                </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon/>
                     </UtilButton>
-                    <DialogTitle>Create a new post</DialogTitle>
+                    <DialogTitle>Edit post</DialogTitle>
                     <DialogContent>
                         <form onSubmit={this.handleSubmit}>
                             <TextField 

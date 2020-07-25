@@ -1,5 +1,5 @@
 import { LOADING_DATA, SET_POSTS , CREATE_POST, 
-    SET_LOCATION, CLEAR_LOCATION, SET_POST 
+    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA 
 } from '../types';
 
 const initialState = {
@@ -18,6 +18,11 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 loading: true
+            }
+        case STOP_LOADING_DATA:
+            return{
+                ...state,
+                loading: false
             }
         case SET_POSTS:
             return{
@@ -42,7 +47,6 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 position: action.payload,
-                loading: false
             }
         case CLEAR_LOCATION:
             return{
