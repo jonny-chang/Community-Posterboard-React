@@ -97,7 +97,6 @@ class CreatePost extends Component{
                 address: '',
                 position: {},
              });
-             console.log('handle close')
         }
         else{
             console.log(nextProps.UI.errors + ':' + nextProps.UI.loading + ':' + nextProps.data.position + ':' +

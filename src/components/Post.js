@@ -3,6 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import DeletePost from './DeletePost';
 
 // Redux
 import { connect } from 'react-redux';
@@ -27,6 +28,9 @@ const styles = {
     },
     description: {
         marginBottom: 5
+    },
+    deleteContainer:{
+        
     }
 }
 
@@ -39,9 +43,12 @@ class Post extends Component {
               title,
               description,
               defaultCapacity,
-              locationString
+              locationString,
+              postId
             },
           } = this.props;
+          const deleteButton =
+            <DeletePost postId={postId}/>
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
@@ -54,6 +61,9 @@ class Post extends Component {
                     <Typography variant="body1">
                         Schedule, buttons, etc...
                     </Typography>
+                    <div className={classes.deleteContainer}>
+                        {deleteButton}
+                    </div>
                 </CardContent>
             </Card>
         )

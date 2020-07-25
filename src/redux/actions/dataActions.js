@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, 
-    SET_POSTS, LOADING_DATA, STOP_LOADING_UI, SET_POST 
+    SET_POSTS, LOADING_DATA, STOP_LOADING_UI, SET_POST, DELETE_POST 
 } from '../types';
 
 
@@ -78,3 +78,15 @@ export const editPost = (newPost, postId) => (dispatch) => {
             })
         })
 }
+
+// Delete Post
+export const deletePost = (postId) => (dispatch) => {
+    axios
+      .delete(`/post/${postId}`)
+      .then(() => {
+        dispatch(getPosts());
+      })
+      .catch((err) => {
+          console.log(err)
+      });
+  };

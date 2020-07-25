@@ -35,7 +35,7 @@ class home extends Component {
         const { classes } = this.props;
         const { posts, loading } = this.props.data;
         let postsMarkup = !loading ? (
-            posts.map((post) => <Post post={post} />)
+            posts.map((post) => <Post post={post} key={post.postId}/>)
           ) : (
             <PostSkeleton/>
           );
