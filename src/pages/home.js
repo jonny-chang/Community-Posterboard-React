@@ -10,6 +10,10 @@ import Profile from '../components/Profile';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+// Redux
+import { connect } from 'react-redux';
+import { getPosts } from '../redux/actions/dataActions';
+
 const styles = {
     posts: {
         
@@ -21,6 +25,16 @@ const styles = {
 }
 
 class home extends Component {
+    constructor(){
+        super();
+        this.state = {
+            posts: null
+        }
+    }
+    // Fetching posts
+    componentDidMount(){
+        this.props.getPosts();
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -44,4 +58,13 @@ class home extends Component {
     }
 }
 
-export default withStyles(styles)(home);
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+})
+
+const mapActionsToProps = {
+    getPosts
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(home));
