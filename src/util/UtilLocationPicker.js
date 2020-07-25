@@ -3,7 +3,7 @@ import LocationPicker from "react-leaflet-location-picker";
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // Mui
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
 import { setLocation } from '../redux/actions/userActions';

@@ -18,6 +18,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Icons
 import AddIcon from '@material-ui/icons/Add';
@@ -45,7 +46,10 @@ const styles = {
     cancel: {
         marginLeft: 20,
         color: '#ff605C'
-    }
+    },
+    progressSpinner: {
+        position: 'absolute'
+      },
 }
 
 class CreatePost extends Component{
@@ -60,7 +64,8 @@ class CreatePost extends Component{
     }
     handleClose = () => {
         this.setState({ open: false, errors: {}})
-        this.props.clearLocation()
+        // this.props.clearLocation()
+        // console.log('clearing')
     }
     componentWillReceiveProps(nextProps){
         const { data: { position } } = this.props;
@@ -77,7 +82,7 @@ class CreatePost extends Component{
         if(
             !nextProps.UI.errors &&
             !nextProps.UI.loading && !(
-                nextProps.data.position ||
+                nextProps.data.position |
                 !(
                     position.longitude === nextProps.data.position.longitude &&
                     position.latitude === nextProps.data.position.latitude
@@ -92,6 +97,12 @@ class CreatePost extends Component{
                 address: '',
                 position: {},
              });
+             console.log('handle close')
+        }
+        else{
+            console.log(nextProps.UI.errors + ':' + nextProps.UI.loading + ':' + nextProps.data.position + ':' +
+                        position.longitude + ':' + nextProps.data.position.longitude + ':' +
+                        position.latitude + ':' + nextProps.data.position.latitude)
         }
     }
     handleOpen = () => {
@@ -194,9 +205,20 @@ class CreatePost extends Component{
                                 </Typography>
                             )}
                             
-                            <Button type="submit" variant="contained" color="primary"
-                            className={classes.submitButton} disabled={loading}>
-                                Post
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.submitButton}
+                                disabled={loading}
+                            >
+                                Submit
+                                {loading && (
+                                    <CircularProgress
+                                        size={30}
+                                        className={classes.progressSpinner}
+                                    />
+                                )}
                             </Button>
                             <Button variant="contained" variant="text" size="small" disabled={loading}
                             className={classes.cancel} onClick={this.handleClose}>

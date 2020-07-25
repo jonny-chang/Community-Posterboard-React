@@ -21,24 +21,35 @@ const styles = {
     content: {
         padding: 25,
         objectFit: 'cover',
+    },
+    title: {
+        marginBottom: 10
+    },
+    description: {
+        marginBottom: 5
     }
-
 }
 
 class Post extends Component {
     render() {
         dayjs.extend(relativeTime)
-        const { 
-            classes
-         } = this.props
+        const {
+            classes,
+            post: {
+              title,
+              description,
+              defaultCapacity,
+              locationString
+            },
+          } = this.props;
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
-                    <Typography variant='h5'>
-                        Title of store
+                    <Typography variant='h5' className={classes.title}>
+                        {title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                        Description
+                    <Typography variant="body2" color="textSecondary" className={classes.description}>
+                        {description}
                     </Typography>
                     <Typography variant="body1">
                         Schedule, buttons, etc...

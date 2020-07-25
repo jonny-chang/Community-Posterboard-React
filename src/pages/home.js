@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import UtilButton from '../util/UtilButton';
+import PropTypes from 'prop-types';
 
 // Components
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
 import Profile from '../components/Profile';
+import PostSkeleton from '../util/PostSkeleton';
 
 // Mui
 import Grid from '@material-ui/core/Grid';
@@ -25,26 +27,24 @@ const styles = {
 }
 
 class home extends Component {
-    constructor(){
-        super();
-        this.state = {
-            posts: null
-        }
-    }
     // Fetching posts
-    componentDidMount(){
+    componentDidMount() {
         this.props.getPosts();
-    }
+      }
     render() {
         const { classes } = this.props;
+        const { posts, loading } = this.props.data;
+        let postsMarkup = !loading ? (
+            posts.map((post) => <Post post={post} />)
+          ) : (
+            <PostSkeleton/>
+          );
         return (
             <Fragment>
                 <Grid container spacing={3} className={classes.posts}>
                     <Grid item xs={3}/>
                     <Grid item xs={6}>
-                        <Post/>
-                        <Post/>
-                        <Post/>
+                        {postsMarkup}
                         <div className={classes.createButton}>
                             <CreatePost/>
                         </div>
@@ -58,9 +58,13 @@ class home extends Component {
     }
 }
 
+home.propTypes = {
+    getPosts: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired
+  };
+
 const mapStateToProps = (state) => ({
-    user: state.user,
-    UI: state.UI
+    data: state.data
 })
 
 const mapActionsToProps = {

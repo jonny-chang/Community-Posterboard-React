@@ -27,7 +27,7 @@ export default function(state = initialState, action){
         case SET_POSTS:
             return{
                 ...state,
-                posts: action.payload,
+                posts: action.payload.posts,
                 loading: false
             }
         case SET_POST:
@@ -38,10 +38,6 @@ export default function(state = initialState, action){
         case CREATE_POST:
             return{
                 ...state,
-                posts: [
-                    action.payload,
-                    ...state.posts
-                ]
             }
         case SET_LOCATION:
             return{
@@ -54,7 +50,8 @@ export default function(state = initialState, action){
                 position: {
                     latitude: 0,
                     longitude: 0
-                }
+                },
+                loading: true
             }
         default:
             return state

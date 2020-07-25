@@ -14,6 +14,7 @@ export const createPost = (newPost) => (dispatch) => {
                 type: CREATE_POST,
                 payload: res.data
             });
+            dispatch(getPosts())
             dispatch({ type: CLEAR_ERRORS })
         })
         .catch(err => {
@@ -27,21 +28,22 @@ export const createPost = (newPost) => (dispatch) => {
 // Get all posts
 
 export const getPosts = () => (dispatch) => {
-    dispatch({ type: LOADING_DATA })
-    axios.get('/posts')
-        .then((res) => {
-            dispatch({
-                type: SET_POSTS,
-                payload: res.data
-            })
-        })
-        .catch((err) => {
-            dispatch({
-                type: SET_POSTS,
-                payload: []
-            })
-        })
-}
+    dispatch({ type: LOADING_DATA });
+    axios
+      .get('/posts')
+      .then((res) => {
+        dispatch({
+          type: SET_POSTS,
+          payload: res.data
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: SET_POSTS,
+          payload: []
+        });
+      });
+  };
 
 // Get single post
 
