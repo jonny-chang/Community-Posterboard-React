@@ -39,16 +39,19 @@ class schedule extends Component {
   }
   render() {
       const { postId, result, forbidden } = this.state
+      const { post, loading } = this.props.data
+      console.log(this.props.data.post)
       if (forbidden) {
           return(
             <Redirect to='/forbidden'/>
           )
     }
     return (
+        
         <Grid container spacing={3}>
         <Grid item xs={3}/>
         <Grid item xs={6}>
-            <p>Schedule of post {postId}</p>
+            <p>Schedule of {post.title}</p>
         </Grid>
         <Grid item xs={3}/>
       </Grid>
