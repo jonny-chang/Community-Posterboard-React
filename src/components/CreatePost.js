@@ -37,6 +37,9 @@ const styles = {
     textField: {
         margin: '10px auto 10px auto'
     },
+    titleTextField: {
+        margin: '0px auto 10px auto'
+    },
     label: {
         marginBottom: 10
     },
@@ -63,7 +66,11 @@ class CreatePost extends Component{
         errors: {}
     }
     handleClose = () => {
-        this.setState({ open: false, errors: {}})
+        this.setState({ 
+            open: false, 
+            errors: {},
+            position: {}
+        })     
     }
     componentWillReceiveProps(nextProps){
         const { data: { position } } = this.props;
@@ -142,7 +149,7 @@ class CreatePost extends Component{
                             label="Title"
                             error={errors.title ? true : false}
                             helperText={errors.title}
-                            className={classes.textField}
+                            className={classes.titleTextField}
                             onChange={this.handleChange}
                             fullWidth
                             required
@@ -206,7 +213,7 @@ class CreatePost extends Component{
                                 Submit
                                 {loading && (
                                     <CircularProgress
-                                    size={30}
+                                    size={20}
                                     className={classes.progressSpinner}
                                     />
                                 )}

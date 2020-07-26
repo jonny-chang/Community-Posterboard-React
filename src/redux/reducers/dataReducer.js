@@ -9,7 +9,7 @@ const initialState = {
         latitude: 0,
         longitude: 0
     },
-    loading: false
+    loading: false,
 };
 
 export default function(state = initialState, action){
@@ -33,7 +33,7 @@ export default function(state = initialState, action){
         case SET_POST:
             return{
                 ...state,
-                post: action.payload
+                post: action.payload,
             }
         case CREATE_POST:
             return{
@@ -42,7 +42,7 @@ export default function(state = initialState, action){
         case SET_LOCATION:
             return{
                 ...state,
-                position: action.payload,
+                position: action.payload
             }
         case CLEAR_LOCATION:
             return{
@@ -51,7 +51,7 @@ export default function(state = initialState, action){
                     latitude: 0,
                     longitude: 0
                 },
-                loading: true
+                // loading: true
             }
         default:
             return state

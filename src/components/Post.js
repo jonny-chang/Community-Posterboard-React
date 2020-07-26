@@ -40,6 +40,7 @@ class Post extends Component {
         dayjs.extend(relativeTime)
         const {
             classes,
+            post,
             post: {
               title,
               description,
@@ -51,7 +52,7 @@ class Post extends Component {
           const deleteButton =
             <DeletePost postId={postId}/>
           const editButton = 
-            <EditPost currentPostId={postId}/>
+            <EditPost currentPostId={postId} currentPost={post}/>
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
@@ -61,9 +62,9 @@ class Post extends Component {
                     <Typography variant="body2" color="textSecondary" className={classes.description}>
                         {description}
                     </Typography>
-                    {/* <div className={classes.deleteContainer}>
+                    <div className={classes.deleteContainer}>
                         {deleteButton}
-                    </div> */}
+                    </div>
                     {editButton}
                 </CardContent>
             </Card>

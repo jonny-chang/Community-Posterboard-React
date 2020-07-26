@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, 
-    SET_POSTS, LOADING_DATA, STOP_LOADING_UI, SET_POST, DELETE_POST 
+import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
+    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST 
 } from '../types';
-
 
 // Create Post
 
@@ -48,14 +47,15 @@ export const getPosts = () => (dispatch) => {
 // Get single post
 
 export const getPost = (postId) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
+    // dispatch({ type: LOADING_UI });
     axios.get(`/post/${postId}`)
         .then((res) => {
             dispatch({
                 type: SET_POST,
                 payload: res.data
             })
-            dispatch({ type: STOP_LOADING_UI })
+            // dispatch({ type: STOP_LOADING_DATA })
+            // dispatch({ type: STOP_LOADING_UI })
         })
         .catch((err) => {
             console.log(err)
@@ -70,12 +70,12 @@ export const editPost = (newPost, postId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.put(`/post/${postId}`, newPost)
         .then(res => {
-            dispatch({
-                type: SET_POSTS,
-            });
+            dispatch(getPosts())
             dispatch({ type: CLEAR_ERRORS })
+            console.log(res)
         })
         .catch(err => {
+            console.log(err)
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data

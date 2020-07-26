@@ -9,8 +9,7 @@ import UtilLocationPicker from '../util/UtilLocationPicker';
 // Redux
 import { connect } from 'react-redux';
 import { editPost, getPost } from '../redux/actions/dataActions';
-import { clearLocation } from '../redux/actions/userActions';
-
+import { clearLocation, setLocation } from '../redux/actions/userActions';
 
 // Mui
 import Button from '@material-ui/core/Button';
@@ -37,6 +36,9 @@ const styles = {
     textField: {
         margin: '10px auto 10px auto'
     },
+    titleTextField: {
+        margin: '0px auto 10px auto'
+    },
     label: {
         marginBottom: 10
     },
@@ -59,11 +61,22 @@ class EditPost extends Component{
         description: '',
         capacity: 0,
         address: '',
-        position: {},
+        position: {
+            longitude: 0,
+            latitude:0
+        },
         errors: {}
     }
     handleClose = () => {
-        this.setState({ open: false, errors: {}})
+        this.setState({ open: false, 
+            errors: {},
+            title: '',
+            description: '',
+            capacity: 0,
+            address: '',
+            position: {},
+        }
+        )
     }
     componentWillReceiveProps(nextProps){
         const { data: { position } } = this.props;
@@ -79,7 +92,8 @@ class EditPost extends Component{
         }
         if(
             !nextProps.UI.errors &&
-            !nextProps.UI.loading && !(
+            !nextProps.UI.loading && 
+            !nextProps.data.loading && !(
                 nextProps.data.position |
                 !(
                     position.longitude === nextProps.data.position.longitude &&
@@ -88,32 +102,28 @@ class EditPost extends Component{
             )
         ){
             this.handleClose();
-            this.setState({
-                title: '',
-                description: '',
-                capacity: 0,
-                address: '',
-                position: {},
-             });
         }
     }
     mapPostToState = (post) => {
         this.setState({
             title: post.title,
             description: post.description,
-            capacity: post.capacity,
-            address: post.address,
+            capacity: post.defaultCapacity,
+            address: post.locationString,
             position: {
                 longitude: post.longitude,
                 latitude: post.latitude
             },
             postId: post.postId
         })
-        this.props.setLocation(this.state.posiion)
     }
     handleOpen = () => {
         this.setState({ open: true })
-        this.props.getPost(this.props.currentPostId)
+        this.props.setLocation({
+            latitude: this.props.currentPost.latitude,
+            longitude: this.props.currentPost.longitude
+        })
+        this.mapPostToState(this.props.currentPost)
     }
     handleChange = (event) => {
         this.setState({
@@ -133,15 +143,15 @@ class EditPost extends Component{
             locationString: this.state.address,
             defaultCapacity: parseInt(this.state.capacity)
         }
-        this.props.editPost(changedPost, this.props.postId);
-        console.log(changedPost)
+        this.props.editPost(changedPost, this.props.currentPostId);
+        console.log(changedPost, this.props.currentPostId)
     }
     render() {
         const { errors } = this.state;
         const { 
             classes, 
             UI: { loading }, 
-            data: { post: { title, description, longitude, latitude, address, capacity } } 
+            currentPost: { title, description, longitude, latitude, locationString, defaultCapacity, postId } 
         } = this.props;
         return (
             <Fragment>
@@ -161,9 +171,9 @@ class EditPost extends Component{
                             label="Title"
                             error={errors.title ? true : false}
                             helperText={errors.title}
-                            className={classes.textField}
+                            className={classes.titleTextField}
                             onChange={this.handleChange}
-                            value={this.state.title}
+                            defaultValue={title}
                             fullWidth
                             required
                             />
@@ -175,7 +185,7 @@ class EditPost extends Component{
                             helperText={errors.description}
                             className={classes.textField}
                             onChange={this.handleChange}
-                            value={this.state.description}
+                            defaultValue={description}
                             multiline
                             fullWidth
                             required
@@ -197,7 +207,7 @@ class EditPost extends Component{
                             helperText={errors.locationString}
                             className={classes.textField}
                             onChange={this.handleChange}
-                            value={this.state.address}
+                            defaultValue={locationString}
                             multiline
                             fullWidth
                             required
@@ -211,7 +221,7 @@ class EditPost extends Component{
                             error={errors.defaultCapacity ? true : false}
                             helperText={errors.defaultCapacity}
                             className={classes.textField}
-                            value={this.state.capacity}
+                            defaultValue={defaultCapacity}
                             required
                             />
                             {errors.error && (
@@ -229,7 +239,7 @@ class EditPost extends Component{
                                 Save Changes
                                 {loading && (
                                     <CircularProgress
-                                        size={30}
+                                        size={20}
                                         className={classes.progressSpinner}
                                     />
                                 )}
@@ -260,7 +270,8 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
     clearLocation,
     editPost,
-    getPost
+    getPost,
+    setLocation
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(EditPost))

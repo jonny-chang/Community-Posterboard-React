@@ -75,5 +75,5 @@ export const setLocation = (position) => (dispatch) => {
 
 export const clearLocation = () => (dispatch) => {
     dispatch({ type: CLEAR_LOCATION })
-    dispatch({ type: STOP_LOADING_DATA })
+    // dispatch({ type: STOP_LOADING_DATA })
 }
