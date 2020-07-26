@@ -19,6 +19,9 @@ const styles = {
     },
     header: {
         margin: 'auto',
+    },
+    title: {
+        color: '#fff'
     }
 }
 
@@ -33,7 +36,9 @@ class Navbar extends Component {
             <AppBar position="fixed">
                 <Toolbar>
                     <div className={classes.header}>
-                        <h2>Community Posterboard</h2>
+                        <a href='/' className={classes.title}>
+                            <h2>Community Posterboard</h2>
+                        </a>
                     </div>
                     {authenticated && (
                         <Button className={classes.button} color='inherit' onClick={this.handleLogout}>
