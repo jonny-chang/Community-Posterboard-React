@@ -77,6 +77,7 @@ class EditPost extends Component{
             position: {},
         }
         )
+        this.props.clearLocation()
     }
     componentWillReceiveProps(nextProps){
         const { data: { position } } = this.props;
@@ -92,14 +93,13 @@ class EditPost extends Component{
         }
         if(
             !nextProps.UI.errors &&
-            !nextProps.UI.loading && 
-            !nextProps.data.loading && !(
+            !nextProps.UI.loading && !(
                 nextProps.data.position |
                 !(
                     position.longitude === nextProps.data.position.longitude &&
                     position.latitude === nextProps.data.position.latitude
                 )
-            )
+            ) && (position.longitude !== 0 && position.latitude !== 0)
         ){
             this.handleClose();
         }

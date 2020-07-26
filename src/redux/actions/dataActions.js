@@ -7,21 +7,32 @@ import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
 
 export const createPost = (newPost) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    axios.post('/post', newPost)
-        .then(res => {
-            dispatch({
-                type: CREATE_POST,
-                payload: res.data
-            });
-            dispatch(getPosts())
-            dispatch({ type: CLEAR_ERRORS })
+    if (newPost.longitude === 0 && newPost.latitude === 0){
+        dispatch({ 
+            type: SET_ERRORS,
+            payload: {
+                longitude: 'Invalid longitude',
+                latitude: 'Invalid latitude'
+            }
         })
-        .catch(err => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data
+    }
+    else {
+        axios.post('/post', newPost)
+            .then(res => {
+                dispatch({
+                    type: CREATE_POST,
+                    payload: res.data
+                });
+                dispatch(getPosts())
+                dispatch({ type: CLEAR_ERRORS })
             })
-        })
+            .catch(err => {
+                dispatch({
+                    type: SET_ERRORS,
+                    payload: err.response.data
+                })
+            })
+    }
 }
 
 // Get all posts
@@ -68,19 +79,30 @@ export const getPost = (postId) => (dispatch) => {
 
 export const editPost = (newPost, postId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    axios.put(`/post/${postId}`, newPost)
-        .then(res => {
-            dispatch(getPosts())
-            dispatch({ type: CLEAR_ERRORS })
-            console.log(res)
+    if (newPost.longitude === 0 && newPost.latitude === 0){
+        dispatch({ 
+            type: SET_ERRORS,
+            payload: {
+                longitude: 'Invalid longitude',
+                latitude: 'Invalid latitude'
+            }
         })
-        .catch(err => {
-            console.log(err)
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data
+    }
+    else {
+        axios.put(`/post/${postId}`, newPost)
+            .then(res => {
+                dispatch(getPosts())
+                dispatch({ type: CLEAR_ERRORS })
+                console.log(res)
             })
-        })
+            .catch(err => {
+                console.log(err)
+                dispatch({
+                    type: SET_ERRORS,
+                    payload: err.response.data
+                })
+            })
+    }
 }
 
 // Delete Post

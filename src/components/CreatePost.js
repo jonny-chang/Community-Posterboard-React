@@ -70,7 +70,8 @@ class CreatePost extends Component{
             open: false, 
             errors: {},
             position: {}
-        })     
+        })
+        this.props.clearLocation()
     }
     componentWillReceiveProps(nextProps){
         const { data: { position } } = this.props;
@@ -92,7 +93,7 @@ class CreatePost extends Component{
                     position.longitude === nextProps.data.position.longitude &&
                     position.latitude === nextProps.data.position.latitude
                 )
-            )
+            ) && (position.longitude !== 0 && position.latitude !== 0)
         ){
             this.handleClose();
             this.setState({
