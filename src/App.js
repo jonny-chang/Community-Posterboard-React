@@ -11,6 +11,7 @@ import themeFile from './util/theme';
 import login from './pages/login';
 import signup from './pages/signup';
 import home from './pages/home';
+import schedule from './pages/schedule';
 
 // Components
 import Navbar from './components/Navbar';
@@ -25,8 +26,8 @@ import store from './redux/store';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser, getUserData } from './redux/actions/userActions';
 
-axios.defaults.baseURL =
-  "https://us-central1-communityposterboard-69961.cloudfunctions.net/api"
+// axios.defaults.baseURL =
+//   "https://us-central1-communityposterboard-69961.cloudfunctions.net/api"
 
 const token = localStorage.FBIdToken;
 if (token){
@@ -56,6 +57,7 @@ class App extends Component {
                 <UnauthRoute exact path='/login' component={login}/>
                 <UnauthRoute exact path='/signup' component={signup}/>
                 <AuthRoute exact path='/' component={home}/>
+                <AuthRoute exact path="/schedule/:postId" component={schedule} />
                 <ExtraRoute path='/'/>
               </Switch>
             </div>
