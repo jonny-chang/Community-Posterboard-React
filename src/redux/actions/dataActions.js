@@ -57,7 +57,11 @@ export const getPost = (postId) => (dispatch) => {
             })
             dispatch({ type: STOP_LOADING_UI })
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err)
+            console.log('error setting singular post')
+            console.log(postId)
+        })
 }
 
 // Edit Post

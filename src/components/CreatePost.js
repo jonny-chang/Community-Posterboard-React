@@ -64,8 +64,6 @@ class CreatePost extends Component{
     }
     handleClose = () => {
         this.setState({ open: false, errors: {}})
-        // this.props.clearLocation()
-        // console.log('clearing')
     }
     componentWillReceiveProps(nextProps){
         const { data: { position } } = this.props;
@@ -97,11 +95,6 @@ class CreatePost extends Component{
                 address: '',
                 position: {},
              });
-        }
-        else{
-            console.log(nextProps.UI.errors + ':' + nextProps.UI.loading + ':' + nextProps.data.position + ':' +
-                        position.longitude + ':' + nextProps.data.position.longitude + ':' +
-                        position.latitude + ':' + nextProps.data.position.latitude)
         }
     }
     handleOpen = () => {
@@ -203,7 +196,6 @@ class CreatePost extends Component{
                                     Error: {errors.error}
                                 </Typography>
                             )}
-                            
                             <Button
                                 type="submit"
                                 variant="contained"

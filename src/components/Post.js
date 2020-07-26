@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import DeletePost from './DeletePost';
+import EditPost from './EditPost';
 
 // Redux
 import { connect } from 'react-redux';
@@ -49,6 +50,8 @@ class Post extends Component {
           } = this.props;
           const deleteButton =
             <DeletePost postId={postId}/>
+          const editButton = 
+            <EditPost currentPostId={postId}/>
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
@@ -61,9 +64,10 @@ class Post extends Component {
                     <Typography variant="body1">
                         Schedule, buttons, etc...
                     </Typography>
-                    <div className={classes.deleteContainer}>
+                    {/* <div className={classes.deleteContainer}>
                         {deleteButton}
-                    </div>
+                    </div> */}
+                    {editButton}
                 </CardContent>
             </Card>
         )

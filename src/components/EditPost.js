@@ -8,8 +8,8 @@ import UtilLocationPicker from '../util/UtilLocationPicker';
 
 // Redux
 import { connect } from 'react-redux';
-import { editPost } from '../redux/actions/dataActions';
-import { clearLocation, setLocation } from '../redux/actions/userActions';
+import { editPost, getPost } from '../redux/actions/dataActions';
+import { clearLocation } from '../redux/actions/userActions';
 
 
 // Mui
@@ -19,6 +19,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
@@ -41,7 +42,14 @@ const styles = {
     },
     locationPicker: {
         margin: '10px auto 10px auto'
-    }
+    },
+    cancel: {
+        marginLeft: 20,
+        color: '#ff605C'
+    },
+    progressSpinner: {
+        position: 'absolute'
+      },
 }
 
 class EditPost extends Component{
@@ -52,20 +60,34 @@ class EditPost extends Component{
         capacity: 0,
         address: '',
         position: {},
-        postId: null,
         errors: {}
     }
     handleClose = () => {
         this.setState({ open: false, errors: {}})
-        this.props.clearLocation()
     }
     componentWillReceiveProps(nextProps){
+        const { data: { position } } = this.props;
         if(nextProps.UI.errors){
             this.setState({
                 errors: nextProps.UI.errors
             })
         }
-        if(!nextProps.UI.errors && !nextProps.UI.loading && !nextProps.data.position){
+        if(nextProps.data.position){
+            this.setState({
+                position: nextProps.data.position
+            })
+        }
+        if(
+            !nextProps.UI.errors &&
+            !nextProps.UI.loading && !(
+                nextProps.data.position |
+                !(
+                    position.longitude === nextProps.data.position.longitude &&
+                    position.latitude === nextProps.data.position.latitude
+                )
+            )
+        ){
+            this.handleClose();
             this.setState({
                 title: '',
                 description: '',
@@ -73,17 +95,7 @@ class EditPost extends Component{
                 address: '',
                 position: {},
              });
-            this.handleClose();
         }
-        if(nextProps.data.position){
-            this.setState({
-                position: nextProps.data.position
-            })
-        }
-    }
-    componentDidMount(){
-        const { post } = this.props;
-        mapPostToState(post);
     }
     mapPostToState = (post) => {
         this.setState({
@@ -91,13 +103,17 @@ class EditPost extends Component{
             description: post.description,
             capacity: post.capacity,
             address: post.address,
-            position: post.position,
+            position: {
+                longitude: post.longitude,
+                latitude: post.latitude
+            },
             postId: post.postId
         })
         this.props.setLocation(this.state.posiion)
     }
     handleOpen = () => {
         this.setState({ open: true })
+        this.props.getPost(this.props.currentPostId)
     }
     handleChange = (event) => {
         this.setState({
@@ -109,22 +125,23 @@ class EditPost extends Component{
         this.setState({
             errors: {}
         })
-        const newPost = {
+        const changedPost = {
             title: this.state.title,
             description: this.state.description,
-            position: this.state.position,
+            latitude: this.state.position['latitude'],
+            longitude: this.state.position['longitude'],
             locationString: this.state.address,
-            defaultCapacity: this.state.capacity
+            defaultCapacity: parseInt(this.state.capacity)
         }
-        this.props.editPost(newPost, this.state.postId);
-        console.log(newPost)
+        this.props.editPost(changedPost, this.props.postId);
+        console.log(changedPost)
     }
     render() {
         const { errors } = this.state;
         const { 
             classes, 
             UI: { loading }, 
-            data: { post: { title, description, position, address, capacity } } 
+            data: { post: { title, description, longitude, latitude, address, capacity } } 
         } = this.props;
         return (
             <Fragment>
@@ -167,6 +184,11 @@ class EditPost extends Component{
                                 Location *
                             </Typography>
                             <UtilLocationPicker className={classes.position}/>
+                            {(errors.longitude || errors.latitude) && (
+                                <Typography variant="subtitle1" color="error">
+                                    Invalid location
+                                </Typography>
+                            )}
                             <TextField 
                             name="address"
                             type="text"
@@ -192,9 +214,25 @@ class EditPost extends Component{
                             value={this.state.capacity}
                             required
                             />
-                            <Button type="submit" variant="contained" color="primary"
-                            className={classes.submitButton} disabled={loading}>
+                            {errors.error && (
+                                <Typography variant="subtitle1" color="error">
+                                    Error: {errors.error}
+                                </Typography>
+                            )}
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.submitButton}
+                                disabled={loading}
+                            >
                                 Save Changes
+                                {loading && (
+                                    <CircularProgress
+                                        size={30}
+                                        className={classes.progressSpinner}
+                                    />
+                                )}
                             </Button>
                             <Button variant="contained" variant="text" size="small" disabled={loading}
                             className={classes.cancel} onClick={this.handleClose}>
@@ -221,8 +259,8 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     clearLocation,
-    setLocation,
-    editPost
+    editPost,
+    getPost
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(EditPost))
