@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
 import Profile from '../components/Profile';
-import PostSkeleton from '../util/PostSkeleton';
 
 // Mui
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
 import { connect } from 'react-redux';
@@ -23,7 +23,17 @@ const styles = {
     createButton: {
         textAlign: 'center',
         marginTop: '10px'
-    }
+    },
+    loadingContainer: {
+        marginTop: 20,
+        height: 100,
+        width: 'auto',
+        textAlign: 'center',
+    },
+    loadingIndicator: {
+      position: 'relative',
+      top: '20px',
+    },
 }
 
 class home extends Component {
@@ -37,7 +47,9 @@ class home extends Component {
         let postsMarkup = !loading ? (
             posts.map((post) => <Post post={post} key={post.postId}/>)
           ) : (
-            <PostSkeleton/>
+            <div className={classes.loadingContainer}>
+                <CircularProgress size={40} className={classes.loadingIndicator}/>                
+            </div>
           );
         return (
             <Fragment>

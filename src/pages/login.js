@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
 import { connect } from 'react-redux';
@@ -39,6 +40,9 @@ const styles = {
     content: {
         padding: 25,
         objectFit: 'cover',
+    },
+    progressSpinner: {
+        position: 'absolute'
     },
 }
 
@@ -87,20 +91,34 @@ class login extends Component {
                             <TextField id="email" name="email" type="email" label="Email" 
                             className={classes.textField} value={this.state.email} 
                             onChange={this.handleChange} helperText={errors.email} 
-                            error={errors.email ? true : false} fullWidth
+                            error={errors.email ? true : false} fullWidth required
                             />
                             <TextField id="password" name="password" type="password" label="Password" 
                             className={classes.textField} value={this.state.password} 
                             onChange={this.handleChange} helperText={errors.password} 
-                            error={errors.password ? true : false} fullWidth
+                            error={errors.password ? true : false} fullWidth required
                             />
                             {errors.general && (
                                 <Typography variant="body2" className={classes.customError}>
                                     {errors.general}
                                 </Typography>
                             )}
-                            <Button type="submit" variant="contained" color="secondary" className={classes.button}>
-                                Login
+                            {errors.error && (
+                                <Typography variant="subtitle1" color="error">
+                                    Error: {errors.error}
+                                </Typography>
+                            )}
+                            <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            disabled={loading}
+                            >
+                            Login
+                            {loading && (
+                                <CircularProgress size={20} className={classes.progressSpinner} />
+                            )}
                             </Button>
                             <br/>
                             <br/>

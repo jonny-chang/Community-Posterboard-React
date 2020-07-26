@@ -197,17 +197,17 @@ class CreatePost extends Component{
                                 </Typography>
                             )}
                             <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.submitButton}
-                                disabled={loading}
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.submitButton}
+                            disabled={loading}
                             >
                                 Submit
                                 {loading && (
                                     <CircularProgress
-                                        size={30}
-                                        className={classes.progressSpinner}
+                                    size={30}
+                                    className={classes.progressSpinner}
                                     />
                                 )}
                             </Button>

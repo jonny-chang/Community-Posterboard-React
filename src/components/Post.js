@@ -61,9 +61,6 @@ class Post extends Component {
                     <Typography variant="body2" color="textSecondary" className={classes.description}>
                         {description}
                     </Typography>
-                    <Typography variant="body1">
-                        Schedule, buttons, etc...
-                    </Typography>
                     {/* <div className={classes.deleteContainer}>
                         {deleteButton}
                     </div> */}

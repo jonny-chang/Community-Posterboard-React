@@ -60,7 +60,7 @@ export const getPost = (postId) => (dispatch) => {
         .catch((err) => {
             console.log(err)
             console.log('error setting singular post')
-            console.log(postId)
+            console.log('PostId: ' + postId)
         })
 }
 
@@ -68,7 +68,7 @@ export const getPost = (postId) => (dispatch) => {
 
 export const editPost = (newPost, postId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    axios.post(`/editPost/${postId}`, newPost)
+    axios.put(`/post/${postId}`, newPost)
         .then(res => {
             dispatch({
                 type: SET_POSTS,
