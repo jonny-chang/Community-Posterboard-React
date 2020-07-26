@@ -57,7 +57,7 @@ class schedule extends Component {
         console.log(this.props.data.post)
         if (forbidden) {
             return(
-                <Redirect to='/forbidden'/>
+                <Redirect to='/error'/>
             )
         }
         return (

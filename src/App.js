@@ -12,7 +12,7 @@ import login from './pages/login';
 import signup from './pages/signup';
 import home from './pages/home';
 import schedule from './pages/schedule';
-import forbidden from './pages/forbidden';
+import error from './pages/error';
 
 // Components
 import Navbar from './components/Navbar';
@@ -59,7 +59,7 @@ class App extends Component {
                 <UnauthRoute exact path='/signup' component={signup}/>
                 <AuthRoute exact path='/' component={home}/>
                 <AuthRoute exact path='/schedule/:postId' component={schedule}/>
-                <Route exact path='/forbidden' component={forbidden}/>
+                <Route exact path='/error' component={error}/>
                 <ExtraRoute path='/'/>
               </Switch>
             </div>

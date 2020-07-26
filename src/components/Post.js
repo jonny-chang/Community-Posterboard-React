@@ -31,8 +31,14 @@ const styles = {
     description: {
         marginBottom: 5
     },
+    capacity: {
+        marginBottom: 5
+    },
+    address: {
+        marginBottom: 5,
+    },
     deleteContainer:{
-        
+
     }
 }
 
@@ -64,14 +70,17 @@ class Post extends Component {
                     <Typography variant='h5' className={classes.title}>
                         {title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" className={classes.description}>
-                        {description}
+                    <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                        Default Capacity: {defaultCapacity} | Address: {locationString}
                     </Typography>
+                    <Typography variant="body2" color="textSecondary" className={classes.description}>
+                        Description: {description}
+                    </Typography>
+                    {editButton}
+                    {scheduleButton}
                     <div className={classes.deleteContainer}>
                         {deleteButton}
                     </div>
-                    {editButton}
-                    {scheduleButton}
                 </CardContent>
             </Card>
         )
