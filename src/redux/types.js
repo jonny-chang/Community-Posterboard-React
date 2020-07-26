@@ -19,3 +19,4 @@ export const SET_POST = 'SET_POST';
 export const SET_LOCATION = 'SET_LOCATION';
 export const CLEAR_LOCATION = 'CLEAR_LOCATION';
 export const DELETE_POST = 'DELETE_POST';
+export const CLEAR_POST = 'CLEAR_POST';

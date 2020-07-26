@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import withStyles from '@material-ui/core/styles/withStyles';
 
+// Mui
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid';
+
+// Redux
 import { connect } from 'react-redux';
-import { getPost } from '../redux/actions/dataActions';
+import { getPost, clearPost } from '../redux/actions/dataActions';
+
+const styles = {
+    backButton: {
+        marginTop: '10px',
+    }
+}
 
 class schedule extends Component {
   state = {
@@ -37,26 +48,40 @@ class schedule extends Component {
             }
             });
   }
-  render() {
-      const { postId, result, forbidden } = this.state
-      const { post, loading } = this.props.data
-      console.log(this.props.data.post)
-      if (forbidden) {
-          return(
-            <Redirect to='/forbidden'/>
-          )
+    handleBack = () => {
+        this.props.clearPost();
     }
-    return (
-        
-        <Grid container spacing={3}>
-        <Grid item xs={3}/>
-        <Grid item xs={6}>
-            <p>Schedule of {post.title}</p>
+    render() {
+        const { postId, result, forbidden } = this.state
+        const { classes, data: { post, loading }} = this.props
+        console.log(this.props.data.post)
+        if (forbidden) {
+            return(
+                <Redirect to='/forbidden'/>
+            )
+        }
+        return (
+            
+            <Grid container spacing={3}>
+            <Grid item xs={3}>
+                <Button 
+                component={Link} 
+                to="/" 
+                className={classes.backButton} 
+                variant='outlined' 
+                color='inherit'
+                onClick={this.handleBack}
+                >
+                    Back
+                </Button>
+            </Grid>   
+            <Grid item xs={6} sm={6}>
+                <p>Schedule of {post.title}</p>
+            </Grid>
+            <Grid item xs={3}/>
         </Grid>
-        <Grid item xs={3}/>
-      </Grid>
-    );
-  }
+        );
+    }
 }
 
 schedule.propTypes = {
@@ -68,10 +93,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    getPost
+    getPost,
+    clearPost
 }
 
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(schedule);
+)(withStyles(styles)(schedule));

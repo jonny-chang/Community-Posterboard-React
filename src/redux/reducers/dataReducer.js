@@ -1,4 +1,4 @@
-import { LOADING_DATA, SET_POSTS , CREATE_POST,
+import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST,
     SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA 
 } from '../types';
 
@@ -51,7 +51,11 @@ export default function(state = initialState, action){
                     latitude: 0,
                     longitude: 0
                 },
-                // loading: true
+            }
+        case CLEAR_POST:
+            return{
+                ...state,
+                post: {}
             }
         default:
             return state

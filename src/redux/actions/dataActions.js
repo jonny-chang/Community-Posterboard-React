@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
-    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST 
+    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST
 } from '../types';
 
 // Create Post
@@ -73,6 +73,12 @@ export const getPost = (postId) => (dispatch) => {
             console.log('error setting singular post')
             console.log('PostId: ' + postId)
         })
+}
+
+// Clearing post
+
+export const clearPost = () => (dispatch) => {
+    dispatch({type: CLEAR_POST })
 }
 
 // Edit Post
