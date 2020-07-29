@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DateTimePicker from 'react-datetime-picker';
 
@@ -43,7 +42,7 @@ const styles = {
         marginTop: 20,
         textAlign: 'center'
     },
-    date: {
+    dateHeader: {
         marginTop: 10,
         textAlign: 'center'
     },
@@ -61,7 +60,7 @@ const styles = {
     }
 }
 
-class schedulePage extends Component {
+class customSchedulePage extends Component {
     state = {
         pickerDate: null,
         isDate: false,
@@ -82,7 +81,7 @@ class schedulePage extends Component {
             this.props.getSlots(nextProps.data.post.postId, this.props.data.dayNumber)
         }
         if (nextProps.data.dayNumber !== this.props.data.dayNumber){
-            console.log('Set new date now')
+            console.log('New date')
         }
     }
     onChange = date => {
@@ -107,8 +106,7 @@ class schedulePage extends Component {
         this.props.getSlots(this.props.data.post.postId, dayNumber)
     }
     render() {
-        console.log(this.state.date)
-        const { classes, data: { post, loading, currentSlots }} = this.props
+        const { classes, data: { post, loading, currentSlots, dayNumber }} = this.props
         const { pickerDate, isDate } = this.state
         let scheduleMarkup = !loading ? (
             (currentSlots.slots && currentSlots.slots.length > 0) ? (
@@ -123,6 +121,21 @@ class schedulePage extends Component {
                 <CircularProgress size={40} className={classes.loadingIndicator}/>                
             </div>
           );
+        let customDatePicker = !loading ? (
+            <Fragment>
+                <Typography variant='h6' className={classes.dateTimeTitle}>
+                    Select date
+                </Typography>
+                <DateTimePicker
+                onChange={this.onChange}
+                value={this.state.pickerDate}
+                className={classes.dateTimePicker}
+                format="yyyy-MM-dd"	
+                />
+                </Fragment>
+        ) : (
+            <div/>
+        )
         return (            
             <Grid container spacing={3}>
             <Grid item xs={3}>
@@ -137,19 +150,14 @@ class schedulePage extends Component {
                 </Button>
             </Grid>   
             <Grid item xs={6} sm={6}>
+                <Typography variant='h5' className={classes.dateHeader}>
+                    Day number: {dayNumber}
+                </Typography>
                 {scheduleMarkup}
             </Grid>
             <Grid item xs={3}>
-                <Typography variant='h6' className={classes.dateTimeTitle}>
-                    Select date
-                </Typography>
-                <DateTimePicker
-                onChange={this.onChange}
-                value={this.state.pickerDate}
-                className={classes.dateTimePicker}
-                format="yyyy-MM-dd"	
-                />
-                {isDate && (
+                {customDatePicker}
+                {(isDate && !loading) && (
                     <div className={classes.dateButtonContainer}>
                         <Button 
                         variant='outlined' 
@@ -167,7 +175,7 @@ class schedulePage extends Component {
     }
 }
 
-schedulePage.propTypes = {
+customSchedulePage.propTypes = {
   data: PropTypes.object.isRequired
 };
 
@@ -184,4 +192,4 @@ const mapActionsToProps = {
     loadData,
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(schedulePage));
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(customSchedulePage));

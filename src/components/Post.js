@@ -61,7 +61,7 @@ class Post extends Component {
           const editButton = 
             <EditPost currentPostId={postId} currentPost={post}/>
           const scheduleButton =
-            <Button component={Link} to={`/schedule/${postId}`} onClick={this.handleLoading}>
+            <Button component={Link} to={`/schedule/${postId}/customdays`} onClick={this.handleLoading}>
                 Schedule
             </Button>
         return (
