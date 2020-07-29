@@ -11,7 +11,7 @@ import themeFile from './util/theme';
 import login from './pages/login';
 import signup from './pages/signup';
 import home from './pages/home';
-import schedule from './pages/schedule';
+import schedulePage from './pages/schedulePage';
 import error from './pages/error';
 
 // Components
@@ -58,7 +58,7 @@ class App extends Component {
                 <UnauthRoute exact path='/login' component={login}/>
                 <UnauthRoute exact path='/signup' component={signup}/>
                 <AuthRoute exact path='/' component={home}/>
-                <AuthRoute exact path='/schedule/:postId' component={schedule}/>
+                <AuthRoute exact path='/schedule/:postId' component={schedulePage}/>
                 <Route exact path='/error' component={error}/>
                 <ExtraRoute path='/'/>
               </Switch>

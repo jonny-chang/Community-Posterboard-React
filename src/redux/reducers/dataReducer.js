@@ -1,5 +1,5 @@
-import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST,
-    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA 
+import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, SET_DAY_NUMBER, CLEAR_DAY_NUMBER,
+    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, SET_CURRENT_SLOTS, CLEAR_CURRENT_SLOTS 
 } from '../types';
 
 const initialState = {
@@ -10,6 +10,8 @@ const initialState = {
         longitude: 0
     },
     loading: false,
+    dayNumber: null,
+    currentSlots: {}
 };
 
 export default function(state = initialState, action){
@@ -33,7 +35,7 @@ export default function(state = initialState, action){
         case SET_POST:
             return{
                 ...state,
-                post: action.payload,
+                post: action.payload
             }
         case CREATE_POST:
             return{
@@ -56,6 +58,27 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 post: {}
+            }
+        case SET_DAY_NUMBER:
+            return{
+                ...state,
+                dayNumber: action.payload
+            }
+        case SET_CURRENT_SLOTS:
+            return{
+                ...state,
+                currentSlots: action.payload,
+                loading: false
+            }
+        case CLEAR_CURRENT_SLOTS:
+            return{
+                ...state,
+                currentSlots: {}
+            }
+        case CLEAR_DAY_NUMBER:
+            return{
+                ...state,
+                dayNumber: null
             }
         default:
             return state

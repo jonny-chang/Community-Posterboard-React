@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
-    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST
+    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
+    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_CURRENT_SLOTS, CLEAR_CURRENT_SLOTS
 } from '../types';
 
 // Create Post
@@ -58,20 +59,23 @@ export const getPosts = () => (dispatch) => {
 // Get single post
 
 export const getPost = (postId) => (dispatch) => {
-    // dispatch({ type: LOADING_UI });
+    dispatch({ type: LOADING_DATA });
+    const millisecondsPerDay = 86400000;
+    var timeStamp = Date.now();
+    var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
+    dispatch({
+        type: SET_DAY_NUMBER,
+        payload: dayNumber
+    })
     axios.get(`/post/${postId}`)
         .then((res) => {
             dispatch({
                 type: SET_POST,
                 payload: res.data
             })
-            // dispatch({ type: STOP_LOADING_DATA })
-            // dispatch({ type: STOP_LOADING_UI })
         })
         .catch((err) => {
             console.log(err)
-            console.log('error setting singular post')
-            console.log('PostId: ' + postId)
         })
 }
 
@@ -122,3 +126,38 @@ export const deletePost = (postId) => (dispatch) => {
           console.log(err)
       });
   };
+
+// Get current day slots
+export const getCurrentSlots = (postId, dayNumber) => (dispatch) => {
+    axios.get(`/post/${postId}/slots?startDayNumber=${dayNumber}`)
+        .then((res) => {
+            dispatch({ 
+                type: SET_CURRENT_SLOTS,
+                payload: res.data
+            })
+        })
+        .catch((err) => {
+            console.log(err.response.data)
+        })
+}
+
+// Clear current day slots
+export const clearCurrentSlots = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_CURRENT_SLOTS
+    })
+}
+
+// Clear day number
+export const clearDayNumber = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_DAY_NUMBER
+    })
+}
+
+// Start loading data
+export const loadData = () => (dispatch) => {
+    dispatch({
+        type: LOADING_DATA
+    })
+}

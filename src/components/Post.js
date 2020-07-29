@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import DeletePost from './DeletePost';
 import EditPost from './EditPost';
 
 // Redux
 import { connect } from 'react-redux';
-import { getPost, getPosts } from '../redux/actions/dataActions';
+import { getPost, getPosts, loadData } from '../redux/actions/dataActions';
 
 // Mui
 import Card from '@material-ui/core/Card';
@@ -43,8 +41,10 @@ const styles = {
 }
 
 class Post extends Component {
+    handleLoading = () => {
+        this.props.loadData()
+    }
     render() {
-        dayjs.extend(relativeTime)
         const {
             classes,
             post,
@@ -61,7 +61,7 @@ class Post extends Component {
           const editButton = 
             <EditPost currentPostId={postId} currentPost={post}/>
           const scheduleButton =
-            <Button component={Link} to={`/schedule/${postId}`}>
+            <Button component={Link} to={`/schedule/${postId}`} onClick={this.handleLoading}>
                 Schedule
             </Button>
         return (
@@ -93,7 +93,8 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     getPost,
-    getPosts
+    getPosts,
+    loadData
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Post));
