@@ -118,7 +118,7 @@ class EditPost extends Component{
         })
     }
     handleOpen = () => {
-        this.setState({ open: true })
+        this.setState({ open: true, errors: {} })
         this.props.setLocation({
             latitude: this.props.currentPost.latitude,
             longitude: this.props.currentPost.longitude

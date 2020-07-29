@@ -97,7 +97,4 @@ const mapActionsToProps = {
     clearPost
 }
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(withStyles(styles)(schedule));
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(schedule));
