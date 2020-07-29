@@ -64,12 +64,20 @@ class customSchedulePage extends Component {
     state = {
         pickerDate: null,
         isDate: false,
-        date: null
+        currentDate: null
     };
     componentDidMount() {
         const postId = this.props.match.params.postId;
         this.props.loadData();
         this.props.getPost(postId);
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        this.setState({
+            currentDate: today
+        })
     }
     componentWillUnmount(){
         this.props.clearSlots();
@@ -79,9 +87,6 @@ class customSchedulePage extends Component {
     componentWillReceiveProps(nextProps){
         if (nextProps.data.post.postId !== this.props.data.post.postId) {
             this.props.getSlots(nextProps.data.post.postId, this.props.data.dayNumber)
-        }
-        if (nextProps.data.dayNumber !== this.props.data.dayNumber){
-            console.log('New date')
         }
     }
     onChange = date => {
@@ -102,12 +107,16 @@ class customSchedulePage extends Component {
     handleDateChange = (event) => {
         const millisecondsPerDay = 86400000;
         var timeStamp = this.state.pickerDate;
+        var currentDate = (timeStamp.getMonth() + 1) + '/' + timeStamp.getDate() + '/' + (timeStamp.getYear() + 1900)
+        this.setState({
+            currentDate: currentDate
+        })
         var dayNumber = Math.floor(timeStamp/millisecondsPerDay)
         this.props.getSlots(this.props.data.post.postId, dayNumber)
     }
     render() {
         const { classes, data: { post, loading, currentSlots, dayNumber }} = this.props
-        const { pickerDate, isDate } = this.state
+        const { pickerDate, isDate, currentDate } = this.state
         let scheduleMarkup = !loading ? (
             (currentSlots.slots && currentSlots.slots.length > 0) ? (
                 currentSlots.slots.map((slots) => <Schedule slots={slots}/>)    
@@ -151,7 +160,7 @@ class customSchedulePage extends Component {
             </Grid>   
             <Grid item xs={6} sm={6}>
                 <Typography variant='h5' className={classes.dateHeader}>
-                    Day number: {dayNumber}
+                    {currentDate}
                 </Typography>
                 {scheduleMarkup}
             </Grid>

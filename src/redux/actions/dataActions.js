@@ -136,6 +136,7 @@ export const getSlots = (postId, dayNumber) => (dispatch) => {
                 type: SET_SLOTS,
                 payload: res.data
             })
+            console.log(res)
         })
         .catch((err) => {
             console.log(err.response.data)
