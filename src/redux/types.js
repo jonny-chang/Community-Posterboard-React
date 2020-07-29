@@ -21,6 +21,6 @@ export const CLEAR_LOCATION = 'CLEAR_LOCATION';
 export const DELETE_POST = 'DELETE_POST';
 export const CLEAR_POST = 'CLEAR_POST';
 export const SET_DAY_NUMBER = 'SET_DAY_NUMBER';
-export const SET_CURRENT_SLOTS = 'SET_CURRENT_SLOTS';
+export const SET_SLOTS = 'SET_SLOTS';
 export const CLEAR_CURRENT_SLOTS = 'CLEAR_CURRENT_SLOTS';
 export const CLEAR_DAY_NUMBER = 'CLEAR_DAY_NUMBER';

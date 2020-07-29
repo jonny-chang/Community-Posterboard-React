@@ -1,5 +1,5 @@
 import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, SET_DAY_NUMBER, CLEAR_DAY_NUMBER,
-    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, SET_CURRENT_SLOTS, CLEAR_CURRENT_SLOTS 
+    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, SET_SLOTS, CLEAR_CURRENT_SLOTS 
 } from '../types';
 
 const initialState = {
@@ -64,7 +64,7 @@ export default function(state = initialState, action){
                 ...state,
                 dayNumber: action.payload
             }
-        case SET_CURRENT_SLOTS:
+        case SET_SLOTS:
             return{
                 ...state,
                 currentSlots: action.payload,

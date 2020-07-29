@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
     SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
-    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_CURRENT_SLOTS, CLEAR_CURRENT_SLOTS
+    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS
 } from '../types';
 
 // Create Post
@@ -127,22 +127,27 @@ export const deletePost = (postId) => (dispatch) => {
       });
   };
 
-// Get current day slots
-export const getCurrentSlots = (postId, dayNumber) => (dispatch) => {
+// Get slots of given day
+export const getSlots = (postId, dayNumber) => (dispatch) => {
+    dispatch({ type: LOADING_DATA })
     axios.get(`/post/${postId}/slots?startDayNumber=${dayNumber}`)
         .then((res) => {
             dispatch({ 
-                type: SET_CURRENT_SLOTS,
+                type: SET_SLOTS,
                 payload: res.data
             })
         })
         .catch((err) => {
             console.log(err.response.data)
         })
+        dispatch({
+            type: SET_DAY_NUMBER,
+            payload: dayNumber
+        })
 }
 
 // Clear current day slots
-export const clearCurrentSlots = () => (dispatch) => {
+export const clearSlots = () => (dispatch) => {
     dispatch({
         type: CLEAR_CURRENT_SLOTS
     })

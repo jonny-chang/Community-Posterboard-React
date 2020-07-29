@@ -4,6 +4,7 @@ import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Redirect, Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
+import DateTimePicker from 'react-datetime-picker';
 
 // Components
 import Schedule from '../components/Schedule';
@@ -18,10 +19,10 @@ import { connect } from 'react-redux';
 import { 
     getPost, 
     clearPost, 
-    getCurrentSlots, 
-    clearCurrentSlots, 
+    getSlots, 
+    clearSlots, 
     clearDayNumber,
-    loadData, 
+    loadData
 } from '../redux/actions/dataActions';
 
 const styles = {
@@ -41,12 +42,30 @@ const styles = {
     noSlots: {
         marginTop: 20,
         textAlign: 'center'
+    },
+    date: {
+        marginTop: 10,
+        textAlign: 'center'
+    },
+    dateTimePicker: {
+        marginTop: 10
+    },
+    dateTimeTitle: {
+        marginTop: 10
+    },
+    dateButtonContainer: {
+        marginTop: 10,
+    },
+    dateButton: {
+        color: '#228B22'
     }
 }
 
 class schedulePage extends Component {
     state = {
-
+        pickerDate: null,
+        isDate: false,
+        date: null
     };
     componentDidMount() {
         const postId = this.props.match.params.postId;
@@ -54,22 +73,48 @@ class schedulePage extends Component {
         this.props.getPost(postId);
     }
     componentWillUnmount(){
-        this.props.clearCurrentSlots();
+        this.props.clearSlots();
         this.props.clearDayNumber();
         this.props.clearPost();
     }
     componentWillReceiveProps(nextProps){
         if (nextProps.data.post.postId !== this.props.data.post.postId) {
-            this.props.getCurrentSlots(nextProps.data.post.postId, this.props.data.dayNumber)
+            this.props.getSlots(nextProps.data.post.postId, this.props.data.dayNumber)
+        }
+        if (nextProps.data.dayNumber !== this.props.data.dayNumber){
+            console.log('Set new date now')
         }
     }
+    onChange = date => {
+        if (date){
+            this.setState({ 
+                pickerDate: date,
+                isDate: true
+            })
+        }
+        else {
+            this.setState({ 
+                pickerDate: date,
+                isDate: false
+            })
+        }
+        
+    }
+    handleDateChange = (event) => {
+        const millisecondsPerDay = 86400000;
+        var timeStamp = this.state.pickerDate;
+        var dayNumber = Math.floor(timeStamp/millisecondsPerDay)
+        this.props.getSlots(this.props.data.post.postId, dayNumber)
+    }
     render() {
+        console.log(this.state.date)
         const { classes, data: { post, loading, currentSlots }} = this.props
+        const { pickerDate, isDate } = this.state
         let scheduleMarkup = !loading ? (
             (currentSlots.slots && currentSlots.slots.length > 0) ? (
                 currentSlots.slots.map((slots) => <Schedule slots={slots}/>)    
             ) : (
-                <Typography variant='h6' className={classes.noSlots}>
+                <Typography variant='body1' className={classes.noSlots}>
                     No slots currently
                 </Typography>
             )
@@ -78,8 +123,7 @@ class schedulePage extends Component {
                 <CircularProgress size={40} className={classes.loadingIndicator}/>                
             </div>
           );
-        return (
-            
+        return (            
             <Grid container spacing={3}>
             <Grid item xs={3}>
                 <Button 
@@ -95,7 +139,29 @@ class schedulePage extends Component {
             <Grid item xs={6} sm={6}>
                 {scheduleMarkup}
             </Grid>
-            <Grid item xs={3}/>
+            <Grid item xs={3}>
+                <Typography variant='h6' className={classes.dateTimeTitle}>
+                    Select date
+                </Typography>
+                <DateTimePicker
+                onChange={this.onChange}
+                value={this.state.pickerDate}
+                className={classes.dateTimePicker}
+                format="yyyy-MM-dd"	
+                />
+                {isDate && (
+                    <div className={classes.dateButtonContainer}>
+                        <Button 
+                        variant='outlined' 
+                        className={classes.dateButton} 
+                        size='small'
+                        onClick={this.handleDateChange}
+                        >
+                            Go to date
+                        </Button>
+                    </div>
+                )}
+            </Grid>
         </Grid>
         );
     }
@@ -112,10 +178,10 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
     getPost,
     clearPost,
-    getCurrentSlots,
-    clearCurrentSlots,
+    getSlots,
+    clearSlots,
     clearDayNumber,
-    loadData
+    loadData,
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(schedulePage));
