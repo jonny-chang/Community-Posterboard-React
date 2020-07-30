@@ -190,12 +190,28 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
 
 // Delete Slot
 export const deleteSlot = (postId, slotId, dayNumber) => (dispatch) => {
-    axios
-      .delete(`/post/${postId}/slot/${slotId}`)
+    axios.delete(`/post/${postId}/slot/${slotId}`)
       .then(() => {
         dispatch(getSlots(postId, dayNumber));
+        dispatch({ type: CLEAR_ERRORS })
       })
       .catch((err) => {
           console.log(err)
       });
   };
+
+  // Edit slot
+  export const editSlot = (postId, slotId, newSlot, dayNumber) => (dispatch) => {
+    axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
+        .then(res => {
+            dispatch(getSlots(postId, dayNumber))
+            dispatch({ type: CLEAR_ERRORS })
+        })
+        .catch(err => {
+            console.log(err)
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            })
+        })
+  }
