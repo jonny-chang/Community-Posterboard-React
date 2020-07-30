@@ -213,7 +213,7 @@ class EditPost extends Component{
                             required
                             />
                             <TextField
-                            label="Capacity"
+                            label="Default Capacity"
                             type="number"
                             name="capacity"
                             fullWidth

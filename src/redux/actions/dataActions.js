@@ -141,7 +141,8 @@ export const getSlots = (postId, dayNumber) => (dispatch) => {
             })
         })
         .catch((err) => {
-            console.log(err.response.data)
+           console.log('error') 
+           console.log(err)
         })
         dispatch({
             type: SET_DAY_NUMBER,
@@ -186,6 +187,7 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
                 type: SET_ERRORS,
                 payload: err.response.data
             })
+            console.log(err.response)
         })
 }
 

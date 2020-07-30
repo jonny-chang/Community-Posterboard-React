@@ -123,11 +123,11 @@ class customSchedulePage extends Component {
         this.props.getSlots(this.props.data.post.postId, dayNumber)
     }
     render() {
-        const { classes, data: { post, loading, currentSlots, dayNumber }} = this.props
+        const { classes, data: { post, loading, currentSlots: { slots }, dayNumber }} = this.props
         const { pickerDate, isDate, currentDate } = this.state
         let scheduleMarkup = !loading ? (
-            (currentSlots.slots && currentSlots.slots.length > 0) ? (
-                currentSlots.slots.map((slots) => <Slot slots={slots}/>)    
+            (slots && slots.length > 0) ? (
+                slots.map((slots) => <Slot thisSlot={slots}/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>

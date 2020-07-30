@@ -44,25 +44,46 @@ class Slot extends Component {
     handleLoading = () => {
         this.props.loadData()
     }
+    timeToString = (totalMinutes) => {
+        var hour = Math.floor(totalMinutes/60)
+        if (totalMinutes >= 720) {
+            hour = hour - 12
+        }
+        var minutes = totalMinutes % 60
+        if (minutes < 10) {
+            minutes = '0' + minutes
+        }
+        if (totalMinutes < 720) {
+            return hour + ':' + minutes + ' a.m.'
+        }
+        else {
+            return hour + ':' + minutes + ' p.m.'
+        }
+    }
     render() {
         const {
             data: {
-                slots,
                 post,
                 dayNumber
             },
+            thisSlot,
             classes
           } = this.props;
           const deleteButton =
-            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={slots.slotId}/>
-          const editButton = null
+            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId}/>
+        const editButton = null 
+        var newStartTime = this.timeToString(thisSlot.startTime)
+        var newEndTime = this.timeToString(thisSlot.endTime)
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
                     <Typography variant='h5' className={classes.title}>
-                        Slots
+                        Start time: {newStartTime} | End time: {newEndTime}
                     </Typography>
-                    {editButton}
+                    <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                        Capacity: {thisSlot.capacity}
+                    </Typography>
+                    {/* {editButton} */}
                     <div className={classes.deleteContainer}>
                         {deleteButton}
                     </div>

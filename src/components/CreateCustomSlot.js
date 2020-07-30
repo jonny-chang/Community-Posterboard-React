@@ -133,17 +133,17 @@ class CreateCustomSlot extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, data: { loading, post  } } = this.props;
+        const { classes, data: { loading, post } } = this.props;
         return (
             <Fragment>
-                <UtilButton onClick={this.handleOpen} tip="Create a new slot">
+                <UtilButton onClick={this.handleOpen} tip="Add a new slot">
                     <AddIcon fontSize="large"/>
                 </UtilButton>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon/>
                     </UtilButton>
-                    <DialogTitle>Create a new slot</DialogTitle>
+                    <DialogTitle>Add a new slot</DialogTitle>
                     <DialogContent>
                         <form onSubmit={this.handleSubmit}>
                             <Typography variant="body1" color="textSecondary" className={classes.dateTimeTitle}>
