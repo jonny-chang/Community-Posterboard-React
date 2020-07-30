@@ -58,7 +58,7 @@ export const getPosts = () => (dispatch) => {
 
 // Get single post
 
-export const getPost = (postId) => (dispatch) => {
+export const getPost = (postId, history) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
     const millisecondsPerDay = 86400000;
     var timeStamp = Date.now();
@@ -75,7 +75,10 @@ export const getPost = (postId) => (dispatch) => {
             })
         })
         .catch((err) => {
-            console.log(err)
+            console.log(err.response)
+            if (err.response.status === 404){
+                history.push('/error')
+            }
         })
 }
 
@@ -139,7 +142,7 @@ export const getSlots = (postId, dayNumber) => (dispatch) => {
             console.log(res)
         })
         .catch((err) => {
-            console.log(err.response)
+            console.log(err.response.data)
         })
         dispatch({
             type: SET_DAY_NUMBER,

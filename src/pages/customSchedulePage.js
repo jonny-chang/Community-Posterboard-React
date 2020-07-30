@@ -62,6 +62,9 @@ const styles = {
     addButton: {
         textAlign: 'center',
         marginTop: 20
+    },
+    noSlotsContainer: {
+        textAlign: 'center'
     }
 }
 
@@ -74,7 +77,7 @@ class customSchedulePage extends Component {
     componentDidMount() {
         const postId = this.props.match.params.postId;
         this.props.loadData();
-        this.props.getPost(postId);
+        this.props.getPost(postId, this.props.history);
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -126,9 +129,12 @@ class customSchedulePage extends Component {
             (currentSlots.slots && currentSlots.slots.length > 0) ? (
                 currentSlots.slots.map((slots) => <Slot slots={slots}/>)    
             ) : (
-                <Typography variant='body1' className={classes.noSlots}>
-                    No slots currently
-                </Typography>
+                <div className={classes.noSlotsContainer}>
+                    <Typography variant='body1' className={classes.noSlots}>
+                        No slots currently for this day
+                    </Typography>
+                </div>
+                
             )
           ) : (
             <div className={classes.loadingContainer}>

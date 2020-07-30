@@ -11,6 +11,7 @@ import Profile from '../components/Profile';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 // Redux
 import { connect } from 'react-redux';
@@ -34,6 +35,13 @@ const styles = {
       position: 'relative',
       top: '20px',
     },
+    noPosts: {
+        marginTop: 20,
+        textAlign: 'center'
+    },
+    noPostsContainer: {
+        textAlign: 'center'
+    }
 }
 
 class home extends Component {
@@ -45,7 +53,18 @@ class home extends Component {
         const { classes } = this.props;
         const { posts, loading } = this.props.data;
         let postsMarkup = !loading ? (
-            posts.map((post) => <Post post={post} key={post.postId}/>)
+            (posts && posts.length > 0) ? (
+                posts.map((post) => <Post post={post} key={post.postId}/>)
+            ) : (
+                <div className={classes.noPostsContainer}>
+                    <Typography variant='body1' className={classes.noPosts}>
+                        You currently have no posts
+                    </Typography>
+                    <Typography variant='body1' className={classes.noPosts}>
+                        Click on the button below to create your first post
+                    </Typography>
+                </div>
+            )           
           ) : (
             <div className={classes.loadingContainer}>
                 <CircularProgress size={40} className={classes.loadingIndicator}/>                
