@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import DeleteSlot from './DeleteSlot';
-import EditPost from './EditPost';
+import EditSlot from './EditSlot';
 
 // Redux
 import { connect } from 'react-redux';
@@ -69,9 +69,16 @@ class Slot extends Component {
             thisSlot,
             classes
           } = this.props;
-          const deleteButton =
+        var newStartTime = this.timeToString(thisSlot.startTime)
+        var newEndTime = this.timeToString(thisSlot.endTime)
+        const deleteButton =
             <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId}/>
-        const editButton = null 
+        const editButton = 
+            <EditSlot 
+            postId={post.postId} 
+            dayNumber={dayNumber} 
+            slot={thisSlot} 
+            />
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)
         return (
@@ -83,7 +90,7 @@ class Slot extends Component {
                     <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
                         Capacity: {thisSlot.capacity}
                     </Typography>
-                    {/* {editButton} */}
+                    {editButton}
                     <div className={classes.deleteContainer}>
                         {deleteButton}
                     </div>

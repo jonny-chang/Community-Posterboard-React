@@ -211,7 +211,7 @@ export const editSlot = (postId, slotId, newSlot, dayNumber) => (dispatch) => {
             dispatch({ type: CLEAR_ERRORS })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err.response)
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data
