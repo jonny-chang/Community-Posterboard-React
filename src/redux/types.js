@@ -24,3 +24,4 @@ export const SET_DAY_NUMBER = 'SET_DAY_NUMBER';
 export const SET_SLOTS = 'SET_SLOTS';
 export const CLEAR_CURRENT_SLOTS = 'CLEAR_CURRENT_SLOTS';
 export const CLEAR_DAY_NUMBER = 'CLEAR_DAY_NUMBER';
+export const CREATE_SLOT = 'CREATE_SLOT';

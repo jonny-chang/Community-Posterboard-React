@@ -7,6 +7,7 @@ import DateTimePicker from 'react-datetime-picker';
 
 // Components
 import Schedule from '../components/Schedule';
+import CreateCustomSlot from '../components/CreateCustomSlot';
 
 // Mui
 import Button from '@material-ui/core/Button'
@@ -57,6 +58,10 @@ const styles = {
     },
     dateButton: {
         color: '#228B22'
+    },
+    addButton: {
+        textAlign: 'center',
+        marginTop: 20
     }
 }
 
@@ -163,6 +168,11 @@ class customSchedulePage extends Component {
                     {currentDate}
                 </Typography>
                 {scheduleMarkup}
+                {!loading && (
+                    <div className={classes.addButton}>
+                        <CreateCustomSlot/>
+                    </div>
+                )}
             </Grid>
             <Grid item xs={3}>
                 {customDatePicker}

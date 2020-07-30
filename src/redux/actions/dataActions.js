@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
     SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
-    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS
+    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT
 } from '../types';
 
 // Create Post
@@ -139,7 +139,7 @@ export const getSlots = (postId, dayNumber) => (dispatch) => {
             console.log(res)
         })
         .catch((err) => {
-            console.log(err.response.data)
+            console.log(err.response)
         })
         dispatch({
             type: SET_DAY_NUMBER,
@@ -166,4 +166,24 @@ export const loadData = () => (dispatch) => {
     dispatch({
         type: LOADING_DATA
     })
+}
+
+// Create custom slot
+export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
+    axios.post(`/post/${postId}/slot`, newSlot)
+        .then(res => {
+            dispatch({
+                type: CREATE_SLOT,
+                payload: res.data
+            });
+            dispatch(getSlots(postId, dayNumber))
+            dispatch({ type: CLEAR_ERRORS })
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            })
+            console.log(err.response.data)
+        })
 }
