@@ -9,7 +9,7 @@ import TimePicker from 'react-time-picker';
 
 // Redux
 import { connect } from 'react-redux';
-import { createSlot } from '../redux/actions/dataActions';
+import { createSlot, clearErrors } from '../redux/actions/dataActions';
 import { clearLocation } from '../redux/actions/userActions';
 
 // Mui
@@ -62,7 +62,7 @@ class CreateCustomSlot extends Component{
         capacity: this.props.data.post.defaultCapacity,
         startTime: null,
         endTime: null,
-        errors: {}
+        errors: []
     }
     handleClose = () => {
         this.setState({ 
@@ -70,7 +70,7 @@ class CreateCustomSlot extends Component{
             capacity: this.props.data.post.defaultCapacity,
             startTime: null,
             endTime: null,
-            errors: {}
+            errors: []
         })
     }
     componentWillReceiveProps(nextProps){
@@ -87,6 +87,7 @@ class CreateCustomSlot extends Component{
         }
     }
     handleOpen = () => {
+        console.log(this.state.errors)
         this.setState({ open: true })
     }
     handleChangeCapacity = (event) => {
@@ -187,6 +188,11 @@ class CreateCustomSlot extends Component{
                             defaultValue={post['defaultCapacity']}
                             required
                             />
+                            {errors.length !== 0 && (
+                                <Typography variant="subtitle1" color="error">
+                                    Error submitting
+                                </Typography>
+                            )}
                             <Button
                             type="submit"
                             variant="contained"
@@ -225,7 +231,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    createSlot
+    createSlot,
+    clearErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreateCustomSlot))

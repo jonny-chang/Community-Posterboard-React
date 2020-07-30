@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import DateTimePicker from 'react-datetime-picker';
 
 // Components
-import Schedule from '../components/Schedule';
+import Slot from '../components/Slot';
 import CreateCustomSlot from '../components/CreateCustomSlot';
 
 // Mui
@@ -124,7 +124,7 @@ class customSchedulePage extends Component {
         const { pickerDate, isDate, currentDate } = this.state
         let scheduleMarkup = !loading ? (
             (currentSlots.slots && currentSlots.slots.length > 0) ? (
-                currentSlots.slots.map((slots) => <Schedule slots={slots}/>)    
+                currentSlots.slots.map((slots) => <Slot slots={slots}/>)    
             ) : (
                 <Typography variant='body1' className={classes.noSlots}>
                     No slots currently

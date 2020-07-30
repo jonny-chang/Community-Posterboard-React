@@ -50,7 +50,8 @@ class Slot extends Component {
                 slots,
                 post,
                 dayNumber
-            }
+            },
+            classes
           } = this.props;
           const deleteButton =
             <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={slots.slotId}/>

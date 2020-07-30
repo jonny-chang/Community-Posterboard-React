@@ -200,8 +200,8 @@ export const deleteSlot = (postId, slotId, dayNumber) => (dispatch) => {
       });
   };
 
-  // Edit slot
-  export const editSlot = (postId, slotId, newSlot, dayNumber) => (dispatch) => {
+// Edit slot
+export const editSlot = (postId, slotId, newSlot, dayNumber) => (dispatch) => {
     axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
         .then(res => {
             dispatch(getSlots(postId, dayNumber))
@@ -215,3 +215,10 @@ export const deleteSlot = (postId, slotId, dayNumber) => (dispatch) => {
             })
         })
   }
+
+// Clears errors
+export const clearErrors = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_ERRORS
+    })
+}

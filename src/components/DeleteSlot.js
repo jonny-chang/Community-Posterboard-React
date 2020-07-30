@@ -35,7 +35,7 @@ class DeleteSlot extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-  deletePost = () => {
+  deleteSlot = () => {
     this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.dayNumber);
     this.setState({ open: false });
   };
@@ -64,7 +64,7 @@ class DeleteSlot extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.deletePost} className={classes.confirmDelete}>
+            <Button onClick={this.deleteSlot} className={classes.confirmDelete}>
               Delete
             </Button>
           </DialogActions>
@@ -83,4 +83,4 @@ DeleteSlot.propTypes = {
 export default connect(
   null,
   { deleteSlot }
-)(withStyles(styles)(DeletePost));
+)(withStyles(styles)(DeleteSlot));
