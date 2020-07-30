@@ -87,7 +87,6 @@ class CreateCustomSlot extends Component{
         }
     }
     handleOpen = () => {
-        console.log(this.state.errors)
         this.setState({ open: true })
     }
     handleChangeCapacity = (event) => {

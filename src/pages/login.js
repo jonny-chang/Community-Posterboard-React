@@ -123,7 +123,7 @@ class login extends Component {
                             <br/>
                             <br/>
                             <small >
-                                Don't have an account? <Link to="/signup">Register now</Link>
+                                Don't have an account? <Link to="/register">Register now</Link>
                             </small>
                         </form>
                      </CardContent>
