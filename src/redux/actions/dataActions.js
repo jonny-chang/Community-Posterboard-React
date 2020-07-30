@@ -187,3 +187,15 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
             console.log(err.response.data)
         })
 }
+
+// Delete Slot
+export const deleteSlot = (postId, slotId, dayNumber) => (dispatch) => {
+    axios
+      .delete(`/post/${postId}/slot/${slotId}`)
+      .then(() => {
+        dispatch(getSlots(postId, dayNumber));
+      })
+      .catch((err) => {
+          console.log(err)
+      });
+  };
