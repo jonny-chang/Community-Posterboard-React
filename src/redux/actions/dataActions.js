@@ -56,9 +56,9 @@ export const getPosts = () => (dispatch) => {
       });
   };
 
-// Get single post
+// Get post for custom day
 
-export const getPost = (postId, history) => (dispatch) => {
+export const getCustomPost = (postId, history) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
     const millisecondsPerDay = 86400000;
     var timeStamp = Date.now();

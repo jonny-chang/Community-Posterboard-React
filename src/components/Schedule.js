@@ -6,7 +6,6 @@ import EditPost from './EditPost';
 
 // Redux
 import { connect } from 'react-redux';
-import { getPost, getPosts } from '../redux/actions/dataActions';
 
 // Mui
 import Card from '@material-ui/core/Card';

@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 // Redux
 import { connect } from 'react-redux';
 import { 
-    getPost, 
+    getCustomPost, 
     clearPost, 
     getSlots, 
     clearSlots, 
@@ -77,7 +77,7 @@ class customSchedulePage extends Component {
     componentDidMount() {
         const postId = this.props.match.params.postId;
         this.props.loadData();
-        this.props.getPost(postId, this.props.history);
+        this.props.getCustomPost(postId, this.props.history);
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -211,7 +211,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    getPost,
+    getCustomPost,
     clearPost,
     getSlots,
     clearSlots,

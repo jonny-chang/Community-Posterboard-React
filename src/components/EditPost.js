@@ -8,7 +8,7 @@ import UtilLocationPicker from '../util/UtilLocationPicker';
 
 // Redux
 import { connect } from 'react-redux';
-import { editPost, getPost } from '../redux/actions/dataActions';
+import { editPost } from '../redux/actions/dataActions';
 import { clearLocation, setLocation } from '../redux/actions/userActions';
 
 // Mui
@@ -270,7 +270,6 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
     clearLocation,
     editPost,
-    getPost,
     setLocation
 }
 

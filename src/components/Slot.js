@@ -6,7 +6,6 @@ import EditSlot from './EditSlot';
 
 // Redux
 import { connect } from 'react-redux';
-import { getPost, getPosts, loadData } from '../redux/actions/dataActions';
 
 // Mui
 import Card from '@material-ui/core/Card';
@@ -88,7 +87,7 @@ class Slot extends Component {
                         Start time: {newStartTime} | End time: {newEndTime}
                     </Typography>
                     <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
-                        Capacity: {thisSlot.capacity}
+                        Capacity: {thisSlot.capacity} | Spots taken: {thisSlot.spotsTaken}
                     </Typography>
                     {editButton}
                     <div className={classes.deleteContainer}>
