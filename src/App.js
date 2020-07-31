@@ -12,6 +12,8 @@ import login from './pages/login';
 import signup from './pages/signup';
 import home from './pages/home';
 import customSchedulePage from './pages/customSchedulePage';
+import homeSchedulePage from './pages/homeSchedulePage';
+import defaultSchedulePage from './pages/defaultSchedulePage';
 import error from './pages/error';
 
 // Components
@@ -58,7 +60,9 @@ class App extends Component {
                 <UnauthRoute exact path='/login' component={login}/>
                 <UnauthRoute exact path='/register' component={signup}/>
                 <AuthRoute exact path='/' component={home}/>
+                <AuthRoute exact path='/schedule/:postId' component={homeSchedulePage}/>
                 <AuthRoute exact path='/schedule/:postId/customdays' component={customSchedulePage}/>
+                <AuthRoute exact path='/schedule/:postId/defaultdays' component={defaultSchedulePage}/>
                 <Route exact path='/error' component={error}/>
                 <ExtraRoute path='/'/>
               </Switch>

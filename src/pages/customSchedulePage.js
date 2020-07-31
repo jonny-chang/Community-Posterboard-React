@@ -159,15 +159,17 @@ class customSchedulePage extends Component {
         return (            
             <Grid container spacing={3}>
             <Grid item xs={3}>
-                <Button 
-                component={Link} 
-                to="/" 
-                className={classes.backButton} 
-                variant='outlined' 
-                color='inherit'
-                >
-                    Back
-                </Button>
+                {!loading && (
+                    <Button 
+                    component={Link} 
+                    to={`/schedule/${post.postId}`}
+                    className={classes.backButton} 
+                    variant='outlined' 
+                    color='inherit'
+                    >
+                        Back
+                    </Button>
+                )}
             </Grid>   
             <Grid item xs={6} sm={6}>
                 <Typography variant='h5' className={classes.dateHeader}>

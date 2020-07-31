@@ -6,7 +6,7 @@ import EditPost from './EditPost';
 
 // Redux
 import { connect } from 'react-redux';
-import { getPost, getPosts, loadData } from '../redux/actions/dataActions';
+import { getPost, getPosts } from '../redux/actions/dataActions';
 
 // Mui
 import Card from '@material-ui/core/Card';
@@ -41,9 +41,6 @@ const styles = {
 }
 
 class Post extends Component {
-    handleLoading = () => {
-        this.props.loadData()
-    }
     render() {
         const {
             classes,
@@ -61,7 +58,7 @@ class Post extends Component {
           const editButton = 
             <EditPost currentPostId={postId} currentPost={post}/>
           const scheduleButton =
-            <Button component={Link} to={`/schedule/${postId}/customdays`} onClick={this.handleLoading}>
+            <Button component={Link} to={`/schedule/${postId}`}>
                 Schedule
             </Button>
         return (
@@ -93,8 +90,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     getPost,
-    getPosts,
-    loadData
+    getPosts
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Post));

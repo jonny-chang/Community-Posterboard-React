@@ -133,16 +133,16 @@ export const deletePost = (postId) => (dispatch) => {
 // Get slots of given day
 export const getSlots = (postId, dayNumber) => (dispatch) => {
     dispatch({ type: LOADING_DATA })
-    axios.get(`/post/${postId}/slots?startDayNumber=${dayNumber}`)
+    axios.get(`/post/${postId}/slots?dayNumber=${dayNumber}`)
         .then((res) => {
             dispatch({ 
                 type: SET_SLOTS,
                 payload: res.data
             })
+            console.log('slots res: ' + res.data)
         })
         .catch((err) => {
-           console.log('error') 
-           console.log(err)
+           console.log(err.response)
         })
         dispatch({
             type: SET_DAY_NUMBER,
