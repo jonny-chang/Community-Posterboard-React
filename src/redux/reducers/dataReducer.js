@@ -1,5 +1,7 @@
-import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, SET_DAY_NUMBER, CLEAR_DAY_NUMBER,
-    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT 
+import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, 
+    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_WEEK_DAY_NUMBER, CLEAR_WEEK_DAY_NUMBER,
+    SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, 
+    SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT 
 } from '../types';
 
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
     },
     loading: false,
     dayNumber: null,
+    weekDayNumber: null,
     currentSlots: {}
 };
 
@@ -68,6 +71,11 @@ export default function(state = initialState, action){
                 ...state,
                 dayNumber: action.payload
             }
+        case SET_WEEK_DAY_NUMBER:
+            return{
+                ...state,
+                weekDayNumber: action.payload
+            }
         case SET_SLOTS:
             return{
                 ...state,
@@ -83,6 +91,11 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 dayNumber: null
+            }
+        case CLEAR_WEEK_DAY_NUMBER:
+            return{
+                ...state,
+                weekDayNumber: null
             }
         default:
             return state

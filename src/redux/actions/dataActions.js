@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
-    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
-    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT
+    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST, CLEAR_WEEK_DAY_NUMBER,
+    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, SET_WEEK_DAY_NUMBER
 } from '../types';
 
 // Create Post
@@ -67,6 +67,24 @@ export const getCustomPost = (postId, history) => (dispatch) => {
         type: SET_DAY_NUMBER,
         payload: dayNumber
     })
+    axios.get(`/post/${postId}`)
+        .then((res) => {
+            dispatch({
+                type: SET_POST,
+                payload: res.data
+            })
+        })
+        .catch((err) => {
+            console.log(err.response)
+            if (err.response.status === 404){
+                history.push('/error')
+            }
+        })
+}
+
+// Get post for default day
+export const getDefaultPost = (postId, history) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
     axios.get(`/post/${postId}`)
         .then((res) => {
             dispatch({
@@ -150,6 +168,14 @@ export const getSlots = (postId, dayNumber) => (dispatch) => {
         })
 }
 
+// Set week day number
+export const setWeekDayNumber = (weekDayNumber) => (dispatch) => {
+    dispatch({
+        type: SET_WEEK_DAY_NUMBER,
+        payload: null
+    })
+}
+
 // Clear current day slots
 export const clearSlots = () => (dispatch) => {
     dispatch({
@@ -161,6 +187,13 @@ export const clearSlots = () => (dispatch) => {
 export const clearDayNumber = () => (dispatch) => {
     dispatch({
         type: CLEAR_DAY_NUMBER
+    })
+}
+
+// Clear week day number
+export const clearWeekDayNumber = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_WEEK_DAY_NUMBER
     })
 }
 
