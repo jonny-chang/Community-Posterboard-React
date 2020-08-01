@@ -56,7 +56,7 @@ const styles = {
       },
 }
 
-class CreateCustomSlot extends Component{
+class CreateSlot extends Component{
     state = {
         open: false,
         capacity: this.props.data.post.defaultCapacity,
@@ -113,15 +113,28 @@ class CreateCustomSlot extends Component{
         var endMin = parseInt(this.state.endTime.substring(3))
         var newEndTime = endHour * 60 + endMin
         if (newStartTime < newEndTime){
-            const newSlot = {
-                capacity: this.state.capacity,
-                startTime: newStartTime,
-                endTime: newEndTime,
-                dayNumber: this.props.data.dayNumber,
-                isCustom: true
+            if (this.props.isCustom) {
+                const newSlot = {
+                    capacity: this.state.capacity,
+                    startTime: newStartTime,
+                    endTime: newEndTime,
+                    dayNumber: this.props.data.dayNumber,
+                    isCustom: this.props.isCustom
+                }
+                console.log(newSlot)
+                this.props.createSlot(this.props.data.post.postId, newSlot, this.props.data.dayNumber)
             }
-            console.log(newSlot)
-            this.props.createSlot(this.props.data.post.postId, newSlot, this.props.data.dayNumber)
+            else {
+                const newSlot = {
+                    capacity: this.state.capacity,
+                    startTime: newStartTime,
+                    endTime: newEndTime,
+                    dayNumber: this.props.data.weekDayNumber,
+                    isCustom: this.props.isCustom
+                }
+                console.log(newSlot)
+                this.props.createSlot(this.props.data.post.postId, newSlot, this.props.data.weekDayNumber)
+            }
         }
         else{
             this.setState({
@@ -220,7 +233,7 @@ class CreateCustomSlot extends Component{
     }
 }
 
-CreateCustomSlot.propTypes = {
+CreateSlot.propTypes = {
     UI: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired
 }
@@ -235,4 +248,4 @@ const mapActionsToProps = {
     clearErrors
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreateCustomSlot))
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreateSlot))

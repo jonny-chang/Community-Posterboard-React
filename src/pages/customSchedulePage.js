@@ -7,7 +7,7 @@ import DateTimePicker from 'react-datetime-picker';
 
 // Components
 import Slot from '../components/Slot';
-import CreateCustomSlot from '../components/CreateCustomSlot';
+import CreateSlot from '../components/CreateSlot';
 
 // Mui
 import Button from '@material-ui/core/Button'
@@ -77,7 +77,6 @@ class customSchedulePage extends Component {
     componentDidMount() {
         const postId = this.props.match.params.postId;
         this.props.loadData();
-        this.props.getCustomPost(postId, this.props.history);
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -86,16 +85,16 @@ class customSchedulePage extends Component {
         this.setState({
             currentDate: today
         })
+        this.props.getCustomPost(postId, this.props.history);
+        const millisecondsPerDay = 86400000;
+        var timeStamp = Date.now();
+        var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
+        this.props.getSlots(postId, dayNumber, true)
     }
     componentWillUnmount(){
         this.props.clearSlots();
         this.props.clearDayNumber();
         this.props.clearPost();
-    }
-    componentWillReceiveProps(nextProps){
-        if (nextProps.data.post.postId !== this.props.data.post.postId) {
-            this.props.getSlots(nextProps.data.post.postId, this.props.data.dayNumber, true)
-        }
     }
     onChange = date => {
         if (date){
@@ -127,7 +126,7 @@ class customSchedulePage extends Component {
         const { pickerDate, isDate, currentDate } = this.state
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
-                slots.map((slots) => <Slot thisSlot={slots}/>)    
+                slots.map((slots) => <Slot thisSlot={slots} isCustom={true}/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>
@@ -178,7 +177,7 @@ class customSchedulePage extends Component {
                 {scheduleMarkup}
                 {!loading && (
                     <div className={classes.addButton}>
-                        <CreateCustomSlot/>
+                        <CreateSlot isCustom={true}/>
                     </div>
                 )}
             </Grid>

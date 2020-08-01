@@ -66,18 +66,19 @@ class Slot extends Component {
                 dayNumber
             },
             thisSlot,
-            classes
+            classes,
+            isCustom
           } = this.props;
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)
         const deleteButton =
-            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId} isCustom={true}/>
+            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId} isCustom={isCustom}/>
         const editButton = 
             <EditSlot 
             postId={post.postId} 
             dayNumber={dayNumber} 
             slot={thisSlot}
-            isCustom={true} 
+            isCustom={isCustom} 
             />
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)

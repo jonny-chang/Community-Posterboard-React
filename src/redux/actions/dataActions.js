@@ -157,14 +157,9 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
                 type: SET_SLOTS,
                 payload: res.data
             })
-            console.log('slots res: ' + res.data)
         })
         .catch((err) => {
            console.log(err.response)
-        })
-        dispatch({
-            type: SET_DAY_NUMBER,
-            payload: dayNumber
         })
 }
 
@@ -212,8 +207,14 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
                 type: CREATE_SLOT,
                 payload: res.data
             });
-            dispatch(getSlots(postId, dayNumber, true))
-            dispatch({ type: CLEAR_ERRORS })
+            if (dayNumber >= 0 && dayNumber < 7){
+                dispatch(getSlots(postId, dayNumber, false))
+                dispatch({ type: CLEAR_ERRORS })
+            }
+            else {
+                dispatch(getSlots(postId, dayNumber, true))
+                dispatch({ type: CLEAR_ERRORS })
+            }
         })
         .catch(err => {
             dispatch({
@@ -226,19 +227,21 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
 
 // Delete Slot
 export const deleteSlot = (postId, slotId, dayNumber, isCustom) => (dispatch) => {
-    axios.delete(`/post/${postId}/slot/${slotId}`)
+    console.log(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`)
+    axios.delete(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`)
       .then(() => {
         dispatch(getSlots(postId, dayNumber, isCustom));
         dispatch({ type: CLEAR_ERRORS })
       })
       .catch((err) => {
-          console.log(err)
+          console.log(err.response)
       });
   };
 
 // Edit slot
 export const editSlot = (postId, slotId, newSlot, dayNumber, isCustom) => (dispatch) => {
-    axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
+    console.log(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`)
+    axios.put(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`, newSlot)
         .then(res => {
             dispatch(getSlots(postId, dayNumber, isCustom))
             dispatch({ type: CLEAR_ERRORS })

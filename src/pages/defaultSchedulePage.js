@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
+// Components/Util
+import Slot from '../components/Slot';
+import CreateSlot from '../components/CreateSlot';
+
 // Mui
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -9,10 +13,17 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
 import { connect } from 'react-redux';
-import { setWeekDayNumber } from '../redux/actions/dataActions';
+import { 
+    setWeekDayNumber, 
+    loadData, 
+    getDefaultPost, 
+    getSlots
+ } from '../redux/actions/dataActions';
 
 const styles = {
     backButton: {
@@ -73,8 +84,20 @@ class defaultSchedulePage extends Component {
         const postId = this.props.match.params.postId;
         this.setState({
             postId: postId
-        })
+        })        
+        this.props.loadData();
         this.props.setWeekDayNumber(3);
+        this.props.getDefaultPost(postId, this.props.history);
+        this.props.getSlots(postId, 3, false)
+    }
+    componentWillReceiveProps(nextProps){
+        if (nextProps.data.weekDayNumber !== this.props.data.weekDayNumber) {
+            const postId = this.props.match.params.postId;
+            this.props.getSlots(postId, nextProps.data.weekDayNumber, false)
+        }
+    }
+    componentWillUnmount() {
+        this.props.setWeekDayNumber(null)
     }
     handleChange = (event) => {
         this.setState({
@@ -101,8 +124,24 @@ class defaultSchedulePage extends Component {
         }
     }
     render() {
-        const { classes, data: { loading, weekDayNumber } } = this.props
+        const { classes, data: { loading, weekDayNumber, currentSlots: { slots }, } } = this.props
         var dayNumberString = this.dayNumberToString(weekDayNumber)
+        let scheduleMarkup = !loading ? (
+            (slots && slots.length > 0) ? (
+                slots.map((slots) => <Slot thisSlot={slots} isCustom={false}/>)    
+            ) : (
+                <div className={classes.noSlotsContainer}>
+                    <Typography variant='body1' className={classes.noSlots}>
+                        No slots currently for this day
+                    </Typography>
+                </div>
+                
+            )
+          ) : (
+            <div className={classes.loadingContainer}>
+                <CircularProgress size={40} className={classes.loadingIndicator}/>                
+            </div>
+          );
         return (
             <Grid container spacing={3}>
             <Grid item xs={3}>
@@ -119,13 +158,22 @@ class defaultSchedulePage extends Component {
                 )}
             </Grid>   
             <Grid item xs={6} sm={6}>
-                <h1>{dayNumberString}</h1>
+                <Typography variant='h5' className={classes.dateHeader}>
+                    {dayNumberString}
+                </Typography>
+                {scheduleMarkup}
+                {!loading && (
+                    <div className={classes.addButton}>
+                        <CreateSlot isCustom={false}/>
+                    </div>
+                )}
             </Grid>
             <Grid item xs={3}>
                 <FormControl className={classes.formControl}>
                     <InputLabel>Day </InputLabel>
                     <Select
                     onChange={this.handleChange}
+                    defaultValue={3}
                     >
                     <MenuItem value={3}>Sunday</MenuItem>
                     <MenuItem value={4}>Monday</MenuItem>
@@ -147,7 +195,10 @@ const mapStateToProps = (state) => ({
   });
   
 const mapActionsToProps = {
-    setWeekDayNumber
+    setWeekDayNumber,
+    loadData,
+    getDefaultPost,
+    getSlots
 }
 
   export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(defaultSchedulePage));
