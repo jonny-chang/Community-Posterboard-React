@@ -141,14 +141,16 @@ class EditSlot extends Component{
                 capacity: this.state.capacity,
                 startTime: newStartTime,
                 endTime: newEndTime,
-                dayNumber: this.props.data.dayNumber
+                dayNumber: this.props.data.dayNumber,
+                isCustom: true
             }
             console.log(newSlot)
             this.props.editSlot(
                 this.props.data.post.postId, 
                 this.props.slot.slotId, 
                 newSlot, 
-                this.props.data.dayNumber
+                this.props.data.dayNumber,
+                this.props.isCustom
             )
         }
         else{

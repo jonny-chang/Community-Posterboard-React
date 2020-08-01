@@ -71,12 +71,13 @@ class Slot extends Component {
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)
         const deleteButton =
-            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId}/>
+            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId} isCustom={true}/>
         const editButton = 
             <EditSlot 
             postId={post.postId} 
             dayNumber={dayNumber} 
-            slot={thisSlot} 
+            slot={thisSlot}
+            isCustom={true} 
             />
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)

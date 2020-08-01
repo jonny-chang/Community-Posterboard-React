@@ -94,7 +94,7 @@ class customSchedulePage extends Component {
     }
     componentWillReceiveProps(nextProps){
         if (nextProps.data.post.postId !== this.props.data.post.postId) {
-            this.props.getSlots(nextProps.data.post.postId, this.props.data.dayNumber)
+            this.props.getSlots(nextProps.data.post.postId, this.props.data.dayNumber, true)
         }
     }
     onChange = date => {
@@ -120,7 +120,7 @@ class customSchedulePage extends Component {
             currentDate: currentDate
         })
         var dayNumber = Math.floor(timeStamp/millisecondsPerDay)
-        this.props.getSlots(this.props.data.post.postId, dayNumber)
+        this.props.getSlots(this.props.data.post.postId, dayNumber, true)
     }
     render() {
         const { classes, data: { post, loading, currentSlots: { slots }, dayNumber }} = this.props

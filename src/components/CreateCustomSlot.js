@@ -117,7 +117,8 @@ class CreateCustomSlot extends Component{
                 capacity: this.state.capacity,
                 startTime: newStartTime,
                 endTime: newEndTime,
-                dayNumber: this.props.data.dayNumber
+                dayNumber: this.props.data.dayNumber,
+                isCustom: true
             }
             console.log(newSlot)
             this.props.createSlot(this.props.data.post.postId, newSlot, this.props.data.dayNumber)

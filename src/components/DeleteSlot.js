@@ -36,7 +36,7 @@ class DeleteSlot extends Component {
     this.setState({ open: false });
   };
   deleteSlot = () => {
-    this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.dayNumber);
+    this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.dayNumber, this.props.isCustom);
     this.setState({ open: false });
   };
   render() {
