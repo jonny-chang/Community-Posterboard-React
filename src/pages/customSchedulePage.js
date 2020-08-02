@@ -102,6 +102,7 @@ class customSchedulePage extends Component {
                 pickerDate: date,
                 isDate: true
             })
+            this.handleDateChange(date)
         }
         else {
             this.setState({ 
@@ -111,15 +112,16 @@ class customSchedulePage extends Component {
         }
         
     }
-    handleDateChange = (event) => {
+    handleDateChange = (pickerDate) => {
         const millisecondsPerDay = 86400000;
-        var timeStamp = this.state.pickerDate;
+        var timeStamp = pickerDate;
         var currentDate = (timeStamp.toDateString())
         this.setState({
             currentDate: currentDate
         })
         var dayNumber = Math.floor(timeStamp/millisecondsPerDay)
         this.props.getSlots(this.props.data.post.postId, dayNumber, true)
+        this.props.setDayNumber(dayNumber)
     }
     render() {
         const { classes, data: { post, loading, currentSlots: { slots }, dayNumber }} = this.props
@@ -183,7 +185,7 @@ class customSchedulePage extends Component {
             </Grid>
             <Grid item xs={3}>
                 {customDatePicker}
-                {(isDate && !loading) && (
+                {/* {(isDate && !loading) && (
                     <div className={classes.dateButtonContainer}>
                         <Button 
                         variant='outlined' 
@@ -194,7 +196,7 @@ class customSchedulePage extends Component {
                             Go to date
                         </Button>
                     </div>
-                )}
+                )} */}
             </Grid>
         </Grid>
         );
