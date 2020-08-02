@@ -6,7 +6,7 @@ import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST,
 
 const initialState = {
     posts: [],
-    post: {},
+    post: [],
     position: {
         latitude: 0,
         longitude: 0
@@ -64,7 +64,7 @@ export default function(state = initialState, action){
         case CLEAR_POST:
             return{
                 ...state,
-                post: {}
+                post: []
             }
         case SET_DAY_NUMBER:
             return{

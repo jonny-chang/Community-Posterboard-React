@@ -56,20 +56,8 @@ export const getPosts = () => (dispatch) => {
       });
   };
 
-// Get post for custom day
-
-export const getCustomPost = (postId, history) => (dispatch) => {
-    dispatch({ type: LOADING_DATA });
-    const millisecondsPerDay = 86400000;
-    var offset = new Date().getTimezoneOffset()
-    var offset = new Date()
-    offset = offset.getTimezoneOffset() * 60000;
-    var timeStamp = Date.now() - offset;
-    var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
-    dispatch({
-        type: SET_DAY_NUMBER,
-        payload: dayNumber
-    })
+// Get single post
+export const getPost = (postId, history) => (dispatch) => {
     axios.get(`/post/${postId}`)
         .then((res) => {
             dispatch({
@@ -85,22 +73,27 @@ export const getCustomPost = (postId, history) => (dispatch) => {
         })
 }
 
+// Get post for custom day
+
+export const getCustomPost = (postId, history) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    const millisecondsPerDay = 86400000;
+    var offset = new Date().getTimezoneOffset()
+    var offset = new Date()
+    offset = offset.getTimezoneOffset() * 60000;
+    var timeStamp = Date.now() - offset;
+    var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
+    dispatch({
+        type: SET_DAY_NUMBER,
+        payload: dayNumber
+    })
+    dispatch(getPost(postId, history))
+}
+
 // Get post for default day
 export const getDefaultPost = (postId, history) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
-    axios.get(`/post/${postId}`)
-        .then((res) => {
-            dispatch({
-                type: SET_POST,
-                payload: res.data
-            })
-        })
-        .catch((err) => {
-            console.log(err.response)
-            if (err.response.status === 404){
-                history.push('/error')
-            }
-        })
+    dispatch(getPost(postId, history))
 }
 
 // Clearing post
