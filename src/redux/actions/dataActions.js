@@ -174,24 +174,19 @@ export const setWeekDayNumber = (weekDayNumber) => (dispatch) => {
     })
 }
 
+// Set day number
+export const setDayNumber = (dayNumber) => (dispatch) => {
+    dispatch({
+        type: SET_DAY_NUMBER,
+        payload: dayNumber
+    })
+}
+
+
 // Clear current day slots
 export const clearSlots = () => (dispatch) => {
     dispatch({
         type: CLEAR_CURRENT_SLOTS
-    })
-}
-
-// Clear day number
-export const clearDayNumber = () => (dispatch) => {
-    dispatch({
-        type: CLEAR_DAY_NUMBER
-    })
-}
-
-// Clear week day number
-export const clearWeekDayNumber = () => (dispatch) => {
-    dispatch({
-        type: CLEAR_WEEK_DAY_NUMBER
     })
 }
 

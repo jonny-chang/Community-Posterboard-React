@@ -21,7 +21,7 @@ import {
     clearPost, 
     getSlots, 
     clearSlots, 
-    clearDayNumber,
+    setDayNumber,
     loadData
 } from '../redux/actions/dataActions';
 
@@ -93,7 +93,7 @@ class customSchedulePage extends Component {
     }
     componentWillUnmount(){
         this.props.clearSlots();
-        this.props.clearDayNumber();
+        this.props.setDayNumber(null);
         this.props.clearPost();
     }
     onChange = date => {
@@ -214,7 +214,7 @@ const mapActionsToProps = {
     clearPost,
     getSlots,
     clearSlots,
-    clearDayNumber,
+    setDayNumber,
     loadData,
 }
 
