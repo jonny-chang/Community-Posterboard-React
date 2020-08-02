@@ -3,13 +3,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import MyButton from '../util/UtilButton';
 
-// MUI Stuff
+// MUI
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 
+// Redux
 import { connect } from 'react-redux';
 import { deleteSlot } from '../redux/actions/dataActions';
 
@@ -37,11 +38,21 @@ class DeleteSlot extends Component {
   };
   deleteSlot = () => {
     if (this.props.isCustom){
-      this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.dayNumber, this.props.isCustom);
+      this.props.deleteSlot(
+        this.props.postId, 
+        this.props.slotId, 
+        this.props.data.dayNumber, 
+        this.props.isCustom
+      );
       this.setState({ open: false });
     }
     else {
-      this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.weekDayNumber, this.props.isCustom);
+      this.props.deleteSlot(
+        this.props.postId, 
+        this.props.slotId, 
+        this.props.data.weekDayNumber, 
+        this.props.isCustom
+      );
       this.setState({ open: false });
     }
     
@@ -86,7 +97,8 @@ DeleteSlot.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(
-  null,
-  { deleteSlot }
-)(withStyles(styles)(DeleteSlot));
+const mapStateToProps = (state) => ({
+  data: state.data
+})
+
+export default connect(mapStateToProps, { deleteSlot })(withStyles(styles)(DeleteSlot));

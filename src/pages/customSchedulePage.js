@@ -78,10 +78,7 @@ class customSchedulePage extends Component {
         const postId = this.props.match.params.postId;
         this.props.loadData();
         var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
+        today = (today.toDateString())
         this.setState({
             currentDate: today
         })
@@ -117,7 +114,7 @@ class customSchedulePage extends Component {
     handleDateChange = (event) => {
         const millisecondsPerDay = 86400000;
         var timeStamp = this.state.pickerDate;
-        var currentDate = (timeStamp.getMonth() + 1) + '/' + timeStamp.getDate() + '/' + (timeStamp.getYear() + 1900)
+        var currentDate = (timeStamp.toDateString())
         this.setState({
             currentDate: currentDate
         })
@@ -129,7 +126,7 @@ class customSchedulePage extends Component {
         const { pickerDate, isDate, currentDate } = this.state
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
-                slots.map((slots) => <Slot thisSlot={slots} isCustom={true}/>)    
+                slots.map((slots) => <Slot thisSlot={slots} isCustom={true} key={slots.slotId}/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>
