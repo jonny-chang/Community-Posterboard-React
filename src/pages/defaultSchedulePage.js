@@ -22,7 +22,9 @@ import {
     setWeekDayNumber, 
     loadData, 
     getDefaultPost, 
-    getSlots
+    getSlots,
+    clearSlots,
+    clearPost
  } from '../redux/actions/dataActions';
 
 const styles = {
@@ -98,6 +100,8 @@ class defaultSchedulePage extends Component {
     }
     componentWillUnmount() {
         this.props.setWeekDayNumber(null)
+        this.props.clearSlots();
+        this.props.clearPost();
     }
     handleChange = (event) => {
         this.setState({
@@ -198,7 +202,9 @@ const mapActionsToProps = {
     setWeekDayNumber,
     loadData,
     getDefaultPost,
-    getSlots
+    getSlots,
+    clearSlots,
+    clearPost
 }
 
   export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(defaultSchedulePage));
