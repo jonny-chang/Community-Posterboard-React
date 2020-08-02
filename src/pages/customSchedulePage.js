@@ -87,7 +87,10 @@ class customSchedulePage extends Component {
         })
         this.props.getCustomPost(postId, this.props.history);
         const millisecondsPerDay = 86400000;
-        var timeStamp = Date.now();
+        var offset = new Date().getTimezoneOffset()
+        var offset = new Date()
+        offset = offset.getTimezoneOffset() * 60000;
+        var timeStamp = Date.now() - offset;
         var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
         this.props.getSlots(postId, dayNumber, true)
     }

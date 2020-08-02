@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 const styles = {
     card: {
@@ -72,11 +71,15 @@ class Slot extends Component {
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)
         const deleteButton =
-            <DeleteSlot postId={post.postId} dayNumber={dayNumber} slotId={thisSlot.slotId} isCustom={isCustom}/>
+            <DeleteSlot 
+            postId={post.postId} 
+            dayNumber={dayNumber} 
+            slotId={thisSlot.slotId} 
+            isCustom={isCustom}/>
         const editButton = 
             <EditSlot 
             postId={post.postId} 
-            dayNumber={dayNumber} 
+            dayNumber={dayNumber}
             slot={thisSlot}
             isCustom={isCustom} 
             />

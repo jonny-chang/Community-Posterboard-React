@@ -61,7 +61,10 @@ export const getPosts = () => (dispatch) => {
 export const getCustomPost = (postId, history) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
     const millisecondsPerDay = 86400000;
-    var timeStamp = Date.now();
+    var offset = new Date().getTimezoneOffset()
+    var offset = new Date()
+    offset = offset.getTimezoneOffset() * 60000;
+    var timeStamp = Date.now() - offset;
     var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
     dispatch({
         type: SET_DAY_NUMBER,
@@ -157,6 +160,7 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
                 type: SET_SLOTS,
                 payload: res.data
             })
+            console.log(res)
         })
         .catch((err) => {
            console.log(err.response)
@@ -227,21 +231,27 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
 
 // Delete Slot
 export const deleteSlot = (postId, slotId, dayNumber, isCustom) => (dispatch) => {
-    console.log(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`)
-    axios.delete(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`)
+    console.log(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}isCustom=${isCustom}`)
+    axios.delete(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}isCustom=${isCustom}`)
       .then(() => {
         dispatch(getSlots(postId, dayNumber, isCustom));
         dispatch({ type: CLEAR_ERRORS })
       })
       .catch((err) => {
           console.log(err.response)
+          dispatch({
+              type: SET_ERRORS,
+              payload: {
+                  deletion: true
+              }
+          })
       });
   };
 
 // Edit slot
 export const editSlot = (postId, slotId, newSlot, dayNumber, isCustom) => (dispatch) => {
-    console.log(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`)
-    axios.put(`/post/${postId}/slot/${slotId}?isCustom=${isCustom}`, newSlot)
+    console.log(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
+    axios.put(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`, newSlot)
         .then(res => {
             dispatch(getSlots(postId, dayNumber, isCustom))
             dispatch({ type: CLEAR_ERRORS })

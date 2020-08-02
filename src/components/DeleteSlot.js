@@ -36,8 +36,15 @@ class DeleteSlot extends Component {
     this.setState({ open: false });
   };
   deleteSlot = () => {
-    this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.dayNumber, this.props.isCustom);
-    this.setState({ open: false });
+    if (this.props.isCustom){
+      this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.dayNumber, this.props.isCustom);
+      this.setState({ open: false });
+    }
+    else {
+      this.props.deleteSlot(this.props.postId, this.props.slotId, this.props.weekDayNumber, this.props.isCustom);
+      this.setState({ open: false });
+    }
+    
   };
   render() {
     const { classes } = this.props;
@@ -76,8 +83,7 @@ class DeleteSlot extends Component {
 
 DeleteSlot.propTypes = {
   deleteSlot: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired,
-  postId: PropTypes.string.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(

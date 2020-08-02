@@ -124,11 +124,11 @@ class defaultSchedulePage extends Component {
         }
     }
     render() {
-        const { classes, data: { loading, weekDayNumber, currentSlots: { slots }, } } = this.props
+        const { classes, data: { loading, weekDayNumber, currentSlots: { slots }, errors } } = this.props
         var dayNumberString = this.dayNumberToString(weekDayNumber)
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
-                slots.map((slots) => <Slot thisSlot={slots} isCustom={false}/>)    
+                slots.map((slots) => <Slot thisSlot={slots} isCustom={false} key={slots.slotId}/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>
