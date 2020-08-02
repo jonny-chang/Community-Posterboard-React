@@ -67,7 +67,7 @@ class home extends Component {
             )           
           ) : (
             <div className={classes.loadingContainer}>
-                <CircularProgress size={40} className={classes.loadingIndicator}/>                
+                <CircularProgress size={50} className={classes.loadingIndicator}/>                
             </div>
           );
         return (
