@@ -139,13 +139,13 @@ class signup extends Component {
                         </CardContent>
                     </Card>
                     <br/>
-                    <Typography variant="caption" color="textSecondary" inLine>
-                        Rbad Studios, Inc.
+                    {/* <Typography variant="caption" color="textSecondary" inLine>
+
                     </Typography>
                     <br/>
                     <Typography variant="caption" color="textSecondary">
-                        1050 Granville St, Vancouver, BC V6Z 1L5
-                    </Typography>
+
+                    </Typography> */}
                 </Grid>
                 <Grid item sm />
             </Grid>

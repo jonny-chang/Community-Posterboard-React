@@ -37,7 +37,7 @@ class Navbar extends Component {
                 <Toolbar>
                     <div className={classes.header}>
                         <a href='/' className={classes.title}>
-                            <h2>Community Posterboard</h2>
+                            <h2>Skipt</h2>
                         </a>
                     </div>
                     {authenticated && (
