@@ -113,28 +113,21 @@ class CreateSlot extends Component{
         var endMin = parseInt(this.state.endTime.substring(3))
         var newEndTime = endHour * 60 + endMin
         if (newStartTime < newEndTime){
-            if (this.props.isCustom) {
-                const newSlot = {
-                    capacity: this.state.capacity,
-                    startTime: newStartTime,
-                    endTime: newEndTime,
-                    dayNumber: this.props.data.dayNumber,
-                    isCustom: this.props.isCustom
-                }
-                console.log(newSlot)
-                this.props.createSlot(this.props.data.post.postId, newSlot, this.props.data.dayNumber)
+            const newSlot = {
+                capacity: this.state.capacity,
+                startTime: newStartTime,
+                endTime: newEndTime,
+                dayNumber: this.props.data.dayNumber,
+                isCustom: this.props.isCustom
             }
-            else {
-                const newSlot = {
-                    capacity: this.state.capacity,
-                    startTime: newStartTime,
-                    endTime: newEndTime,
-                    dayNumber: this.props.data.weekDayNumber,
-                    isCustom: this.props.isCustom
-                }
-                console.log(newSlot)
-                this.props.createSlot(this.props.data.post.postId, newSlot, this.props.data.weekDayNumber)
-            }
+            console.log(newSlot)
+            this.props.createSlot(
+                this.props.data.post.postId, 
+                newSlot, 
+                this.props.data.dayNumber, 
+                this.props.isCustom, 
+                this.props.history
+            )
         }
         else{
             this.setState({

@@ -29,9 +29,7 @@ import store from './redux/store';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser, getUserData } from './redux/actions/userActions';
 
-// axios.defaults.baseURL =
-//   "https://us-central1-communityposterboard-69961.cloudfunctions.net/api"
-
+axios.defaults.baseURL = 'https://us-central1-communityposterboard-69961.cloudfunctions.net/api'
 const token = localStorage.FBIdToken;
 if (token){
   const decodedToken = jwtDecode(token);
@@ -64,7 +62,7 @@ class App extends Component {
                 <AuthRoute exact path='/schedule/:postId/customdays' component={customSchedulePage}/>
                 <AuthRoute exact path='/schedule/:postId/defaultdays' component={defaultSchedulePage}/>
                 <Route exact path='/error' component={error}/>
-                <ExtraRoute path='/'/>
+                <Route path='/' component={error}/>
               </Switch>
             </div>
           </Router>

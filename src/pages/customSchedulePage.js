@@ -72,7 +72,8 @@ class customSchedulePage extends Component {
     state = {
         pickerDate: null,
         isDate: false,
-        currentDate: null
+        currentDate: null,
+        custom: null
     };
     componentDidMount() {
         const postId = this.props.match.params.postId;
@@ -89,7 +90,26 @@ class customSchedulePage extends Component {
         offset = offset.getTimezoneOffset() * 60000;
         var timeStamp = Date.now() - offset;
         var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
-        this.props.getSlots(postId, dayNumber, true)
+    }
+    componentWillReceiveProps(nextProps){
+        const { data: { post: { postId, customDays }}} = this.props
+        if (Array.isArray(customDays)){
+            if (nextProps.data.dayNumber !== this.props.data.dayNumber){
+                this.props.getSlots(postId, nextProps.data.dayNumber, customDays.includes(nextProps.data.dayNumber))
+                this.setState({
+                    custom: customDays.includes(nextProps.data.dayNumber)
+                })
+            }
+        }
+        if(Array.isArray(nextProps.data.post.customDays)){
+            if (nextProps.data.post.customDays !== this.props.data.post.customDays){
+                const { data: { dayNumber }} = this.props
+                this.props.getSlots(nextProps.data.post.postId, dayNumber, nextProps.data.post.customDays.includes(dayNumber))
+                this.setState({
+                    custom: nextProps.data.post.customDays.includes(dayNumber)
+                })
+            }
+        }
     }
     componentWillUnmount(){
         this.props.clearSlots();
@@ -120,15 +140,20 @@ class customSchedulePage extends Component {
             currentDate: currentDate
         })
         var dayNumber = Math.floor(timeStamp/millisecondsPerDay)
-        this.props.getSlots(this.props.data.post.postId, dayNumber, true)
         this.props.setDayNumber(dayNumber)
     }
     render() {
-        const { classes, data: { post, loading, currentSlots: { slots }, dayNumber }} = this.props
-        const { pickerDate, isDate, currentDate } = this.state
+        const { classes, 
+            data: { 
+                post, 
+                loading, 
+                currentSlots: { slots }, 
+                dayNumber 
+            }} = this.props
+        const { currentDate } = this.state
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
-                slots.map((slots) => <Slot thisSlot={slots} isCustom={true} key={slots.slotId}/>)    
+                slots.map((slots) => <Slot thisSlot={slots} isCustom={this.state.custom} key={slots.slotId}/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>
@@ -179,7 +204,7 @@ class customSchedulePage extends Component {
                 {scheduleMarkup}
                 {!loading && (
                     <div className={classes.addButton}>
-                        <CreateSlot isCustom={true}/>
+                        <CreateSlot isCustom={this.state.custom}/>
                     </div>
                 )}
             </Grid>

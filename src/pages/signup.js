@@ -27,7 +27,7 @@ const styles = {
         margin: '10px auto 10px auto'
     },
     button: {
-        marginTop: 30
+        marginTop: 20
     },
     customError: {
         color: 'red',
@@ -35,7 +35,7 @@ const styles = {
     },
     card: {
         display: 'flex',
-        marginTop: 10,
+        marginTop: 20,
     },
     content: {
         padding: 25,
@@ -124,7 +124,7 @@ class signup extends Component {
                                 className={classes.button}
                                 disabled={loading}
                                 >
-                                Sign Up
+                                Sign up
                                 {loading && (
                                     <CircularProgress size={20} className={classes.progressSpinner} />
                                 )}

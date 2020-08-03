@@ -91,9 +91,16 @@ class Slot extends Component {
                     <Typography variant='h5' className={classes.title}>
                         Start time: {newStartTime} | End time: {newEndTime}
                     </Typography>
-                    <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
-                        Capacity: {thisSlot.capacity} | Spots taken: {thisSlot.spotsTaken}
-                    </Typography>
+                    {isCustom && (
+                        <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                            Capacity: {thisSlot.capacity} | Spots taken: {thisSlot.spotsTaken}
+                        </Typography>
+                    )}
+                    {!isCustom && (
+                        <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                            Capacity: {thisSlot.capacity}
+                        </Typography>
+                    )}
                     {editButton}
                     <div className={classes.deleteContainer}>
                         {deleteButton}

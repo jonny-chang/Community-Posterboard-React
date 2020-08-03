@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
-    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST, CLEAR_WEEK_DAY_NUMBER,
-    SET_DAY_NUMBER, CLEAR_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, SET_WEEK_DAY_NUMBER
+    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
+    SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT
 } from '../types';
 
 // Create Post
@@ -147,6 +147,7 @@ export const deletePost = (postId) => (dispatch) => {
 // Get slots of given day
 export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
     dispatch({ type: LOADING_DATA })
+    console.log(`.get: /post/${postId}/slots?dayNumber=${dayNumber}&isCustom=${isCustom}`)
     axios.get(`/post/${postId}/slots?dayNumber=${dayNumber}&isCustom=${isCustom}`)
         .then((res) => {
             dispatch({ 
@@ -157,14 +158,6 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
         .catch((err) => {
            console.log(err.response)
         })
-}
-
-// Set week day number
-export const setWeekDayNumber = (weekDayNumber) => (dispatch) => {
-    dispatch({
-        type: SET_WEEK_DAY_NUMBER,
-        payload: weekDayNumber
-    })
 }
 
 // Set day number
@@ -191,21 +184,16 @@ export const loadData = () => (dispatch) => {
 }
 
 // Create custom slot
-export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
+export const createSlot = (postId, newSlot, dayNumber, custom, history) => (dispatch) => {
     axios.post(`/post/${postId}/slot`, newSlot)
         .then(res => {
             dispatch({
                 type: CREATE_SLOT,
                 payload: res.data
             });
-            if (dayNumber >= 0 && dayNumber < 7){
-                dispatch(getSlots(postId, dayNumber, false))
+                dispatch(getSlots(postId, dayNumber, custom))
+                dispatch(getPost(postId, history))
                 dispatch({ type: CLEAR_ERRORS })
-            }
-            else {
-                dispatch(getSlots(postId, dayNumber, true))
-                dispatch({ type: CLEAR_ERRORS })
-            }
         })
         .catch(err => {
             dispatch({
@@ -217,10 +205,11 @@ export const createSlot = (postId, newSlot, dayNumber) => (dispatch) => {
 }
 
 // Delete Slot
-export const deleteSlot = (postId, slotId, dayNumber, isCustom) => (dispatch) => {
-    console.log(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
+export const deleteSlot = (postId, slotId, dayNumber, isCustom, history) => (dispatch) => {
+    console.log(`.delete: /post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
     axios.delete(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
       .then(() => {
+        dispatch(getPost(postId, history))
         dispatch(getSlots(postId, dayNumber, isCustom));
         dispatch({ type: CLEAR_ERRORS })
       })
@@ -236,12 +225,13 @@ export const deleteSlot = (postId, slotId, dayNumber, isCustom) => (dispatch) =>
   };
 
 // Edit slot
-export const editSlot = (postId, slotId, newSlot, dayNumber, isCustom) => (dispatch) => {
-    console.log(`/post/${postId}/slot/${slotId}`)
+export const editSlot = (postId, slotId, newSlot, dayNumber, history) => (dispatch) => {
+    console.log(`.edit: /post/${postId}/slot/${slotId}`)
     console.log(newSlot)
     axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
         .then(res => {
-            dispatch(getSlots(postId, dayNumber, isCustom))
+            dispatch(getPost(postId, history))
+            dispatch(getSlots(postId, dayNumber, true))
             dispatch({ type: CLEAR_ERRORS })
         })
         .catch(err => {

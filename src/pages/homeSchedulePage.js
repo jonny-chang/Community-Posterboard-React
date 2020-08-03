@@ -67,7 +67,7 @@ class homeSchedulePage extends Component {
         let titleMarkup = !loading ? (
             <div className={classes.titleContainer}>
                 <Typography variant='caption'>
-                    Schedule of
+                    Schedule for
                 </Typography>
                 <Typography variant='h5'>
                     {title}

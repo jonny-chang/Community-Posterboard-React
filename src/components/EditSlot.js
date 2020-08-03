@@ -137,40 +137,21 @@ class EditSlot extends Component{
         var endMin = parseInt(this.state.endTime.substring(3))
         var newEndTime = endHour * 60 + endMin
         if (newStartTime < newEndTime){
-            if (this.props.isCustom) {
-                const newSlot = {
-                    capacity: this.state.capacity,
-                    startTime: newStartTime,
-                    endTime: newEndTime,
-                    dayNumber: this.props.data.dayNumber,
-                    isCustom: true
-                }
-                console.log(newSlot)
-                this.props.editSlot(
-                    this.props.data.post.postId, 
-                    this.props.slot.slotId, 
-                    newSlot, 
-                    this.props.data.dayNumber,
-                    this.props.isCustom
-                )
+            const newSlot = {
+                capacity: this.state.capacity,
+                startTime: newStartTime,
+                endTime: newEndTime,
+                dayNumber: this.props.data.dayNumber,
+                isCustom: this.props.isCustom
             }
-            else {
-                const newSlot = {
-                    capacity: this.state.capacity,
-                    startTime: newStartTime,
-                    endTime: newEndTime,
-                    dayNumber: this.props.data.weekDayNumber,
-                    isCustom: false
-                }
-                console.log(newSlot)
-                this.props.editSlot(
-                    this.props.data.post.postId, 
-                    this.props.slot.slotId, 
-                    newSlot, 
-                    this.props.data.weekDayNumber,
-                    this.props.isCustom
-                )
-            }
+            console.log(newSlot)
+            this.props.editSlot(
+                this.props.data.post.postId, 
+                this.props.slot.slotId, 
+                newSlot, 
+                this.props.data.dayNumber,
+                this.props.history
+            )
         }
         else{
             this.setState({

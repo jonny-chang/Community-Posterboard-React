@@ -19,7 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Redux
 import { connect } from 'react-redux';
 import { 
-    setWeekDayNumber, 
+    setDayNumber, 
     loadData, 
     getDefaultPost, 
     getSlots,
@@ -80,7 +80,7 @@ const styles = {
 class defaultSchedulePage extends Component {
     state = {
         postId: null,
-        weekDayNumber: null
+        dayNumber: null
     }
     componentDidMount() {
         const postId = this.props.match.params.postId;
@@ -88,29 +88,29 @@ class defaultSchedulePage extends Component {
             postId: postId
         })        
         this.props.loadData();
-        this.props.setWeekDayNumber(3);
+        this.props.setDayNumber(3);
         this.props.getDefaultPost(postId, this.props.history);
         this.props.getSlots(postId, 3, false)
     }
     componentWillReceiveProps(nextProps){
-        if (nextProps.data.weekDayNumber !== this.props.data.weekDayNumber) {
+        if (nextProps.data.dayNumber !== this.props.data.dayNumber) {
             const postId = this.props.match.params.postId;
-            this.props.getSlots(postId, nextProps.data.weekDayNumber, false)
+            this.props.getSlots(postId, nextProps.data.dayNumber, false)
         }
     }
     componentWillUnmount() {
-        this.props.setWeekDayNumber(null)
+        this.props.setDayNumber(null)
         this.props.clearSlots();
         this.props.clearPost();
     }
     handleChange = (event) => {
         this.setState({
-            weekDayNumber: event.target.value
+            dayNumber: event.target.value
         })
-        this.props.setWeekDayNumber(event.target.value)
+        this.props.setDayNumber(event.target.value)
     }
-    dayNumberToString = (weekDayNumber) => {
-        switch (weekDayNumber){
+    dayNumberToString = (dayNumber) => {
+        switch (dayNumber){
             case 0:
                 return 'Thursday'
             case 1:
@@ -128,8 +128,13 @@ class defaultSchedulePage extends Component {
         }
     }
     render() {
-        const { classes, data: { loading, weekDayNumber, currentSlots: { slots }, errors } } = this.props
-        var dayNumberString = this.dayNumberToString(weekDayNumber)
+        const { classes, 
+            data: { 
+                loading, 
+                dayNumber, 
+                currentSlots: { slots } 
+            } } = this.props
+        var dayNumberString = this.dayNumberToString(dayNumber)
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
                 slots.map((slots) => <Slot thisSlot={slots} isCustom={false} key={slots.slotId}/>)    
@@ -199,7 +204,7 @@ const mapStateToProps = (state) => ({
   });
   
 const mapActionsToProps = {
-    setWeekDayNumber,
+    setDayNumber,
     loadData,
     getDefaultPost,
     getSlots,
