@@ -144,7 +144,7 @@ class EditPost extends Component{
             defaultCapacity: parseInt(this.state.capacity)
         }
         this.props.editPost(changedPost, this.props.currentPostId);
-        console.log(changedPost, this.props.currentPostId)
+        // console.log(changedPost, this.props.currentPostId)
     }
     render() {
         const { errors } = this.state;

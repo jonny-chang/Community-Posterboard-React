@@ -144,7 +144,7 @@ class EditSlot extends Component{
                 dayNumber: this.props.data.dayNumber,
                 isCustom: this.props.isCustom
             }
-            console.log(newSlot)
+            // console.log(newSlot)
             this.props.editSlot(
                 this.props.data.post.postId, 
                 this.props.slot.slotId, 

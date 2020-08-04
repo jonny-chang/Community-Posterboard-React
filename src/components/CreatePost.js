@@ -127,7 +127,7 @@ class CreatePost extends Component{
             defaultCapacity: parseInt(this.state.capacity)
         }
         this.props.createPost(newPost);
-        console.log(newPost)
+        // console.log(newPost)
     }
     render() {
         const { errors } = this.state;

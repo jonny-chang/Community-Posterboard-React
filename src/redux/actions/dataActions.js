@@ -120,7 +120,7 @@ export const editPost = (newPost, postId) => (dispatch) => {
             .then(res => {
                 dispatch(getPosts())
                 dispatch({ type: CLEAR_ERRORS })
-                console.log(res)
+                // console.log(res)
             })
             .catch(err => {
                 console.log(err)
@@ -147,7 +147,7 @@ export const deletePost = (postId) => (dispatch) => {
 // Get slots of given day
 export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
     dispatch({ type: LOADING_DATA })
-    console.log(`.get: /post/${postId}/slots?dayNumber=${dayNumber}&isCustom=${isCustom}`)
+    // console.log(`.get: /post/${postId}/slots?dayNumber=${dayNumber}&isCustom=${isCustom}`)
     axios.get(`/post/${postId}/slots?dayNumber=${dayNumber}&isCustom=${isCustom}`)
         .then((res) => {
             dispatch({ 
@@ -206,7 +206,7 @@ export const createSlot = (postId, newSlot, dayNumber, custom, history) => (disp
 
 // Delete Slot
 export const deleteSlot = (postId, slotId, dayNumber, isCustom, history) => (dispatch) => {
-    console.log(`.delete: /post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
+    // console.log(`.delete: /post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
     axios.delete(`/post/${postId}/slot/${slotId}?dayNumber=${dayNumber}&isCustom=${isCustom}`)
       .then(() => {
         dispatch(getPost(postId, history))
@@ -226,7 +226,7 @@ export const deleteSlot = (postId, slotId, dayNumber, isCustom, history) => (dis
 
 // Edit slot
 export const editSlot = (postId, slotId, newSlot, dayNumber, history) => (dispatch) => {
-    console.log(`.edit: /post/${postId}/slot/${slotId}`)
+    // console.log(`.edit: /post/${postId}/slot/${slotId}`)
     console.log(newSlot)
     axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
         .then(res => {
