@@ -4,6 +4,7 @@ export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
 export const SET_USER = 'SET_USER';
 export const LOADING_USER = 'LOADING_USER';
 export const SET_NEW_USER = 'SET_NEW_USER';
+export const SET_RESEND_STATUS = 'SET_RESEND_STATUS';
 
 // UI reducer types
 export const SET_ERRORS = 'SET_ERRORS';

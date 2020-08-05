@@ -1,10 +1,14 @@
-import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_NEW_USER } from '../types';
+import { SET_USER, SET_AUTHENTICATED, 
+    SET_UNAUTHENTICATED, LOADING_USER, 
+    SET_NEW_USER, SET_RESEND_STATUS 
+} from '../types';
 
 const initialState = {
     authenticated: false,
     loading: false,
     email: '',
-    newUser: false
+    newUser: false,
+    resendStatus: 0
 };
 
 export default function(state = initialState, action){
@@ -31,6 +35,11 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 newUser: action.payload
+            }
+        case SET_RESEND_STATUS:
+            return {
+                ...state,
+                resendStatus: action.payload
             }
         default:
             return state;

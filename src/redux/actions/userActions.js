@@ -1,6 +1,6 @@
 import { 
     SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_NEW_USER,
-    SET_UNAUTHENTICATED, LOADING_USER, SET_LOCATION, CLEAR_LOCATION,  
+    SET_UNAUTHENTICATED, LOADING_USER, SET_LOCATION, CLEAR_LOCATION, SET_RESEND_STATUS,  
 } from '../types';
 import axios from 'axios';
 
@@ -88,9 +88,25 @@ export const setNewUser = (bool) => (dispatch) => {
 }
 
 export const resendVerificationEmail = (userData) => (dispatch) => {
-    axios.post('/sendVerificationEmail', userData)
+    axios.post('/send', userData)
         .then(res => {
-
+            dispatch({
+                type: SET_RESEND_STATUS,
+                payload: 1
+            })
+            console.log('1')
         })
-        .get(err => console.log(err.response))
+        .catch(err => {
+            dispatch({ 
+                type: SET_RESEND_STATUS,
+                payload: 2 
+            })
+        })
+}
+
+export const setResendStatus = (status) => (dispatch) => {
+    dispatch({
+        type: SET_RESEND_STATUS,
+        payload: status
+    })
 }

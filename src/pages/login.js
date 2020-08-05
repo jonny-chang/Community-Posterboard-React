@@ -21,7 +21,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 // Redux
 import { connect } from 'react-redux';
-import { loginUser, setNewUser, resendVerificationEmail } from '../redux/actions/userActions';
+import { loginUser, setNewUser, resendVerificationEmail, setResendStatus } from '../redux/actions/userActions';
 import { clearErrors } from '../redux/actions/dataActions';
 
 const styles = {
@@ -47,6 +47,11 @@ const styles = {
     card: {
         display: 'flex',
         marginTop: 20,
+    },
+    resendErrorCard: {
+        display: 'flex',
+        marginTop: 20,
+        backgroundColor: '#ffcccb'
     },
     newUserCard: {
         display: 'flex',
@@ -84,7 +89,7 @@ class login extends Component {
             email: '',
             password: '',
             errors: {},
-            open: false
+            open: false,
         }
     }
     // Setting errors for local state
@@ -95,6 +100,7 @@ class login extends Component {
     }
     componentWillUnmount(){
         this.props.setNewUser(false)
+        this.props.setResendStatus(0)
     }
     handleSubmit = (event) => {
         event.preventDefault();
@@ -123,7 +129,7 @@ class login extends Component {
         this.handleClose()
     }
     render() {
-        const { classes, UI: { loading }, user: { newUser } } = this.props;
+        const { classes, UI: { loading }, user: { newUser, resendStatus } } = this.props;
         const { errors } = this.state;
         return (
             <Fragment>
@@ -137,6 +143,37 @@ class login extends Component {
                                         We have sent a confirmation link to your email address. 
                                         Please click on the link to verify your email address 
                                         in order to login successfully.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item sm />
+                    </Grid>
+                )}
+                {resendStatus === 1 && (
+                    <Grid container className={classes.newUserCardContainer}>
+                        <Grid item sm />
+                        <Grid item sm>
+                            <Card className={classes.newUserCard}>
+                                <CardContent className={classes.newUserContent}>
+                                    <Typography variant='body2'>
+                                        A verification email has been resent to your email address. 
+                                        Please follow the instructions in the email in order to login successfully.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item sm />
+                    </Grid>
+                )}
+                {resendStatus === 2 && (
+                    <Grid container className={classes.newUserCardContainer}>
+                        <Grid item sm />
+                        <Grid item sm>
+                            <Card className={classes.resendErrorCard}>
+                                <CardContent className={classes.newUserContent}>
+                                    <Typography variant='body2'>
+                                        An error occured resending the verification email. Please try again.
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -253,7 +290,8 @@ const mapActionsToProps = {
     loginUser,
     clearErrors,
     setNewUser,
-    resendVerificationEmail
+    resendVerificationEmail,
+    setResendStatus
 }
 
 // Connect function connects to redux state
