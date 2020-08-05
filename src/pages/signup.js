@@ -134,7 +134,6 @@ class signup extends Component {
                                 <small >
                                 Already have an account? <Link to="/login">Login now</Link>
                                 </small>
-                                
                             </form>
                         </CardContent>
                     </Card>

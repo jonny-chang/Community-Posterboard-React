@@ -1,5 +1,5 @@
 import { 
-    SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, STOP_LOADING_DATA,
+    SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_NEW_USER,
     SET_UNAUTHENTICATED, LOADING_USER, SET_LOCATION, CLEAR_LOCATION,  
 } from '../types';
 import axios from 'axios';
@@ -26,17 +26,19 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('/signup', newUserData)
             .then(res => {
-                setAuthorizationHeader(res.data.retrievedIdToken ?? res.data.token)
-                dispatch(getUserData());
-                dispatch({ type: SET_AUTHENTICATED })
+                // setAuthorizationHeader(res.data.retrievedIdToken ?? res.data.token)
+                // dispatch(getUserData());
+                // dispatch({ type: SET_AUTHENTICATED });
                 dispatch({ type: CLEAR_ERRORS });
-                history.push('/');
+                dispatch(setNewUser(true))
+                history.push('/login');
             })
             .catch(err => {
                 dispatch({
                     type: SET_ERRORS,
                     payload: err.response.data
                 })
+                console.log(err.response)
             })
 }
 
@@ -76,4 +78,11 @@ export const setLocation = (position) => (dispatch) => {
 export const clearLocation = () => (dispatch) => {
     dispatch({ type: CLEAR_LOCATION })
     dispatch({ type: CLEAR_ERRORS })
+}
+
+export const setNewUser = (bool) => (dispatch) => {
+    dispatch({
+        type: SET_NEW_USER,
+        payload: bool
+    })
 }
