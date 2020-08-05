@@ -21,7 +21,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 // Redux
 import { connect } from 'react-redux';
-import { loginUser, setNewUser } from '../redux/actions/userActions';
+import { loginUser, setNewUser, resendVerificationEmail } from '../redux/actions/userActions';
 import { clearErrors } from '../redux/actions/dataActions';
 
 const styles = {
@@ -114,6 +114,14 @@ class login extends Component {
         this.props.clearErrors()
         this.setState({ errors: {} })
     }
+    handleResend = (event) => {
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.resendVerificationEmail(userData)
+        this.handleClose()
+    }
     render() {
         const { classes, UI: { loading }, user: { newUser } } = this.props;
         const { errors } = this.state;
@@ -152,8 +160,10 @@ class login extends Component {
                                 <DialogTitle>Email verification error</DialogTitle>
                                 <DialogContent>
                                     <div className={classes.dialogContentContainer}>
-                                        <Typography variant='body2'>
-                                            You're email has not been verified
+                                        <Typography variant='body2' display='inline'>
+                                            You're email address has not been verified, click
+                                            <a href="#" onClick={this.handleResend}> here </a>
+                                            to resend the verification email.
                                         </Typography>
                                     </div>
                                     <Button variant="contained" variant="text" size="small"
@@ -242,7 +252,8 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
     loginUser,
     clearErrors,
-    setNewUser
+    setNewUser,
+    resendVerificationEmail
 }
 
 // Connect function connects to redux state

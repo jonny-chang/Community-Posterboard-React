@@ -16,7 +16,7 @@ class error extends Component {
         return (
             <div className={classes.container}>
                 <Typography variant='h4'>
-                    Error, page does not exist
+                    Error, the page you are looking for does not exist
                 </Typography>
             </div>
         )

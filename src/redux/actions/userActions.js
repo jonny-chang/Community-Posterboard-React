@@ -86,3 +86,7 @@ export const setNewUser = (bool) => (dispatch) => {
         payload: bool
     })
 }
+
+export const resendVerificationEmail = (userData) => (dispatch) => {
+    axios.post('/resend', userData)
+}

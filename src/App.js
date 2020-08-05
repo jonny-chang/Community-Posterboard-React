@@ -57,6 +57,7 @@ class App extends Component {
               <Switch>
                 <UnauthRoute exact path='/login' component={login}/>
                 <UnauthRoute exact path='/register' component={signup}/>
+                <UnauthRoute exact path='/signup' component={signup}/>
                 <AuthRoute exact path='/' component={home}/>
                 <AuthRoute exact path='/schedule/:postId' component={homeSchedulePage}/>
                 <AuthRoute exact path='/schedule/:postId/customdays' component={customSchedulePage}/>
