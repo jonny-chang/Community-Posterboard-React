@@ -88,5 +88,9 @@ export const setNewUser = (bool) => (dispatch) => {
 }
 
 export const resendVerificationEmail = (userData) => (dispatch) => {
-    axios.post('/resend', userData)
+    axios.post('/sendVerificationEmail', userData)
+        .then(res => {
+
+        })
+        .get(err => console.log(err.response))
 }
