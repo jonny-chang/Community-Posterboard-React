@@ -329,6 +329,24 @@ class customSchedulePage extends Component {
                 <CircularProgress size={50} className={classes.loadingIndicator}/>                
             </div>
           );
+          let defaultScheduleMarkup = !loading ? (
+            (slots && slots.length > 0) ? (
+                slots.map((slots) => 
+                <Slot thisSlot={slots} isCustom={false} 
+                key={slots.slotId} view='default'/>)    
+            ) : (
+                <div className={classes.noSlotsContainer}>
+                    <Typography variant='body1' className={classes.noSlots}>
+                        No slots currently for this day
+                    </Typography>
+                </div>
+                
+            )
+          ) : (
+            <div className={classes.loadingContainer}>
+                <CircularProgress size={50} className={classes.loadingIndicator}/>                
+            </div>
+          );
         return (
             <Fragment>
                 {value === 1 && (
@@ -369,7 +387,7 @@ class customSchedulePage extends Component {
                                     </Typography>
                                 </Fragment>
                             )}
-                            {scheduleMarkup}
+                            {deafultScheduleMarkup}
                             {!loading && (
                                 <div className={classes.addButton}>
                                     <CreateSlot isCustom={false}/>
