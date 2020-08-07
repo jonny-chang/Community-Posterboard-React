@@ -1,5 +1,5 @@
 import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, 
-    SET_DAY_NUMBER,
+    SET_DAY_NUMBER, DELETE_POST,
     SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, 
     SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT 
 } from '../types';
@@ -82,6 +82,14 @@ export default function(state = initialState, action){
                 ...state,
                 currentSlots: {}
             }
+        case DELETE_POST:
+            let index = state.posts.findIndex(
+                (post) => post.postId === action.payload
+              );
+              state.posts.splice(index, 1);
+              return {
+                ...state
+              }
         default:
             return state
     }

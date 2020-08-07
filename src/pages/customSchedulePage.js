@@ -13,6 +13,9 @@ import CreateSlot from '../components/CreateSlot';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
 
 // Redux
 import { connect } from 'react-redux';
@@ -48,10 +51,11 @@ const styles = {
         textAlign: 'center'
     },
     dateTimePicker: {
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 10
     },
     dateTimeTitle: {
-        marginTop: 10
+        
     },
     dateButtonContainer: {
         marginTop: 10,
@@ -65,7 +69,11 @@ const styles = {
     },
     noSlotsContainer: {
         textAlign: 'center'
-    }
+    },
+    paper: {
+        padding: 20,
+        marginTop: 20
+    },
 }
 
 class customSchedulePage extends Component {
@@ -168,6 +176,7 @@ class customSchedulePage extends Component {
             </div>
           );
         let customDatePicker = !loading ? (
+            // <Paper className={classes.paper}>
             <Fragment>
                 <Typography variant='h6' className={classes.dateTimeTitle}>
                     Select date
@@ -178,7 +187,8 @@ class customSchedulePage extends Component {
                 className={classes.dateTimePicker}
                 format="yyyy-MM-dd"	
                 />
-                </Fragment>
+            </Fragment>
+            // </Paper>
         ) : (
             <div/>
         )

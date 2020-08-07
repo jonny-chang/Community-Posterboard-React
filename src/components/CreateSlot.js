@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 // Util/Components
 import UtilButton from '../util/UtilButton';
-import UtilLocationPicker from '../util/UtilLocationPicker';
+import UtilButtonFab from '../util/UtilButtonFab';
 import TimePicker from 'react-time-picker';
 
 // Redux
@@ -143,9 +143,9 @@ class CreateSlot extends Component{
         const { classes, data: { loading, post } } = this.props;
         return (
             <Fragment>
-                <UtilButton onClick={this.handleOpen} tip="Add a new slot">
+                <UtilButtonFab onClick={this.handleOpen} tip="Add a new slot" color='primary'>
                     <AddIcon fontSize="large"/>
-                </UtilButton>
+                </UtilButtonFab>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon/>

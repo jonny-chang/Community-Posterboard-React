@@ -22,8 +22,8 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Icons
-import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = {
     submitButton: {
@@ -167,9 +167,9 @@ class EditSlot extends Component{
         const { classes, data: { loading, post } } = this.props;
         return (
             <Fragment>
-                <Button onClick={this.handleOpen}>
-                    Edit Slot
-                </Button>
+                <UtilButton tip='Edit slot' onClick={this.handleOpen}>
+                    <EditIcon/>
+                </UtilButton>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon/>

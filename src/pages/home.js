@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import UtilButton from '../util/UtilButton';
 import PropTypes from 'prop-types';
 
 // Components
@@ -13,6 +12,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 
+// Icons
+import StoreIcon from '@material-ui/icons/Store';
+
 // Redux
 import { connect } from 'react-redux';
 import { getPosts } from '../redux/actions/dataActions';
@@ -23,7 +25,7 @@ const styles = {
     },
     createButton: {
         textAlign: 'center',
-        marginTop: '10px'
+        marginTop: '20px'
     },
     loadingContainer: {
         marginTop: 20,
@@ -37,10 +39,14 @@ const styles = {
     },
     noPosts: {
         marginTop: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 20
     },
     noPostsContainer: {
         textAlign: 'center'
+    },
+    icon: {
+        marginTop: 20
     }
 }
 
@@ -57,12 +63,13 @@ class home extends Component {
                 posts.map((post) => <Post post={post} key={post.postId}/>)
             ) : (
                 <div className={classes.noPostsContainer}>
+                    {/* <StoreIcon fontSize='large' className={classes.icon}/> */}
                     <Typography variant='body1' className={classes.noPosts}>
                         You currently have no posts
                     </Typography>
-                    <Typography variant='body1' className={classes.noPosts}>
+                    {/* <Typography variant='body1' className={classes.noPosts}>
                         Click on the button below to create your first post
-                    </Typography>
+                    </Typography> */}
                 </div>
             )           
           ) : (

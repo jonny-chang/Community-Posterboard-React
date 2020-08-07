@@ -16,6 +16,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux';
 import { signupUser } from '../redux/actions/userActions';
 
+// Images
+import Logo from '../images/Logo.png'
+
 const styles = {
     form: {
         textAlign: 'center'
@@ -44,6 +47,10 @@ const styles = {
     progressSpinner: {
         position: 'absolute'
     },
+    image: {
+        height: '75px',
+        width: '75px'
+    }
 }
 
 class signup extends Component {
@@ -85,8 +92,9 @@ class signup extends Component {
             <Grid container className={classes.form}>
                 <Grid item sm />
                 <Grid item sm>
-                    <Card className={classes.card}>
-                        <CardContent className={classes.content}>
+                    {/* <Card className={classes.card}>
+                        <CardContent className={classes.content}> */}
+                            <img src={Logo} className={classes.image}/>                        
                             <Typography variant="h3" className={classes.pageTitle}>
                                 Register
                             </Typography>
@@ -135,8 +143,8 @@ class signup extends Component {
                                 Already have an account? <Link to="/login">Login now</Link>
                                 </small>
                             </form>
-                        </CardContent>
-                    </Card>
+                        {/* </CardContent>
+                    </Card> */}
                     <br/>
                     {/* <Typography variant="caption" color="textSecondary" inLine>
 

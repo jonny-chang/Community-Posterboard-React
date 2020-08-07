@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // Util/Components
 import UtilButton from '../util/UtilButton';
 import UtilLocationPicker from '../util/UtilLocationPicker';
+import UtilButtonFab from '../util/UtilButtonFab';
 
 // Redux
 import { connect } from 'react-redux';
@@ -131,12 +132,12 @@ class CreatePost extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, UI: { loading }, data: { position } } = this.props;
+        const { classes, UI: { loading } } = this.props;
         return (
             <Fragment>
-                <UtilButton onClick={this.handleOpen} tip="Create a post">
+                <UtilButtonFab color='primary' onClick={this.handleOpen} tip="Create a post">
                     <AddIcon fontSize="large"/>
-                </UtilButton>
+                </UtilButtonFab>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon/>

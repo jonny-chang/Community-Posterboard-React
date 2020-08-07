@@ -24,6 +24,9 @@ import { connect } from 'react-redux';
 import { loginUser, setNewUser, resendVerificationEmail, setResendStatus } from '../redux/actions/userActions';
 import { clearErrors } from '../redux/actions/dataActions';
 
+// Images
+import Logo from '../images/Logo.png'
+
 const styles = {
     form: {
         textAlign: 'center'
@@ -80,6 +83,10 @@ const styles = {
         left: '90%',
         top: '2%'
     },
+    image: {
+        height: '75px',
+        width: '75px'
+    }
 }
 
 class login extends Component {
@@ -184,8 +191,8 @@ class login extends Component {
                 <Grid container className={classes.form}>
                     <Grid item sm />
                     <Grid item sm>
-                        <Card className={classes.card}>
-                        <CardContent className={classes.content}>
+                        {/* <Card className={classes.card}>
+                        <CardContent className={classes.content}> */}
                             {errors.noVerification && (
                                 <Dialog open={true} onClose={this.handleClose} fullWidth maxWidth="sm">
                                 <UtilButton 
@@ -210,7 +217,7 @@ class login extends Component {
                                 </DialogContent>
                             </Dialog>
                             )}
-                                
+                            <img src={Logo} className={classes.image}/>
                             <Typography variant="h3" className={classes.pageTitle}>
                                 Login
                             </Typography>
@@ -253,8 +260,8 @@ class login extends Component {
                                     Don't have an account? <Link to="/register">Register now</Link>
                                 </small>
                             </form>
-                        </CardContent>
-                        </Card>
+                        {/* </CardContent>
+                        </Card> */}
                         <br/>
                         {/* <Typography variant="caption" color="textSecondary" inLine>
 

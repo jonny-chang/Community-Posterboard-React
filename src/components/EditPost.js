@@ -22,6 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = {
     submitButton: {
@@ -155,9 +156,9 @@ class EditPost extends Component{
         } = this.props;
         return (
             <Fragment>
-                <Button onClick={this.handleOpen}>
-                    Edit Post
-                </Button>
+                <UtilButton tip='Edit post' onClick={this.handleOpen}>
+                    <EditIcon/>
+                </UtilButton>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
                         <CloseIcon/>

@@ -12,6 +12,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ScheduleIcon from '@material-ui/icons/Event';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = {
     card: {
@@ -34,9 +37,6 @@ const styles = {
     address: {
         marginBottom: 5,
     },
-    deleteContainer:{
-
-    }
 }
 
 class Post extends Component {
@@ -57,9 +57,11 @@ class Post extends Component {
           const editButton = 
             <EditPost currentPostId={postId} currentPost={post}/>
           const scheduleButton =
-            <Button component={Link} to={`/schedule/${postId}`}>
-                Schedule
-            </Button>
+            <Tooltip title='Edit schedule'>
+                <IconButton component={Link} to={`/schedule/${postId}`}>
+                    <ScheduleIcon/>
+                </IconButton>
+            </Tooltip>
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
@@ -74,9 +76,7 @@ class Post extends Component {
                     </Typography>
                     {editButton}
                     {scheduleButton}
-                    <div className={classes.deleteContainer}>
-                        {deleteButton}
-                    </div>
+                    {deleteButton}
                 </CardContent>
             </Card>
         )

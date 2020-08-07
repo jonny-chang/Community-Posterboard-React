@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
     SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
-    SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT
+    SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, DELETE_POST
 } from '../types';
 
 // Create Post
@@ -67,9 +67,6 @@ export const getPost = (postId, history) => (dispatch) => {
         })
         .catch((err) => {
             console.log(err.response)
-            if (err.response.status === 404){
-                history.push('/error')
-            }
         })
 }
 
@@ -134,10 +131,13 @@ export const editPost = (newPost, postId) => (dispatch) => {
 
 // Delete Post
 export const deletePost = (postId) => (dispatch) => {
-    axios
-      .delete(`/post/${postId}`)
+    dispatch({
+        type: DELETE_POST,
+        payload: postId
+    });
+    axios.delete(`/post/${postId}`)
       .then(() => {
-        dispatch(getPosts());
+        console.log('res')
       })
       .catch((err) => {
           console.log(err)
