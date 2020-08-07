@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
     card: {
@@ -35,7 +36,7 @@ const styles = {
     },
     deleteContainer:{
 
-    }
+    },
 }
 
 class Slot extends Component {
@@ -66,7 +67,8 @@ class Slot extends Component {
             },
             thisSlot,
             classes,
-            isCustom
+            isCustom,
+            view
           } = this.props;
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)
@@ -91,20 +93,19 @@ class Slot extends Component {
                     <Typography variant='h5' className={classes.title}>
                         Start time: {newStartTime} | End time: {newEndTime}
                     </Typography>
-                    {isCustom && (
+                    {view === 'custom' && (
                         <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
                             Capacity: {thisSlot.capacity} | Spots taken: {thisSlot.spotsTaken}
                         </Typography>
                     )}
-                    {!isCustom && (
+                    {view === 'default' && (
                         <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
                             Capacity: {thisSlot.capacity}
                         </Typography>
                     )}
                     {editButton}
-                    <div className={classes.deleteContainer}>
-                        {deleteButton}
-                    </div>
+                    {deleteButton}
+
                 </CardContent>
             </Card>
         )

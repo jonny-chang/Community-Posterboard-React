@@ -103,7 +103,7 @@ class defaultSchedulePage extends Component {
         this.props.clearSlots();
         this.props.clearPost();
     }
-    handleChange = (event) => {
+    handleChangeDropdown = (event) => {
         this.setState({
             dayNumber: event.target.value
         })
@@ -137,7 +137,9 @@ class defaultSchedulePage extends Component {
         var dayNumberString = this.dayNumberToString(dayNumber)
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
-                slots.map((slots) => <Slot thisSlot={slots} isCustom={false} key={slots.slotId}/>)    
+                slots.map((slots) => 
+                <Slot thisSlot={slots} isCustom={false} 
+                key={slots.slotId} view='default'/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>
@@ -178,10 +180,10 @@ class defaultSchedulePage extends Component {
                 )}
             </Grid>
             <Grid item xs={3}>
-                <FormControl className={classes.formControl}>
+                {<FormControl className={classes.formControl}>
                     <InputLabel>Day </InputLabel>
                     <Select
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeDropdown}
                     defaultValue={3}
                     >
                     <MenuItem value={3}>Sunday</MenuItem>
@@ -192,7 +194,7 @@ class defaultSchedulePage extends Component {
                     <MenuItem value={1}>Friday</MenuItem>
                     <MenuItem value={2}>Saturday</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl>}
             </Grid>
         </Grid>
         )

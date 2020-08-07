@@ -12,6 +12,7 @@ import login from './pages/login';
 import signup from './pages/signup';
 import home from './pages/home';
 import customSchedulePage from './pages/customSchedulePage';
+import schedulePage from './pages/schedulePage';
 import homeSchedulePage from './pages/homeSchedulePage';
 import defaultSchedulePage from './pages/defaultSchedulePage';
 import error from './pages/error';
@@ -59,9 +60,7 @@ class App extends Component {
                 <UnauthRoute exact path='/register' component={signup}/>
                 <UnauthRoute exact path='/signup' component={signup}/>
                 <AuthRoute exact path='/' component={home}/>
-                <AuthRoute exact path='/schedule/:postId' component={homeSchedulePage}/>
-                <AuthRoute exact path='/schedule/:postId/customdays' component={customSchedulePage}/>
-                <AuthRoute exact path='/schedule/:postId/defaultdays' component={defaultSchedulePage}/>
+                <AuthRoute exact path='/schedule/:postId' component={schedulePage}/>
                 <Route exact path='/error' component={error}/>
                 <Route path='/' component={error}/>
               </Switch>

@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 // Redux
 import { connect } from 'react-redux';
@@ -47,7 +48,7 @@ const styles = {
         textAlign: 'center'
     },
     dateHeader: {
-        marginTop: 10,
+        marginTop: 20,
         textAlign: 'center'
     },
     dateTimePicker: {
@@ -55,7 +56,7 @@ const styles = {
         marginBottom: 10
     },
     dateTimeTitle: {
-        
+        marginTop: 10
     },
     dateButtonContainer: {
         marginTop: 10,
@@ -73,6 +74,10 @@ const styles = {
     paper: {
         padding: 20,
         marginTop: 20
+    },
+    titleContainer: {
+        marginTop: 10,
+        marginBottom: 10
     },
 }
 
@@ -159,9 +164,24 @@ class customSchedulePage extends Component {
                 dayNumber 
             }} = this.props
         const { currentDate } = this.state
+        let titleMarkup = !loading ? (
+            <div className={classes.titleContainer}>
+                <Typography variant='overline'>
+                    Schedule for
+                </Typography>
+                <Typography variant='h5'>
+                    {post.title}
+                </Typography>
+                <Divider orientation='vertical'/>
+            </div>
+        ) : (
+            null
+        )
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
-                slots.map((slots) => <Slot thisSlot={slots} isCustom={this.state.custom} key={slots.slotId}/>)    
+                slots.map((slots) => 
+                <Slot thisSlot={slots} isCustom={this.state.custom} 
+                key={slots.slotId} view='custom'/>)    
             ) : (
                 <div className={classes.noSlotsContainer}>
                     <Typography variant='body1' className={classes.noSlots}>
@@ -178,9 +198,11 @@ class customSchedulePage extends Component {
         let customDatePicker = !loading ? (
             // <Paper className={classes.paper}>
             <Fragment>
-                <Typography variant='h6' className={classes.dateTimeTitle}>
-                    Select date
-                </Typography>
+                <div className={classes.dateTimeTitle}>
+                    <Typography variant='button' className={classes.dateTimeTitle}>
+                        Select date
+                    </Typography>
+                </div>
                 <DateTimePicker
                 onChange={this.onChange}
                 value={this.state.pickerDate}
@@ -207,10 +229,16 @@ class customSchedulePage extends Component {
                     </Button>
                 )}
             </Grid>   
-            <Grid item xs={6} sm={6}>
-                <Typography variant='h5' className={classes.dateHeader}>
-                    {currentDate}
-                </Typography>
+            <Grid item xs={6} sm={6}>               
+                {titleMarkup}
+                {!loading && (
+                    <Fragment>
+                        <Divider/>
+                        <Typography variant='h5' className={classes.dateHeader}>
+                            {currentDate}
+                        </Typography>
+                    </Fragment>
+                )}
                 {scheduleMarkup}
                 {!loading && (
                     <div className={classes.addButton}>

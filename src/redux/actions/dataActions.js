@@ -90,7 +90,17 @@ export const getCustomPost = (postId, history) => (dispatch) => {
 // Get post for default day
 export const getDefaultPost = (postId, history) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
-    dispatch(getPost(postId, history))
+    axios.get(`/post/${postId}`)
+        .then((res) => {
+            dispatch({
+                type: SET_POST,
+                payload: res.data
+            })
+            dispatch(getSlots(postId, 3, false))
+        })
+        .catch((err) => {
+            console.log(err.response)
+        })
 }
 
 // Clearing post
@@ -131,13 +141,12 @@ export const editPost = (newPost, postId) => (dispatch) => {
 
 // Delete Post
 export const deletePost = (postId) => (dispatch) => {
-    dispatch({
-        type: DELETE_POST,
-        payload: postId
-    });
     axios.delete(`/post/${postId}`)
       .then(() => {
-        console.log('res')
+        dispatch({
+            type: DELETE_POST,
+            payload: postId
+        });
       })
       .catch((err) => {
           console.log(err)
@@ -156,7 +165,7 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
             })
         })
         .catch((err) => {
-           console.log(err.response)
+        //    console.log(err.response)
         })
 }
 
