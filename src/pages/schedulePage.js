@@ -387,7 +387,7 @@ class customSchedulePage extends Component {
                                     </Typography>
                                 </Fragment>
                             )}
-                            {deafultScheduleMarkup}
+                            {defaultScheduleMarkup}
                             {!loading && (
                                 <div className={classes.addButton}>
                                     <CreateSlot isCustom={false}/>
