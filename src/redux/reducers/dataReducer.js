@@ -1,5 +1,5 @@
 import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, 
-    SET_DAY_NUMBER, DELETE_POST,
+    SET_DAY_NUMBER, DELETE_POST, LOADING_STORE_NAME,
     SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, 
     SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT 
 } from '../types';
@@ -14,7 +14,8 @@ const initialState = {
     loading: false,
     dayNumber: null,
     dayNumber: null,
-    currentSlots: {}
+    currentSlots: {},
+    loadingName: false
 };
 
 export default function(state = initialState, action){
@@ -38,7 +39,8 @@ export default function(state = initialState, action){
         case SET_POST:
             return{
                 ...state,
-                post: action.payload
+                post: action.payload,
+                loadingName: false
             }
         case CREATE_POST:
             return{
@@ -89,7 +91,12 @@ export default function(state = initialState, action){
               state.posts.splice(index, 1);
               return {
                 ...state
-              }
+            }
+        case LOADING_STORE_NAME:
+            return{
+                ...state,
+                loadingName: true
+            }
         default:
             return state
     }

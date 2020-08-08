@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DateTimePicker from 'react-datetime-picker';
@@ -10,6 +9,8 @@ import Slot from '../components/Slot';
 import CreateSlot from '../components/CreateSlot';
 
 // Mui
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -97,6 +98,9 @@ const styles = {
     },
     formControl: {
         marginTop: 15
+    },
+    linearProgress: {
+        marginTop: 45
     }
 }
 
@@ -237,7 +241,8 @@ class customSchedulePage extends Component {
                 post, 
                 loading, 
                 currentSlots: { slots }, 
-                dayNumber 
+                dayNumber,
+                loadingName 
             }} = this.props
         const { currentDate, value } = this.state
         var dayNumberString = this.dayNumberToString(dayNumber)
@@ -292,9 +297,21 @@ class customSchedulePage extends Component {
                 </Grid>
             </Grid>
         ) : (
-            null
+            <Grid container className={classes.defaultTitleContainer} justify='space-around'>
+                <Grid item xs={5}>
+                    <div className={classes.linearProgress}>
+                        <LinearProgress/>
+                    </div>
+                </Grid>
+                <Grid item xs={5}/>
+                <Grid item xs={2}>
+                    <div className={classes.linearProgress}>
+                        <LinearProgress/>
+                    </div>
+                </Grid>
+            </Grid>
         )
-        let defaultTitleMarkup = !loading ? (
+        let defaultTitleMarkup = !loadingName ? (
             <Grid container className={classes.defaultTitleContainer} justify='space-around'>
                 <Grid item xs={10}>
                     <Typography variant='overline'>
@@ -309,7 +326,19 @@ class customSchedulePage extends Component {
                 </Grid>
             </Grid>
         ) : (
-            null
+            <Grid container className={classes.defaultTitleContainer} justify='space-around'>
+                <Grid item xs={5}>
+                    <div className={classes.linearProgress}>
+                        <LinearProgress/>
+                    </div>
+                </Grid>
+                <Grid item xs={5}/>
+                <Grid item xs={2}>
+                    <div className={classes.linearProgress}>
+                        <LinearProgress/>
+                    </div>
+                </Grid>
+            </Grid>
         )
         let scheduleMarkup = !loading ? (
             (slots && slots.length > 0) ? (
@@ -379,9 +408,9 @@ class customSchedulePage extends Component {
                                 </Tabs>
                             </Paper>            
                             {defaultTitleMarkup}
+                            <Divider/>
                             {!loading && (
-                                <Fragment>
-                                    <Divider/>
+                                <Fragment>          
                                     <Typography variant='h5' className={classes.dateHeader}>
                                         {dayNumberString}
                                     </Typography>
@@ -427,9 +456,9 @@ class customSchedulePage extends Component {
                                 </Tabs>
                             </Paper>            
                             {customTitleMarkup}
+                            <Divider/>
                             {!loading && (
                                 <Fragment>
-                                    <Divider/>
                                     <Typography variant='h5' className={classes.dateHeader}>
                                         {currentDate}
                                     </Typography>

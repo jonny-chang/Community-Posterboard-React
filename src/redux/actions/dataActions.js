@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
-    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST,
+    SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST, LOADING_STORE_NAME,
     SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, DELETE_POST
 } from '../types';
 
@@ -73,7 +73,8 @@ export const getPost = (postId, history) => (dispatch) => {
 // Get post for custom day
 
 export const getCustomPost = (postId, history) => (dispatch) => {
-    dispatch({ type: LOADING_DATA });
+    dispatch({ type: LOADING_STORE_NAME });
+    dispatch({ type: LOADING_DATA })
     const millisecondsPerDay = 86400000;
     var offset = new Date().getTimezoneOffset()
     var offset = new Date()
@@ -89,7 +90,7 @@ export const getCustomPost = (postId, history) => (dispatch) => {
 
 // Get post for default day
 export const getDefaultPost = (postId, history) => (dispatch) => {
-    dispatch({ type: LOADING_DATA });
+    dispatch({ type: LOADING_STORE_NAME });
     axios.get(`/post/${postId}`)
         .then((res) => {
             dispatch({
