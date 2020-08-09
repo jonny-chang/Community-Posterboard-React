@@ -85,7 +85,13 @@ class Post extends Component {
                         Description: {description}
                     </Typography>
                     {editButton}
+                    <Typography variant="body2" color="textSecondary" variant='block'>
+                        │
+                    </Typography>
                     {scheduleButton}
+                    <Typography variant="body2" color="textSecondary" variant='block'>
+                        │
+                    </Typography>
                     {deleteButton}
             {/* </Paper> */}
                  </CardContent>

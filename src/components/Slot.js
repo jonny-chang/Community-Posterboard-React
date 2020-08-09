@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 
 const styles = {
     card: {
@@ -107,6 +106,9 @@ class Slot extends Component {
                         </Typography>
                     )}
                     {editButton}
+                    <Typography variant="body2" color="textSecondary" variant='block'>
+                        │
+                    </Typography>
                     {deleteButton}
 
                 </CardContent>
