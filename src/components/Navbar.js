@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types'
 
+// Images
+import Logo from '../images/Logo.png';
+
 // Mui
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,7 +25,13 @@ const styles = {
     },
     title: {
         color: '#fff'
-    }
+    },
+    image: {
+        left: 'absolute',
+        right: '20px',
+        height: '35px',
+        width: '35px'
+    },
 }
 
 class Navbar extends Component {
@@ -33,15 +42,20 @@ class Navbar extends Component {
     render() {
         const { classes, user: { authenticated } } = this.props
         return (
-            <AppBar position="fixed">
+            <AppBar position="fixed"  className={classes.appBar} color='primary'>
                 <Toolbar>
+                    <img src={Logo} className={classes.image}/>
                     <div className={classes.header}>
                         <a href='/' className={classes.title}>
                             <h2>Skipt</h2>
                         </a>
                     </div>
                     {authenticated && (
-                        <Button className={classes.button} color='inherit' onClick={this.handleLogout}>
+                        <Button 
+                        className={classes.button} 
+                        color='#fff' 
+                        onClick={this.handleLogout}
+                        >
                             Logout
                         </Button>
                     )}

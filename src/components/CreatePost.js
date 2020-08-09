@@ -54,6 +54,9 @@ const styles = {
     progressSpinner: {
         position: 'absolute'
       },
+    fab: {
+        color: '#6864aa'
+    }
 }
 
 class CreatePost extends Component{

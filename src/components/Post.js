@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import ScheduleIcon from '@material-ui/icons/Event';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 
 const styles = {
     card: {
@@ -25,8 +26,13 @@ const styles = {
         padding: 25,
         objectFit: 'cover',
     },
+    paper: {
+        padding: 25,
+        marginTop: 15,
+        backgroundColor: '#f5f5f5'
+    },
     title: {
-        marginBottom: 10
+        marginBottom: 10,
     },
     description: {
         marginBottom: 5
@@ -37,6 +43,9 @@ const styles = {
     address: {
         marginBottom: 5,
     },
+    scheduleIcon: {
+        color: '#228B22'
+    }
 }
 
 class Post extends Component {
@@ -59,12 +68,13 @@ class Post extends Component {
           const scheduleButton =
             <Tooltip title='Edit schedule'>
                 <IconButton component={Link} to={`/schedule/${postId}`}>
-                    <ScheduleIcon/>
+                    <ScheduleIcon className={classes.scheduleIcon}/>
                 </IconButton>
             </Tooltip>
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
+                {/* <Paper className={classes.paper} variant='outlined'> */}
                     <Typography variant='h5' className={classes.title}>
                         {title}
                     </Typography>
@@ -77,7 +87,8 @@ class Post extends Component {
                     {editButton}
                     {scheduleButton}
                     {deleteButton}
-                </CardContent>
+            {/* </Paper> */}
+                 </CardContent>
             </Card>
         )
     }

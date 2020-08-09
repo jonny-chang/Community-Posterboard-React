@@ -53,6 +53,9 @@ const styles = {
     progressSpinner: {
         position: 'absolute'
       },
+    editIcon: {
+        color: '#FFA500'
+    }
 }
 
 class EditPost extends Component{
@@ -157,7 +160,7 @@ class EditPost extends Component{
         return (
             <Fragment>
                 <UtilButton tip='Edit post' onClick={this.handleOpen}>
-                    <EditIcon/>
+                    <EditIcon className={classes.editIcon}/>
                 </UtilButton>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>
