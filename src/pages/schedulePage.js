@@ -39,7 +39,8 @@ import {
 
 const styles = {
     backButton: {
-        marginTop: '10px',
+        marginTop: '25px',
+        marginLeft: '15px'
     },
     loadingContainer: {
         marginTop: 20,
@@ -382,7 +383,6 @@ class customSchedulePage extends Component {
                     <Grid container spacing={3} className={classes.gridContainer} 
                     alignItems="flex-start" justify="flex-end" direction="row">
                         <Grid item xs={3}>
-                            {!loading && (
                                 <Button 
                                 component={Link} 
                                 to='/'
@@ -392,7 +392,6 @@ class customSchedulePage extends Component {
                                 >
                                     Back
                                 </Button>
-                            )}
                         </Grid>   
                         <Grid item xs={8} sm={8} className={classes.grid}>     
                             <Paper className={classes.root}>
