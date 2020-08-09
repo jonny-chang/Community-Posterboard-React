@@ -121,14 +121,14 @@ class EditSlot extends Component{
             capacity: parseInt(event.target.value),
         })
     }
-    handleChangeStartTime = time => {
+    handleChangeStartTime = (event) => {
         this.setState({ 
-            startTime: time,
+            startTime: event.target.value,
         })
     }
-    handleChangeEndTime = time => {
+    handleChangeEndTime = (event) => {
         this.setState({ 
-            endTime: time,
+            endTime: event.target.value,
         })
     }
     handleSubmit = (event) => {
@@ -180,29 +180,28 @@ class EditSlot extends Component{
                     <DialogTitle>Edit slot</DialogTitle>
                     <DialogContent>
                         <form onSubmit={this.handleSubmit}>
-                            <Typography variant="body1" color="textSecondary" className={classes.dateTimeTitle}>
-                                Start time *
-                            </Typography>
-                            <TimePicker
-                            onChange={this.handleChangeStartTime}
+                        <TextField
+                            label="Start time *"
                             value={this.state.startTime}
-                            className={classes.dateTimePicker}
-                            hourPlaceholder='00'
-                            minutePlaceholder='00'
-                            disableClock
+                            onChange={this.handleChangeStartTime}
+                            type="time"
+                            className={classes.textField}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
                             required
                             />
-                            <Typography variant="body1" color="textSecondary" className={classes.dateTimeTitle}>
-                                End time *
-                            </Typography>
-                            <TimePicker
-                            onChange={this.handleChangeEndTime}
+                            <br/>
+                            <TextField
+                            label="End time *"
                             value={this.state.endTime}
-                            className={classes.dateTimePicker}
-                            hourPlaceholder='00'
-                            minutePlaceholder='00'
-                            disableClock
-                            required	
+                            onChange={this.handleChangeEndTime}
+                            type="time"
+                            className={classes.textField}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            required
                             />
                             {errors.time && (
                                 <Typography variant="subtitle1" color="error">

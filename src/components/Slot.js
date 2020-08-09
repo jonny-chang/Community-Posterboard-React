@@ -48,6 +48,9 @@ class Slot extends Component {
         if (totalMinutes >= 720) {
             hour = hour - 12
         }
+        if (hour === 0) {
+            hour = 12
+        }
         var minutes = totalMinutes % 60
         if (minutes < 10) {
             minutes = '0' + minutes

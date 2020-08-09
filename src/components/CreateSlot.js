@@ -60,16 +60,16 @@ class CreateSlot extends Component{
     state = {
         open: false,
         capacity: this.props.data.post.defaultCapacity,
-        startTime: null,
-        endTime: null,
+        startTime: '00:00',
+        endTime: '00:00',
         errors: []
     }
     handleClose = () => {
         this.setState({ 
             open: false,
             capacity: this.props.data.post.defaultCapacity,
-            startTime: null,
-            endTime: null,
+            startTime: '00:00',
+            endTime: '00:00',
             errors: []
         })
     }
@@ -94,14 +94,14 @@ class CreateSlot extends Component{
             capacity: parseInt(event.target.value),
         })
     }
-    handleChangeStartTime = time => {
+    handleChangeStartTime = (event) => {
         this.setState({ 
-            startTime: time,
+            startTime: event.target.value,
         })
     }
-    handleChangeEndTime = time => {
+    handleChangeEndTime = (event) => {
         this.setState({ 
-            endTime: time,
+            endTime: event.target.value,
         })
     }
     handleSubmit = (event) => {
@@ -112,6 +112,7 @@ class CreateSlot extends Component{
         var endHour = parseInt(this.state.endTime.substring(0, 2))
         var endMin = parseInt(this.state.endTime.substring(3))
         var newEndTime = endHour * 60 + endMin
+        console.log(this.state.startTime)
         if (newStartTime < newEndTime){
             const newSlot = {
                 capacity: this.state.capacity,
@@ -120,7 +121,7 @@ class CreateSlot extends Component{
                 dayNumber: this.props.data.dayNumber,
                 isCustom: this.props.isCustom
             }
-            // console.log(newSlot)
+            console.log(newSlot)
             this.props.createSlot(
                 this.props.data.post.postId, 
                 newSlot, 
@@ -153,29 +154,28 @@ class CreateSlot extends Component{
                     <DialogTitle>Add a new slot</DialogTitle>
                     <DialogContent>
                         <form onSubmit={this.handleSubmit}>
-                            <Typography variant="body1" color="textSecondary" className={classes.dateTimeTitle}>
-                                Start time *
-                            </Typography>
-                            <TimePicker
-                            onChange={this.handleChangeStartTime}
+                            <TextField
+                            label="Start time *"
                             value={this.state.startTime}
-                            className={classes.dateTimePicker}
-                            hourPlaceholder='00'
-                            minutePlaceholder='00'
-                            disableClock
+                            onChange={this.handleChangeStartTime}
+                            type="time"
+                            className={classes.textField}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
                             required
                             />
-                            <Typography variant="body1" color="textSecondary" className={classes.dateTimeTitle}>
-                                End time *
-                            </Typography>
-                            <TimePicker
-                            onChange={this.handleChangeEndTime}
+                            <br/>
+                            <TextField
+                            label="End time *"
                             value={this.state.endTime}
-                            className={classes.dateTimePicker}
-                            hourPlaceholder='00'
-                            minutePlaceholder='00'
-                            disableClock
-                            required	
+                            onChange={this.handleChangeEndTime}
+                            type="time"
+                            className={classes.textField}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            required
                             />
                             {errors.time && (
                                 <Typography variant="subtitle1" color="error">
