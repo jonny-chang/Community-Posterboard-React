@@ -1,7 +1,7 @@
 import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, 
     SET_DAY_NUMBER, DELETE_POST, LOADING_STORE_NAME,
     SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, 
-    SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT 
+    SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT, GET_POST_ERROR, GET_SLOT_ERROR
 } from '../types';
 
 const initialState = {
@@ -15,7 +15,9 @@ const initialState = {
     dayNumber: null,
     dayNumber: null,
     currentSlots: {},
-    loadingName: false
+    loadingName: false,
+    getPostError: false,
+    getSlotError: false
 };
 
 export default function(state = initialState, action){
@@ -96,6 +98,16 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 loadingName: true
+            }
+        case GET_POST_ERROR:
+            return{
+                ...state,
+                getPostError: action.payload
+            }
+        case GET_SLOT_ERROR:
+            return{
+                ...state,
+                getSlotError: action.payload
             }
         default:
             return state

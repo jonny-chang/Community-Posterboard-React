@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Grow from '@material-ui/core/Grow';
 
 const styles = {
     card: {
@@ -90,29 +91,31 @@ class Slot extends Component {
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)
         return (
-            <Card className={classes.card}>
-                <CardContent className={classes.content}>
-                    <Typography variant='h5' className={classes.title}>
-                        Start time: {newStartTime} | End time: {newEndTime}
-                    </Typography>
-                    {view === 'custom' && (
-                        <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
-                            Capacity: {thisSlot.capacity} | Spots taken: {thisSlot.spotsTaken}
+            <Grow in={true} timeout={1200}>
+                <Card className={classes.card}>
+                    <CardContent className={classes.content}>
+                        <Typography variant='h5' className={classes.title}>
+                            Start time: {newStartTime} | End time: {newEndTime}
                         </Typography>
-                    )}
-                    {view === 'default' && (
-                        <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
-                            Capacity: {thisSlot.capacity}
+                        {view === 'custom' && (
+                            <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                                Capacity: {thisSlot.capacity} | Spots taken: {thisSlot.spotsTaken}
+                            </Typography>
+                        )}
+                        {view === 'default' && (
+                            <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                                Capacity: {thisSlot.capacity}
+                            </Typography>
+                        )}
+                        {editButton}
+                        <Typography variant="body2" color="textSecondary" variant='block'>
+                            │
                         </Typography>
-                    )}
-                    {editButton}
-                    <Typography variant="body2" color="textSecondary" variant='block'>
-                        │
-                    </Typography>
-                    {deleteButton}
+                        {deleteButton}
 
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </Grow>
         )
     }
 }

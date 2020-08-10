@@ -36,7 +36,12 @@ const styles = {
     },
     daysButton: {
         marginTop: 20
-    }
+    },
+    copyright: {
+        position: 'fixed',
+        bottom: '10px',
+        left: '12px',
+    },
 }
 
 class homeSchedulePage extends Component {

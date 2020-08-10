@@ -11,11 +11,10 @@ import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import ScheduleIcon from '@material-ui/icons/Event';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
+import Grow from '@material-ui/core/Grow';
 
 const styles = {
     card: {
@@ -72,30 +71,32 @@ class Post extends Component {
                 </IconButton>
             </Tooltip>
         return (
-            <Card className={classes.card}>
-                <CardContent className={classes.content}>
-                {/* <Paper className={classes.paper} variant='outlined'> */}
-                    <Typography variant='h5' className={classes.title}>
-                        {title}
-                    </Typography>
-                    <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
-                        Default Capacity: {defaultCapacity} | Address: {locationString}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" className={classes.description}>
-                        Description: {description}
-                    </Typography>
-                    {editButton}
-                    <Typography variant="body2" color="textSecondary" variant='block'>
-                        │
-                    </Typography>
-                    {scheduleButton}
-                    <Typography variant="body2" color="textSecondary" variant='block'>
-                        │
-                    </Typography>
-                    {deleteButton}
-            {/* </Paper> */}
-                 </CardContent>
-            </Card>
+            <Grow in={true} timeout={1200}>
+                <Card className={classes.card}>
+                    <CardContent className={classes.content}>
+                    {/* <Paper className={classes.paper} variant='outlined'> */}
+                        <Typography variant='h5' className={classes.title}>
+                            {title}
+                        </Typography>
+                        <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>
+                            Default Capacity: {defaultCapacity} | Address: {locationString}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" className={classes.description}>
+                            Description: {description}
+                        </Typography>
+                        {editButton}
+                        <Typography variant="body2" color="textSecondary" variant='block'>
+                            │
+                        </Typography>
+                        {scheduleButton}
+                        <Typography variant="body2" color="textSecondary" variant='block'>
+                            │
+                        </Typography>
+                        {deleteButton}
+                {/* </Paper> */}
+                    </CardContent>
+                </Card>
+            </Grow>
         )
     }
 }

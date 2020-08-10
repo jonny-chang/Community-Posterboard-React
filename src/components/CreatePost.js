@@ -20,6 +20,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Fade from '@material-ui/core/Fade';
 
 // Icons
 import AddIcon from '@material-ui/icons/Add';
@@ -139,7 +140,9 @@ class CreatePost extends Component{
         return (
             <Fragment>
                 <UtilButtonFab color='primary' onClick={this.handleOpen} tip="Create a post">
-                    <AddIcon fontSize="large"/>
+                    <Fade in={true} timeout={1000}>
+                        <AddIcon fontSize="large"/>
+                    </Fade>
                 </UtilButtonFab>
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
                     <UtilButton tip="Cancel" onClick={this.handleClose} tipClassName={classes.closeButton}>

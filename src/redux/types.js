@@ -27,3 +27,5 @@ export const SET_SLOTS = 'SET_SLOTS';
 export const CLEAR_CURRENT_SLOTS = 'CLEAR_CURRENT_SLOTS';
 export const CREATE_SLOT = 'CREATE_SLOT';
 export const LOADING_STORE_NAME = 'LOADING_STORE_NAME';
+export const GET_POST_ERROR = 'GET_POST_ERROR';
+export const GET_SLOT_ERROR = 'GET_POST_ERROR';

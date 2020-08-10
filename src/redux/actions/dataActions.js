@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST, STOP_LOADING_UI,
     SET_POSTS, LOADING_DATA, STOP_LOADING_DATA, SET_POST, CLEAR_POST, LOADING_STORE_NAME,
-    SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, DELETE_POST
+    SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, DELETE_POST,
+    GET_POST_ERROR, GET_SLOT_ERROR
 } from '../types';
 
 // Create Post
@@ -53,6 +54,7 @@ export const getPosts = () => (dispatch) => {
           type: SET_POSTS,
           payload: []
         });
+        dispatch(setGetErrors(true, 'post'))
       });
   };
 
@@ -166,6 +168,11 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
             })
         })
         .catch((err) => {
+            dispatch(setGetErrors(true, 'slot'))
+            dispatch({ 
+                type: SET_SLOTS,
+                payload: []
+            })
         //    console.log(err.response)
         })
 }
@@ -258,4 +265,19 @@ export const clearErrors = () => (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS
     })
+}
+
+export const setGetErrors = (bool, type) => (dispatch) => {
+    if (type === 'post') {
+        dispatch({
+            type: GET_POST_ERROR,
+            payload: bool
+        })
+    }
+    if (type === 'slot') {
+        dispatch({
+            type: GET_SLOT_ERROR,
+            payload: bool
+        })
+    }
 }

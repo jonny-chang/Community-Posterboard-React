@@ -24,6 +24,10 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import Slide from '@material-ui/core/Slide';
+import Fade from '@material-ui/core/Fade';
+import Collapse from '@material-ui/core/Collapse';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Redux
 import { connect } from 'react-redux';
@@ -34,7 +38,8 @@ import {
     clearSlots, 
     setDayNumber,
     loadData,
-    getDefaultPost
+    getDefaultPost,
+    setGetErrors
 } from '../redux/actions/dataActions';
 
 const styles = {
@@ -102,7 +107,16 @@ const styles = {
     },
     linearProgress: {
         marginTop: 45
-    }
+    },
+    copyright: {
+        position: 'fixed',
+        bottom: '10px',
+        left: '12px',
+    },
+}
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class customSchedulePage extends Component {
@@ -112,12 +126,14 @@ class customSchedulePage extends Component {
         currentDate: null,
         custom: null,
         value: 1,
-        dayNumber: 3
+        dayNumber: 3,
+        collapse: false
     };
     componentDidMount() {
         const postId = this.props.match.params.postId;
         this.setState({
-            postId: postId
+            postId: postId,
+            collapse: true
         })        
         this.props.loadData();
         this.props.setDayNumber(3);
@@ -155,6 +171,8 @@ class customSchedulePage extends Component {
         this.props.clearSlots();
         this.props.setDayNumber(null);
         this.props.clearPost();
+        this.props.setGetErrors(false, 'post');
+        this.props.setGetErrors(false, 'slot');
     }
     handleChange = (event, newValue) => {
         this.setState({
@@ -243,7 +261,9 @@ class customSchedulePage extends Component {
                 loading, 
                 currentSlots: { slots }, 
                 dayNumber,
-                loadingName 
+                loadingName,
+                getPostError,
+                getSlotError 
             }} = this.props
         const { currentDate, value } = this.state
         var dayNumberString = this.dayNumberToString(dayNumber)
@@ -283,20 +303,22 @@ class customSchedulePage extends Component {
         ) : (
             null
         )
-        let customTitleMarkup = !loading ? (
-            <Grid container className={classes.titleContainer} justify='space-around'>
-                <Grid item xs={9}>
-                    <Typography variant='overline'>
-                        Schedule for
-                    </Typography>
-                    <Typography variant='h5'>
-                        {post.title}
-                    </Typography>
+        let customTitleMarkup = !loadingName ? (
+            <Fade in={true} timeout={2000}>
+                <Grid container className={classes.titleContainer} justify='space-around'>
+                    <Grid item xs={9}>
+                        <Typography variant='overline'>
+                            Schedule for
+                        </Typography>
+                        <Typography variant='h5'>
+                            {post.title}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                        {customDatePicker}
+                    </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                    {customDatePicker}
-                </Grid>
-            </Grid>
+            </Fade>
         ) : (
             <Grid container className={classes.defaultTitleContainer} justify='space-around'>
                 <Grid item xs={5}>
@@ -313,19 +335,21 @@ class customSchedulePage extends Component {
             </Grid>
         )
         let defaultTitleMarkup = !loadingName ? (
-            <Grid container className={classes.defaultTitleContainer} justify='space-around'>
-                <Grid item xs={10}>
-                    <Typography variant='overline'>
-                        Schedule for
-                    </Typography>
-                    <Typography variant='h5'>
-                        {post.title}
-                    </Typography>
+            <Fade in={true} timeout={2000}>
+                <Grid container className={classes.defaultTitleContainer} justify='space-around'>
+                    <Grid item xs={10}>
+                        <Typography variant='overline'>
+                            Schedule for
+                        </Typography>
+                        <Typography variant='h5'>
+                            {post.title}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        {dropdown}
+                    </Grid>
                 </Grid>
-                <Grid item xs={2}>
-                    {dropdown}
-                </Grid>
-            </Grid>
+            </Fade>
         ) : (
             <Grid container className={classes.defaultTitleContainer} justify='space-around'>
                 <Grid item xs={5}>
@@ -379,6 +403,16 @@ class customSchedulePage extends Component {
           );
         return (
             <Fragment>
+                {(getPostError) && (
+                    <Alert severity="error">
+                        There was an error retrieving your posts, please refresh the page
+                    </Alert>
+                )}
+                {(getSlotError) && (
+                    <Alert severity="error">
+                        There was an error retrieving your slots, please refresh the page
+                    </Alert>
+                )}       
                 {value === 1 && (
                     <Grid container spacing={3} className={classes.gridContainer} 
                     alignItems="flex-start" justify="flex-end" direction="row">
@@ -393,30 +427,34 @@ class customSchedulePage extends Component {
                                     Back
                                 </Button>
                         </Grid>   
-                        <Grid item xs={8} sm={8} className={classes.grid}>     
-                            <Paper className={classes.root}>
-                                <Tabs
-                                    value={this.state.value}
-                                    onChange={this.handleChange}
-                                    indicatorColor="primary"
-                                    textColor="primary"
-                                    centered
-                                >
-                                    <Tab label="Default Days" value={1} disabled={loading}/>
-                                    <Tab label="Custom Days" value={2} disabled={loading}/>
-                                </Tabs>
-                            </Paper>            
+                        <Grid item xs={8} sm={8} className={classes.grid}> 
+                            <Collapse in={this.state.collapse} timeout={1000}>    
+                                <Paper className={classes.root}>
+                                    <Tabs
+                                        value={this.state.value}
+                                        onChange={this.handleChange}
+                                        indicatorColor="primary"
+                                        textColor="primary"
+                                        centered
+                                    >
+                                        <Tab label="Default Days" value={1} disabled={loading}/>
+                                        <Tab label="Custom Days" value={2} disabled={loading}/>
+                                    </Tabs>
+                                </Paper>     
+                            </Collapse>
                             {defaultTitleMarkup}
                             <Divider/>
                             {!loading && (
                                 <Fragment>          
-                                    <Typography variant='h5' className={classes.dateHeader}>
-                                        {dayNumberString}
-                                    </Typography>
+                                    <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={1000}>
+                                        <Typography variant='h5' className={classes.dateHeader}>
+                                            {dayNumberString}
+                                        </Typography>
+                                    </Slide>
                                 </Fragment>
                             )}
                             {defaultScheduleMarkup}
-                            {!loading && (
+                            {(!loading && !loadingName) && (
                                 <div className={classes.addButton}>
                                     <CreateSlot isCustom={false}/>
                                 </div>
@@ -429,7 +467,6 @@ class customSchedulePage extends Component {
                     <Grid container spacing={3} className={classes.gridContainer} 
                     alignItems="flex-start" justify="flex-end" direction="row">
                         <Grid item xs={3}>
-                            {!loading && (
                                 <Button 
                                 component={Link} 
                                 to='/'
@@ -439,7 +476,6 @@ class customSchedulePage extends Component {
                                 >
                                     Back
                                 </Button>
-                            )}
                         </Grid>   
                         <Grid item xs={8} sm={8} className={classes.grid}>     
                             <Paper className={classes.root}>
@@ -453,18 +489,20 @@ class customSchedulePage extends Component {
                                     <Tab label="Default Days" value={1} disabled={loading}/>
                                     <Tab label="Custom Days" value={2} disabled={loading}/>
                                 </Tabs>
-                            </Paper>            
+                            </Paper>
                             {customTitleMarkup}
                             <Divider/>
                             {!loading && (
                                 <Fragment>
-                                    <Typography variant='h5' className={classes.dateHeader}>
-                                        {currentDate}
-                                    </Typography>
+                                      <Slide direction="left" in={true} mountOnEnter unmountOnExit timeout={1000}>
+                                        <Typography variant='h5' className={classes.dateHeader}>
+                                            {currentDate}
+                                        </Typography>
+                                      </Slide>
                                 </Fragment>
                             )}
                             {scheduleMarkup}
-                            {!loading && (
+                            {(!loading && !loadingName) && (
                                 <div className={classes.addButton}>
                                     <CreateSlot isCustom={this.state.custom}/>
                                 </div>
@@ -472,7 +510,10 @@ class customSchedulePage extends Component {
                         </Grid>
                         <Grid item xs={1}/>
                     </Grid>
-                )}                      
+                )}
+                <Typography variant='caption' className={classes.copyright}>
+                    © Skipt 2020
+                </Typography>                      
             </Fragment>          
         );
     }
@@ -493,7 +534,8 @@ const mapActionsToProps = {
     clearSlots,
     setDayNumber,
     loadData,
-    getDefaultPost
+    getDefaultPost,
+    setGetErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(customSchedulePage));

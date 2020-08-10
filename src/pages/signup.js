@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -50,7 +50,12 @@ const styles = {
     image: {
         height: '75px',
         width: '75px'
-    }
+    },
+    copyright: {
+        position: 'fixed',
+        bottom: '10px',
+        left: '12px',
+    },
 }
 
 class signup extends Component {
@@ -89,73 +94,78 @@ class signup extends Component {
         const { classes, UI: { loading } } = this.props;
         const { errors } = this.state;
         return (
-            <Grid container className={classes.form}>
-                <Grid item sm />
-                <Grid item sm>
-                    {/* <Card className={classes.card}>
-                        <CardContent className={classes.content}> */}
-                            <img src={Logo} className={classes.image}/>                        
-                            <Typography variant="h3" className={classes.pageTitle}>
-                                Register
-                            </Typography>
-                            <form noValidate onSubmit={this.handleSubmit}>
-                                <TextField id="email" name="email" type="email" label="Email" 
-                                className={classes.textField} value={this.state.email} 
-                                onChange={this.handleChange} helperText={errors.email} 
-                                error={errors.email ? true : false} fullWidth required
-                                />
-                                <TextField id="password" name="password" type="password" label="Password" 
-                                className={classes.textField} value={this.state.password} 
-                                onChange={this.handleChange} helperText={errors.password} 
-                                error={errors.password ? true : false} fullWidth required
-                                />
-                                <TextField id="confirmPassword" name="confirmPassword" type="password" 
-                                label="Confirm Password" className={classes.textField}
-                                value={this.state.confirmPassword} onChange={this.handleChange} 
-                                helperText={errors.confirmPassword} 
-                                error={errors.confirmPassword ? true : false} fullWidth required
-                                />
-                                {errors.general && (
-                                    <Typography variant="body2" className={classes.customError}>
-                                        {errors.general}
-                                    </Typography>
-                                )}
-                                {errors.error && (
-                                    <Typography variant="subtitle1" color="error">
-                                        Error: {errors.error}
-                                    </Typography>
-                                )}
-                                <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                disabled={loading}
-                                >
-                                Sign up
-                                {loading && (
-                                    <CircularProgress size={20} className={classes.progressSpinner} />
-                                )}
-                                </Button>
-                                <br/>
-                                <br/>
-                                <small >
-                                Already have an account? <Link to="/login">Login now</Link>
-                                </small>
-                            </form>
-                        {/* </CardContent>
-                    </Card> */}
-                    <br/>
-                    {/* <Typography variant="caption" color="textSecondary" inLine>
+            <Fragment>
+                <Grid container className={classes.form}>
+                    <Grid item sm />
+                    <Grid item sm>
+                        {/* <Card className={classes.card}>
+                            <CardContent className={classes.content}> */}
+                                <img src={Logo} className={classes.image}/>                        
+                                <Typography variant="h3" className={classes.pageTitle}>
+                                    Register
+                                </Typography>
+                                <form noValidate onSubmit={this.handleSubmit}>
+                                    <TextField id="email" name="email" type="email" label="Email" 
+                                    className={classes.textField} value={this.state.email} 
+                                    onChange={this.handleChange} helperText={errors.email} 
+                                    error={errors.email ? true : false} fullWidth required
+                                    />
+                                    <TextField id="password" name="password" type="password" label="Password" 
+                                    className={classes.textField} value={this.state.password} 
+                                    onChange={this.handleChange} helperText={errors.password} 
+                                    error={errors.password ? true : false} fullWidth required
+                                    />
+                                    <TextField id="confirmPassword" name="confirmPassword" type="password" 
+                                    label="Confirm Password" className={classes.textField}
+                                    value={this.state.confirmPassword} onChange={this.handleChange} 
+                                    helperText={errors.confirmPassword} 
+                                    error={errors.confirmPassword ? true : false} fullWidth required
+                                    />
+                                    {errors.general && (
+                                        <Typography variant="body2" className={classes.customError}>
+                                            {errors.general}
+                                        </Typography>
+                                    )}
+                                    {errors.error && (
+                                        <Typography variant="subtitle1" color="error">
+                                            Error: {errors.error}
+                                        </Typography>
+                                    )}
+                                    <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    disabled={loading}
+                                    >
+                                    Sign up
+                                    {loading && (
+                                        <CircularProgress size={20} className={classes.progressSpinner} />
+                                    )}
+                                    </Button>
+                                    <br/>
+                                    <br/>
+                                    <small >
+                                    Already have an account? <Link to="/login">Login now</Link>
+                                    </small>
+                                </form>
+                            {/* </CardContent>
+                        </Card> */}
+                        <br/>
+                        {/* <Typography variant="caption" color="textSecondary" inLine>
 
-                    </Typography>
-                    <br/>
-                    <Typography variant="caption" color="textSecondary">
+                        </Typography>
+                        <br/>
+                        <Typography variant="caption" color="textSecondary">
 
-                    </Typography> */}
+                        </Typography> */}
+                    </Grid>
+                    <Grid item sm />
                 </Grid>
-                <Grid item sm />
-            </Grid>
+                <Typography variant='caption' className={classes.copyright}>
+                    © Skipt 2020
+                </Typography>
+            </Fragment>
         )
     }
 }

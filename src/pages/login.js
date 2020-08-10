@@ -86,7 +86,12 @@ const styles = {
     image: {
         height: '75px',
         width: '75px'
-    }
+    },
+    copyright: {
+        position: 'fixed',
+        bottom: '10px',
+        left: '12px',
+    },
 }
 
 class login extends Component {
@@ -273,6 +278,9 @@ class login extends Component {
                     </Grid>
                     <Grid item sm />
                 </Grid>
+                <Typography variant='caption' className={classes.copyright}>
+                    © Skipt 2020
+                </Typography>
             </Fragment>
         )
     }
