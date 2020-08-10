@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import DeleteSlot from './DeleteSlot';
 import EditSlot from './EditSlot';
+import ViewParticipants from './ViewParticipants';
 
 // Redux
 import { connect } from 'react-redux';
@@ -110,6 +111,18 @@ class Slot extends Component {
                         <Typography variant="body2" color="textSecondary" variant='block'>
                             │
                         </Typography>
+                        {/* {view === 'custom' && (
+                            <Fragment>
+                                <ViewParticipants
+                                postId={post.postId}
+                                slot={thisSlot}
+                                isCustom={isCustom}
+                                />
+                                <Typography variant="body2" color="textSecondary" variant='block'>
+                                    │
+                                </Typography>   
+                            </Fragment>     
+                        )} */}
                         {deleteButton}
 
                     </CardContent>

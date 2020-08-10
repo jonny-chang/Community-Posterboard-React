@@ -126,7 +126,7 @@ class schedulePage extends Component {
         pickerDate: null,
         isDate: false,
         currentDate: null,
-        custom: null,
+        custom: false,
         value: 1,
         dayNumber: 3,
         collapse: false,
@@ -142,28 +142,33 @@ class schedulePage extends Component {
         this.props.getDefaultPost(postId, this.props.history);
     }
     componentWillReceiveProps(nextProps){
-        if (this.state.value === 2){
-            const { data: { post: { postId, customDays }}} = this.props
+        const { data: { dayNumber, post: { postId, customDays }}} = this.props
+        if (nextProps.data.dayNumber > 6 && dayNumber < 7) {
             if (Array.isArray(customDays)){
-                if (nextProps.data.dayNumber !== this.props.data.dayNumber){
-                    this.props.getSlots(postId, nextProps.data.dayNumber, customDays.includes(nextProps.data.dayNumber))
+                    this.props.getSlots(
+                        postId, 
+                        nextProps.data.dayNumber, 
+                        customDays.includes(nextProps.data.dayNumber)
+                    )
+                    this.setState({
+                        custom: customDays.includes(nextProps.data.dayNumber)
+                    })
+            }
+        }
+        if (nextProps.data.dayNumber > 6){
+                if (nextProps.data.dayNumber !== dayNumber){
+                    this.props.getSlots(
+                        postId, 
+                        nextProps.data.dayNumber, 
+                        customDays.includes(nextProps.data.dayNumber)
+                    )
                     this.setState({
                         custom: customDays.includes(nextProps.data.dayNumber)
                     })
                 }
-            }
-            if(Array.isArray(nextProps.data.post.customDays)){
-                if (nextProps.data.post.customDays !== this.props.data.post.customDays){
-                    const { data: { dayNumber }} = this.props
-                    this.props.getSlots(nextProps.data.post.postId, dayNumber, nextProps.data.post.customDays.includes(dayNumber))
-                    this.setState({
-                        custom: nextProps.data.post.customDays.includes(dayNumber)
-                    })
-                }
-            }
         }
-        if (this.state.value === 1){
-            if (nextProps.data.dayNumber !== this.props.data.dayNumber) {
+        if (nextProps.data.dayNumber < 7) {
+            if (nextProps.data.dayNumber !== dayNumber) {
                 const postId = this.props.match.params.postId;
                 this.props.getSlots(postId, nextProps.data.dayNumber, false)
             }
@@ -501,7 +506,7 @@ class schedulePage extends Component {
                             {scheduleMarkup}
                             {(!loading && !loadingName) && (
                                 <div className={classes.addButton}>
-                                    <CreateSlot isCustom={this.state.custom}/>
+                                    <CreateSlot isCustom={true}/>
                                 </div>
                             )}
                         </Grid>

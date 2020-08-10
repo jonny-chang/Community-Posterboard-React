@@ -115,7 +115,7 @@ class CreateSlot extends Component{
         var endHour = parseInt(this.state.endTime.substring(0, 2))
         var endMin = parseInt(this.state.endTime.substring(3))
         var newEndTime = endHour * 60 + endMin
-        console.log(this.state.startTime)
+        // console.log(this.state.startTime)
         if (newStartTime < newEndTime){
             const newSlot = {
                 capacity: this.state.capacity,
