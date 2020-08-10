@@ -18,6 +18,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Redux
 import { connect } from 'react-redux';
@@ -94,6 +95,10 @@ const styles = {
     },
 }
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class login extends Component {
     constructor(){
         super();
@@ -145,19 +150,19 @@ class login extends Component {
         const { errors } = this.state;
         return (
             <Fragment>
-                {newUser && (
+                {(newUser && (resendStatus !== 1 && resendStatus !== 2)) && (
                     <Grid container className={classes.newUserCardContainer}>
                         <Grid item sm />
                         <Grid item sm>
-                            <Card className={classes.newUserCard}>
-                                <CardContent className={classes.newUserContent}>
-                                    <Typography variant='body2'>
+                            {/* <Card className={classes.newUserCard}>
+                                <CardContent className={classes.newUserContent}> */}
+                                    <Alert severity="success">
                                         We have sent a confirmation link to your email address. 
                                         Please click on the link to verify your email address 
                                         in order to login successfully.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                    </Alert>
+                                {/* </CardContent>
+                            </Card> */}
                         </Grid>
                         <Grid item sm />
                     </Grid>
@@ -166,14 +171,14 @@ class login extends Component {
                     <Grid container className={classes.newUserCardContainer}>
                         <Grid item sm />
                         <Grid item sm>
-                            <Card className={classes.newUserCard}>
-                                <CardContent className={classes.newUserContent}>
-                                    <Typography variant='body2'>
+                            {/* <Card className={classes.newUserCard}>
+                                <CardContent className={classes.newUserContent}> */}
+                                    <Alert severity="info">
                                         A verification email has been resent to your email address. 
                                         Please follow the instructions in the email in order to login successfully.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                    </Alert>
+                                {/* </CardContent>
+                            </Card> */}
                         </Grid>
                         <Grid item sm />
                     </Grid>
@@ -182,13 +187,13 @@ class login extends Component {
                     <Grid container className={classes.newUserCardContainer}>
                         <Grid item sm />
                         <Grid item sm>
-                            <Card className={classes.resendErrorCard}>
-                                <CardContent className={classes.newUserContent}>
-                                    <Typography variant='body2'>
+                            {/* <Card className={classes.resendErrorCard}>
+                                <CardContent className={classes.newUserContent}> */}
+                                    <Alert severity="error">
                                         An error occured resending the verification email. Please try again.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                    </Alert>
+                                {/* </CardContent>
+                            </Card> */}
                         </Grid>
                         <Grid item sm />
                     </Grid>
