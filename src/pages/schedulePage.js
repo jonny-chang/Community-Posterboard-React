@@ -181,31 +181,33 @@ class schedulePage extends Component {
         this.setState({
             value: newValue
         })
-        if (newValue === 1) {
-            const postId = this.props.match.params.postId;
-            this.setState({
-                postId: postId
-            })        
-            this.props.loadData();
-            this.props.setDayNumber(3);
-            // this.props.getDefaultPost(postId, this.props.history);
-        }
-        if (newValue === 2) {
-            const postId = this.props.match.params.postId;
-            this.props.loadData();
-            var today = new Date();
-            today = (today.toDateString())
-            this.setState({
-                currentDate: today
-            })
-            this.props.getCustomPost(postId, this.props.history);
-            const millisecondsPerDay = 86400000;
-            var offset = new Date().getTimezoneOffset()
-            var offset = new Date()
-            offset = offset.getTimezoneOffset() * 60000;
-            var timeStamp = Date.now() - offset;
-            var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
+        if (this.state.value !== newValue) {
+            if (newValue === 1) {
+                const postId = this.props.match.params.postId;
+                this.setState({
+                    postId: postId
+                })        
+                this.props.loadData();
+                this.props.setDayNumber(3);
+                // this.props.getDefaultPost(postId, this.props.history);
             }
+            if (newValue === 2) {
+                const postId = this.props.match.params.postId;
+                this.props.loadData();
+                var today = new Date();
+                today = (today.toDateString())
+                this.setState({
+                    currentDate: today
+                })
+                this.props.getCustomPost(postId, this.props.history);
+                const millisecondsPerDay = 86400000;
+                var offset = new Date().getTimezoneOffset()
+                var offset = new Date()
+                offset = offset.getTimezoneOffset() * 60000;
+                var timeStamp = Date.now() - offset;
+                var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
+            }
+        }
       };
     onChange = (date) => {
             this.setState({ 
