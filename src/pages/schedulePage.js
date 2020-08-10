@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import DateTimePicker from 'react-datetime-picker';
 
 // Components
 import Slot from '../components/Slot';
@@ -14,8 +13,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
@@ -28,6 +25,11 @@ import Slide from '@material-ui/core/Slide';
 import Fade from '@material-ui/core/Fade';
 import Collapse from '@material-ui/core/Collapse';
 import MuiAlert from '@material-ui/lab/Alert';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 // Redux
 import { connect } from 'react-redux';
@@ -127,7 +129,8 @@ class customSchedulePage extends Component {
         custom: null,
         value: 1,
         dayNumber: 3,
-        collapse: false
+        collapse: false,
+        pickerDateValue: null
     };
     componentDidMount() {
         const postId = this.props.match.params.postId;
@@ -204,21 +207,12 @@ class customSchedulePage extends Component {
             var dayNumber = Math.floor(timeStamp/millisecondsPerDay);
             }
       };
-    onChange = date => {
-        if (date){
+    onChange = (date) => {
             this.setState({ 
                 pickerDate: date,
-                isDate: true
             })
             this.handleDateChange(date)
-        }
-        else {
-            this.setState({ 
-                pickerDate: date,
-                isDate: false
-            })
-        }
-        
+            console.log(date)        
     }
     handleDateChange = (pickerDate) => {
         const millisecondsPerDay = 86400000;
@@ -269,27 +263,29 @@ class customSchedulePage extends Component {
         var dayNumberString = this.dayNumberToString(dayNumber)
         let customDatePicker = !loading ? (
             <div className={classes.dateTimeContainer}>
-                <div className={classes.dateTimeTitle}>
-                    <Typography variant='button' className={classes.dateTimeTitle}>
-                        Select date
-                    </Typography>
-                </div>
-                <DateTimePicker
-                onChange={this.onChange}
-                value={this.state.pickerDate}
-                className={classes.dateTimePicker}
-                format="yyyy-MM-dd"
-                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    label="Select date"
+                    value={this.state.pickerDate}
+                    onChange={this.onChange}
+                    />
+                </MuiPickersUtilsProvider>
             </div>
         ) : (
             null
         )
         let dropdown = !loading ? (
-            <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl} style={{minWidth: 120}}>
                 <InputLabel>Day</InputLabel>
                 <Select
                 onChange={this.handleChangeDropdown}
                 value={this.state.dayNumber}
+                autoWidth
+                
                 >
                 <MenuItem value={3}>Sunday</MenuItem>
                 <MenuItem value={4}>Monday</MenuItem>
@@ -437,8 +433,8 @@ class customSchedulePage extends Component {
                                         textColor="primary"
                                         centered
                                     >
-                                        <Tab label="Default Days" value={1} disabled={loading}/>
-                                        <Tab label="Custom Days" value={2} disabled={loading}/>
+                                        <Tab label="Default Days" value={1} disabled={loading || loadingName}/>
+                                        <Tab label="Custom Days" value={2} disabled={loading || loadingName}/>
                                     </Tabs>
                                 </Paper>     
                             </Collapse>
