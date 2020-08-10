@@ -121,7 +121,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class customSchedulePage extends Component {
+class schedulePage extends Component {
     state = {
         pickerDate: null,
         isDate: false,
@@ -515,7 +515,7 @@ class customSchedulePage extends Component {
     }
 }
 
-customSchedulePage.propTypes = {
+schedulePage.propTypes = {
   data: PropTypes.object.isRequired
 };
 
@@ -534,4 +534,4 @@ const mapActionsToProps = {
     setGetErrors
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(customSchedulePage));
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(schedulePage));

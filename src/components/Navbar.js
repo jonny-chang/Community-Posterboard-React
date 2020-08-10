@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types'
 
@@ -14,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 
 // Redux
 import { connect } from 'react-redux';
-import { logoutUser, getUserData } from '../redux/actions/userActions';
+import { logoutUser } from '../redux/actions/userActions';
 
 const styles = {
     button: {

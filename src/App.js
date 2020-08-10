@@ -11,18 +11,13 @@ import themeFile from './util/theme';
 import login from './pages/login';
 import signup from './pages/signup';
 import home from './pages/home';
-import customSchedulePage from './pages/customSchedulePage';
 import schedulePage from './pages/schedulePage';
-import homeSchedulePage from './pages/homeSchedulePage';
-import defaultSchedulePage from './pages/defaultSchedulePage';
 import error from './pages/error';
 
 // Components
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
 import UnauthRoute from './util/UnauthRoute';
-import ExtraRoute from './util/ExtraRoute';
-
 
 // Redux
 import { Provider } from 'react-redux';
@@ -32,6 +27,7 @@ import { logoutUser, getUserData } from './redux/actions/userActions';
 
 axios.defaults.baseURL = 'https://us-central1-communityposterboard-69961.cloudfunctions.net/api'
 const token = localStorage.FBIdToken;
+
 if (token){
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()){

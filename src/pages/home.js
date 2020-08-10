@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // Components
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
-import Profile from '../components/Profile';
 
 // Mui
 import Grid from '@material-ui/core/Grid';

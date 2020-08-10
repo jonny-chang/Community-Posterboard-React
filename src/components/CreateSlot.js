@@ -5,12 +5,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // Util/Components
 import UtilButton from '../util/UtilButton';
 import UtilButtonFab from '../util/UtilButtonFab';
-import TimePicker from 'react-time-picker';
 
 // Redux
 import { connect } from 'react-redux';
-import { createSlot, clearErrors } from '../redux/actions/dataActions';
-import { clearLocation } from '../redux/actions/userActions';
+import { createSlot } from '../redux/actions/dataActions';
 
 // Mui
 import Button from '@material-ui/core/Button';
@@ -240,8 +238,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    createSlot,
-    clearErrors
+    createSlot
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(CreateSlot))
