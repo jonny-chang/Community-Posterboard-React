@@ -405,7 +405,7 @@ class customSchedulePage extends Component {
             <Fragment>
                 {(getPostError) && (
                     <Alert severity="error">
-                        There was an error retrieving your posts, please refresh the page
+                        There was an error retrieving the post information, please refresh the page
                     </Alert>
                 )}
                 {(getSlotError) && (
