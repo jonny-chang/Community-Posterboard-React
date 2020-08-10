@@ -214,7 +214,6 @@ class schedulePage extends Component {
                 pickerDate: date,
             })
             this.handleDateChange(date)
-            console.log(date)        
     }
     handleDateChange = (pickerDate) => {
         const millisecondsPerDay = 86400000;

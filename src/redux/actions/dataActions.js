@@ -33,6 +33,9 @@ export const createPost = (newPost) => (dispatch) => {
                     type: SET_ERRORS,
                     payload: err.response.data
                 })
+                if (err.status === 401){
+                    window.location.reload();
+                }
             })
     }
 }
@@ -55,6 +58,9 @@ export const getPosts = () => (dispatch) => {
           type: SET_POSTS,
           payload: []
         });
+        if (err.status === 401){
+            window.location.reload();
+        }
         dispatch(setGetErrors(true, 'post'))
       });
   };
@@ -70,6 +76,9 @@ export const getPost = (postId, history) => (dispatch) => {
         })
         .catch((err) => {
             console.log(err.response)
+            if (err.status === 401){
+                window.location.reload();
+            }
         })
 }
 
@@ -139,6 +148,9 @@ export const editPost = (newPost, postId) => (dispatch) => {
                     type: SET_ERRORS,
                     payload: err.response.data
                 })
+                if (err.status === 401){
+                    window.location.reload();
+                }
             })
     }
 }
@@ -175,6 +187,9 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
                 type: SET_SLOTS,
                 payload: []
             })
+            if (err.status === 401){
+                window.location.reload();
+            }
         //    console.log(err.response)
         })
 }
@@ -220,6 +235,9 @@ export const createSlot = (postId, newSlot, dayNumber, custom, history) => (disp
                 payload: err.response.data
             })
             console.log(err.response)
+            if (err.status === 401){
+                window.location.reload();
+            }
         })
 }
 
@@ -259,6 +277,9 @@ export const editSlot = (postId, slotId, newSlot, dayNumber, history) => (dispat
                 type: SET_ERRORS,
                 payload: err.response.data
             })
+            if (err.status === 401){
+                window.location.reload();
+            }
         })
   }
 
