@@ -124,7 +124,6 @@ function Alert(props) {
 class schedulePage extends Component {
     state = {
         pickerDate: null,
-        isDate: false,
         currentDate: null,
         custom: false,
         value: 1,
@@ -145,14 +144,14 @@ class schedulePage extends Component {
         const { data: { dayNumber, post: { postId, customDays }}} = this.props
         if (nextProps.data.dayNumber > 6 && dayNumber < 7) {
             if (Array.isArray(customDays)){
-                    this.props.getSlots(
-                        postId, 
-                        nextProps.data.dayNumber, 
-                        customDays.includes(nextProps.data.dayNumber)
-                    )
-                    this.setState({
-                        custom: customDays.includes(nextProps.data.dayNumber)
-                    })
+                this.props.getSlots(
+                    postId, 
+                    nextProps.data.dayNumber, 
+                    customDays.includes(nextProps.data.dayNumber)
+                )
+                this.setState({
+                    custom: customDays.includes(nextProps.data.dayNumber)
+                })
             }
         }
         if (nextProps.data.dayNumber > 6){
@@ -189,7 +188,8 @@ class schedulePage extends Component {
             if (newValue === 1) {
                 const postId = this.props.match.params.postId;
                 this.setState({
-                    postId: postId
+                    postId: postId,
+                    dayNumber: 3
                 })        
                 this.props.loadData();
                 this.props.setDayNumber(3);
@@ -202,7 +202,7 @@ class schedulePage extends Component {
                 today = (today.toDateString())
                 this.setState({
                     currentDate: today,
-                    pickerDate: null
+                    pickerDate: today
                 })
                 this.props.getCustomPost(postId, this.props.history);
                 const millisecondsPerDay = 86400000;

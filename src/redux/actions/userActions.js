@@ -26,9 +26,6 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post('/signup', newUserData)
             .then(res => {
-                // setAuthorizationHeader(res.data.retrievedIdToken ?? res.data.token)
-                // dispatch(getUserData());
-                // dispatch({ type: SET_AUTHENTICATED });
                 dispatch({ type: CLEAR_ERRORS });
                 dispatch(setNewUser(true))
                 history.push('/login');
@@ -94,7 +91,6 @@ export const resendVerificationEmail = (userData) => (dispatch) => {
                 type: SET_RESEND_STATUS,
                 payload: 1
             })
-            console.log('1')
         })
         .catch(err => {
             dispatch({ 

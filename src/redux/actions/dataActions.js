@@ -226,7 +226,6 @@ export const createSlot = (postId, newSlot, dayNumber, custom, history) => (disp
                 payload: res.data
             });
                 dispatch(getSlots(postId, dayNumber, custom))
-                console.log(custom)
                 dispatch(getPost(postId, history))
                 dispatch({ type: CLEAR_ERRORS })
         })
