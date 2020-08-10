@@ -19,6 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
@@ -55,7 +56,14 @@ const styles = {
       },
     editIcon: {
         color: '#FFA500'
+    },
+    locationError: {
+        marginTop: 10
     }
+}
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class EditPost extends Component{
@@ -199,9 +207,9 @@ class EditPost extends Component{
                             </Typography>
                             <UtilLocationPicker className={classes.position}/>
                             {(errors.longitude || errors.latitude) && (
-                                <Typography variant="subtitle1" color="error">
-                                    Invalid location
-                                </Typography>
+                                <Alert severity='error' className={classes.locationError}>
+                                    Invalid Location
+                                </Alert>
                             )}
                             <TextField 
                             name="address"
@@ -229,9 +237,9 @@ class EditPost extends Component{
                             required
                             />
                             {errors.error && (
-                                <Typography variant="subtitle1" color="error">
-                                    Error: {errors.error}
-                                </Typography>
+                                <Alert severity='error'>
+                                    Error submitting ({errors.error})
+                                </Alert>
                             )}
                             <Button
                                 type="submit"

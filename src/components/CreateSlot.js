@@ -16,9 +16,9 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fade from '@material-ui/core/Fade'
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Icons
 import AddIcon from '@material-ui/icons/Add';
@@ -53,6 +53,10 @@ const styles = {
     progressSpinner: {
         position: 'absolute'
       },
+}
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class CreateSlot extends Component{
@@ -132,7 +136,7 @@ class CreateSlot extends Component{
         else{
             this.setState({
                 errors: {
-                    time: 'invalidTime'
+                    time: 'Invalid Time'
                 }
             })
         }
@@ -156,7 +160,7 @@ class CreateSlot extends Component{
                     <DialogContent>
                         <form onSubmit={this.handleSubmit}>
                             <TextField
-                            label="Start time *"
+                            label="Start time"
                             value={this.state.startTime}
                             onChange={this.handleChangeStartTime}
                             type="time"
@@ -165,10 +169,12 @@ class CreateSlot extends Component{
                             shrink: true,
                             }}
                             required
+                            error={errors.time}
+                            helperText={errors.time}
                             />
                             <br/>
                             <TextField
-                            label="End time *"
+                            label="End time"
                             value={this.state.endTime}
                             onChange={this.handleChangeEndTime}
                             type="time"
@@ -177,12 +183,9 @@ class CreateSlot extends Component{
                             shrink: true,
                             }}
                             required
+                            error={errors.time}
+                            helperText={errors.time}
                             />
-                            {errors.time && (
-                                <Typography variant="subtitle1" color="error">
-                                    Invalid times
-                                </Typography>
-                            )}
                             <TextField
                             label="Capacity"
                             type="number"
@@ -196,9 +199,9 @@ class CreateSlot extends Component{
                             required
                             />
                             {errors.length !== 0 && (
-                                <Typography variant="subtitle1" color="error">
+                                <Alert severity='error'>
                                     Error submitting
-                                </Typography>
+                                </Alert>
                             )}
                             <Button
                             type="submit"

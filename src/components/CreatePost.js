@@ -21,6 +21,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fade from '@material-ui/core/Fade';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Icons
 import AddIcon from '@material-ui/icons/Add';
@@ -57,7 +58,14 @@ const styles = {
       },
     fab: {
         color: '#6864aa'
+    },
+    locationError: {
+        marginTop: 10
     }
+}
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class CreatePost extends Component{
@@ -179,9 +187,9 @@ class CreatePost extends Component{
                             </Typography>
                             <UtilLocationPicker className={classes.position}/>
                             {(errors.longitude || errors.latitude) && (
-                                <Typography variant="subtitle1" color="error">
-                                    Invalid location
-                                </Typography>
+                                <Alert severity='error' className={classes.locationError}>
+                                    Invalid Location
+                                </Alert>
                             )}
                             <TextField 
                             name="address"
@@ -207,9 +215,9 @@ class CreatePost extends Component{
                             required
                             />
                             {errors.error && (
-                                <Typography variant="subtitle1" color="error">
-                                    Error: {errors.error}
-                                </Typography>
+                                <Alert severity='error'>
+                                    Error submitting ({errors.error})
+                                </Alert>
                             )}
                             <Button
                             type="submit"
