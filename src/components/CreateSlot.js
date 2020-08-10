@@ -120,7 +120,7 @@ class CreateSlot extends Component{
                 dayNumber: this.props.data.dayNumber,
                 isCustom: this.props.isCustom
             }
-            console.log(newSlot)
+            // console.log(newSlot)
             this.props.createSlot(
                 this.props.data.post.postId, 
                 newSlot, 

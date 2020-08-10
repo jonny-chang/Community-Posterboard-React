@@ -130,7 +130,6 @@ class schedulePage extends Component {
         value: 1,
         dayNumber: 3,
         collapse: false,
-        pickerDateValue: null
     };
     componentDidMount() {
         const postId = this.props.match.params.postId;
@@ -197,7 +196,8 @@ class schedulePage extends Component {
                 var today = new Date();
                 today = (today.toDateString())
                 this.setState({
-                    currentDate: today
+                    currentDate: today,
+                    pickerDate: null
                 })
                 this.props.getCustomPost(postId, this.props.history);
                 const millisecondsPerDay = 86400000;
