@@ -48,6 +48,7 @@ export const getPosts = () => (dispatch) => {
           type: SET_POSTS,
           payload: res.data
         });
+        dispatch(setGetErrors(false, 'post'))
       })
       .catch((err) => {
         dispatch({
@@ -75,7 +76,7 @@ export const getPost = (postId, history) => (dispatch) => {
 // Get post for custom day
 
 export const getCustomPost = (postId, history) => (dispatch) => {
-    dispatch({ type: LOADING_STORE_NAME });
+    // dispatch({ type: LOADING_STORE_NAME });
     dispatch({ type: LOADING_DATA })
     const millisecondsPerDay = 86400000;
     var offset = new Date().getTimezoneOffset()
@@ -87,7 +88,7 @@ export const getCustomPost = (postId, history) => (dispatch) => {
         type: SET_DAY_NUMBER,
         payload: dayNumber
     })
-    dispatch(getPost(postId, history))
+    // dispatch(getPost(postId, history))
 }
 
 // Get post for default day
@@ -99,7 +100,7 @@ export const getDefaultPost = (postId, history) => (dispatch) => {
                 type: SET_POST,
                 payload: res.data
             })
-            dispatch(getSlots(postId, 3, false))
+            // dispatch(getSlots(postId, 3, false))
         })
         .catch((err) => {
             console.log(err.response)
@@ -166,6 +167,7 @@ export const getSlots = (postId, dayNumber, isCustom) => (dispatch) => {
                 type: SET_SLOTS,
                 payload: res.data
             })
+            dispatch(setGetErrors(false, 'slot'))
         })
         .catch((err) => {
             dispatch(setGetErrors(true, 'slot'))

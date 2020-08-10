@@ -185,7 +185,7 @@ class customSchedulePage extends Component {
             })        
             this.props.loadData();
             this.props.setDayNumber(3);
-            this.props.getDefaultPost(postId, this.props.history);
+            // this.props.getDefaultPost(postId, this.props.history);
         }
         if (newValue === 2) {
             const postId = this.props.match.params.postId;
