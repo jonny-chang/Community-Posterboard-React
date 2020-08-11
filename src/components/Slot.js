@@ -37,6 +37,9 @@ const styles = {
     deleteContainer:{
 
     },
+    description: {
+        marginBottom: 5
+    }
 }
 
 class Slot extends Component {
@@ -97,6 +100,9 @@ class Slot extends Component {
                     <CardContent className={classes.content}>
                         <Typography variant='h5' className={classes.title}>
                             Start time: {newStartTime} | End time: {newEndTime}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" className={classes.description}>
+                            Description: {thisSlot.description}
                         </Typography>
                         {view === 'custom' && (
                             <Typography variant="subtitle2" color="textSecondary" className={classes.capacity}>

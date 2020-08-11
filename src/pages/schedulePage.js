@@ -275,7 +275,7 @@ class schedulePage extends Component {
                 dayNumber,
                 loadingName,
                 getPostError,
-                getSlotError, 
+                getSlotError,
             }
         } = this.props
         const { currentDate, value } = this.state
@@ -471,7 +471,7 @@ class schedulePage extends Component {
                             {defaultScheduleMarkup}
                             {(!loading && !loadingName) && (
                                 <div className={classes.addButton}>
-                                    <CreateSlot isCustom={false}/>
+                                    <CreateSlot isCustom={false} hasSchedule={post.hasSchedule}/>
                                 </div>
                             )}
                         </Grid>
@@ -519,7 +519,7 @@ class schedulePage extends Component {
                             {scheduleMarkup}
                             {(!loading && !loadingName) && (
                                 <div className={classes.addButton}>
-                                    <CreateSlot isCustom={this.state.custom}/>
+                                    <CreateSlot isCustom={this.state.custom} hasSchedule={post.hasSchedule}/>
                                 </div>
                             )}
                         </Grid>

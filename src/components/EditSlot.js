@@ -155,7 +155,7 @@ class EditSlot extends Component{
                 endTime: newEndTime,
                 dayNumber: this.props.data.dayNumber,
                 isCustom: this.props.isCustom,
-                // description: this.state.description
+                description: this.state.description
             }
             // console.log(newSlot)
             this.props.editSlot(

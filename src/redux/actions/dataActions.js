@@ -21,12 +21,8 @@ export const createPost = (newPost) => (dispatch) => {
     else {
         axios.post('/post', newPost)
             .then(res => {
-                dispatch({
-                    type: CREATE_POST,
-                    payload: res.data
-                });
-                dispatch(getPosts())
                 dispatch({ type: CLEAR_ERRORS })
+                dispatch(getPosts())
             })
             .catch(err => {
                 dispatch({
@@ -220,8 +216,8 @@ export const loadData = () => (dispatch) => {
 }
 
 // Create custom slot
-export const createSlot = (postId, newSlot, dayNumber, custom, history) => (dispatch) => {
-    console.log(newSlot)
+export const createSlot = (postId, newSlot, dayNumber, history) => (dispatch) => {
+    // console.log(newSlot)
     axios.post(`/post/${postId}/slot`, newSlot)
         .then(res => {
             dispatch({
@@ -229,7 +225,12 @@ export const createSlot = (postId, newSlot, dayNumber, custom, history) => (disp
                 payload: res.data,
                 dayNumber: dayNumber
             });
-            dispatch(getSlots(postId, dayNumber, custom))
+            if (dayNumber > 6) {
+                dispatch(getSlots(postId, dayNumber, true))
+            }
+            if (dayNumber < 7) {
+                dispatch(getSlots(postId, dayNumber, false))
+            }
             // dispatch(getPost(postId, history))
             dispatch({ type: CLEAR_ERRORS })
         })
@@ -268,6 +269,7 @@ export const deleteSlot = (postId, slotId, dayNumber, isCustom, history) => (dis
 // Edit slot
 export const editSlot = (postId, slotId, newSlot, dayNumber, view, history) => (dispatch) => {
     console.log(`.edit: /post/${postId}/slot/${slotId}`)
+    console.log(newSlot)
     axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
         .then(res => {
             // dispatch(getPost(postId, history))
@@ -276,8 +278,11 @@ export const editSlot = (postId, slotId, newSlot, dayNumber, view, history) => (
                     type: ADD_CUSTOM_DAY,
                     dayNumber: dayNumber
                 })
+                dispatch(getSlots(postId, dayNumber, true))
             }
-            dispatch(getSlots(postId, dayNumber, true))
+            if (view === 'default') {
+                dispatch(getSlots(postId, dayNumber, false))
+            }
             dispatch({ type: CLEAR_ERRORS })
         })
         .catch(err => {
