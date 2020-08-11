@@ -2,7 +2,7 @@ import axios from 'axios';
 import { LOADING_UI, SET_ERRORS, CLEAR_ERRORS, CREATE_POST,
     SET_POSTS, LOADING_DATA, SET_POST, CLEAR_POST, LOADING_STORE_NAME,
     SET_DAY_NUMBER, SET_SLOTS , CLEAR_CURRENT_SLOTS, CREATE_SLOT, DELETE_POST,
-    GET_POST_ERROR, GET_SLOT_ERROR
+    GET_POST_ERROR, GET_SLOT_ERROR, ADD_CUSTOM_DAY
 } from '../types';
 
 // Create Post
@@ -109,10 +109,12 @@ export const getDefaultPost = (postId, history) => (dispatch) => {
                 type: SET_POST,
                 payload: res.data
             })
+            dispatch(setGetErrors(false, 'post'))
             // dispatch(getSlots(postId, 3, false))
         })
         .catch((err) => {
             console.log(err.response)
+            dispatch(setGetErrors(true, 'post'))
         })
 }
 
@@ -219,22 +221,24 @@ export const loadData = () => (dispatch) => {
 
 // Create custom slot
 export const createSlot = (postId, newSlot, dayNumber, custom, history) => (dispatch) => {
+    console.log(newSlot)
     axios.post(`/post/${postId}/slot`, newSlot)
         .then(res => {
             dispatch({
                 type: CREATE_SLOT,
-                payload: res.data
+                payload: res.data,
+                dayNumber: dayNumber
             });
-                dispatch(getSlots(postId, dayNumber, custom))
-                dispatch(getPost(postId, history))
-                dispatch({ type: CLEAR_ERRORS })
+            dispatch(getSlots(postId, dayNumber, custom))
+            // dispatch(getPost(postId, history))
+            dispatch({ type: CLEAR_ERRORS })
         })
         .catch(err => {
+            console.log(err)
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data
             })
-            console.log(err.response)
             if (err.status === 401){
                 window.location.reload();
             }
@@ -262,17 +266,23 @@ export const deleteSlot = (postId, slotId, dayNumber, isCustom, history) => (dis
   };
 
 // Edit slot
-export const editSlot = (postId, slotId, newSlot, dayNumber, history) => (dispatch) => {
-    // console.log(`.edit: /post/${postId}/slot/${slotId}`)
-    // console.log(newSlot)
+export const editSlot = (postId, slotId, newSlot, dayNumber, view, history) => (dispatch) => {
+    console.log(`.edit: /post/${postId}/slot/${slotId}`)
     axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
         .then(res => {
-            dispatch(getPost(postId, history))
+            // dispatch(getPost(postId, history))
+            if (view === 'custom') {
+                dispatch({
+                    type: ADD_CUSTOM_DAY,
+                    dayNumber: dayNumber
+                })
+            }
             dispatch(getSlots(postId, dayNumber, true))
             dispatch({ type: CLEAR_ERRORS })
         })
         .catch(err => {
-            console.log(err.response)
+            console.log(err.response.data)
+            console.log(err)
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data

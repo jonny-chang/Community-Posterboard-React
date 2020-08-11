@@ -82,11 +82,12 @@ class Slot extends Component {
             slotId={thisSlot.slotId} 
             isCustom={isCustom}/>
         const editButton = 
-            <EditSlot 
+            <EditSlot
             postId={post.postId} 
             dayNumber={dayNumber}
             slot={thisSlot}
-            isCustom={isCustom} 
+            isCustom={isCustom}
+            view={view} 
             />
         var newStartTime = this.timeToString(thisSlot.startTime)
         var newEndTime = this.timeToString(thisSlot.endTime)

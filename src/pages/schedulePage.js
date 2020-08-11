@@ -155,21 +155,33 @@ class schedulePage extends Component {
             }
         }
         if (nextProps.data.dayNumber > 6){
-                if (nextProps.data.dayNumber !== dayNumber){
-                    this.props.getSlots(
-                        postId, 
-                        nextProps.data.dayNumber, 
-                        customDays.includes(nextProps.data.dayNumber)
-                    )
-                    this.setState({
-                        custom: customDays.includes(nextProps.data.dayNumber)
-                    })
-                }
+            if (nextProps.data.dayNumber !== dayNumber){
+                this.props.getSlots(
+                    postId, 
+                    nextProps.data.dayNumber, 
+                    customDays.includes(nextProps.data.dayNumber)
+                )
+                this.setState({
+                    custom: customDays.includes(nextProps.data.dayNumber)
+                })
+            }
         }
         if (nextProps.data.dayNumber < 7) {
             if (nextProps.data.dayNumber !== dayNumber) {
                 const postId = this.props.match.params.postId;
                 this.props.getSlots(postId, nextProps.data.dayNumber, false)
+                this.setState({
+                    custom: false
+                })
+            }
+        }
+        if (nextProps.data.dayNumber > 7) {
+            if (Array.isArray(customDays)){
+                if (customDays.length > 0) {
+                    this.setState({
+                        custom: customDays.includes(nextProps.data.dayNumber)
+                    })
+                }
             }
         }
     }
@@ -263,8 +275,9 @@ class schedulePage extends Component {
                 dayNumber,
                 loadingName,
                 getPostError,
-                getSlotError 
-            }} = this.props
+                getSlotError, 
+            }
+        } = this.props
         const { currentDate, value } = this.state
         var dayNumberString = this.dayNumberToString(dayNumber)
         let customDatePicker = !loading ? (
@@ -506,7 +519,7 @@ class schedulePage extends Component {
                             {scheduleMarkup}
                             {(!loading && !loadingName) && (
                                 <div className={classes.addButton}>
-                                    <CreateSlot isCustom={true}/>
+                                    <CreateSlot isCustom={this.state.custom}/>
                                 </div>
                             )}
                         </Grid>

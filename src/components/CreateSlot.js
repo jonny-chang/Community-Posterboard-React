@@ -65,6 +65,7 @@ class CreateSlot extends Component{
         capacity: this.props.data.post.defaultCapacity,
         startTime: '00:00',
         endTime: '00:00',
+        description: '',
         errors: []
     }
     handleClose = () => {
@@ -73,6 +74,7 @@ class CreateSlot extends Component{
             capacity: this.props.data.post.defaultCapacity,
             startTime: '00:00',
             endTime: '00:00',
+            description: '',
             errors: []
         })
     }
@@ -107,6 +109,11 @@ class CreateSlot extends Component{
             endTime: event.target.value,
         })
     }
+    handleChangeDescription = (event) => {
+        this.setState({ 
+            description: event.target.value,
+        })
+    }
     handleSubmit = (event) => {
         event.preventDefault();
         var startHour = parseInt(this.state.startTime.substring(0, 2))
@@ -122,11 +129,12 @@ class CreateSlot extends Component{
                 startTime: newStartTime,
                 endTime: newEndTime,
                 dayNumber: this.props.data.dayNumber,
-                isCustom: this.props.isCustom
+                isCustom: this.props.isCustom,
+                // description: this.state.description
             }
             // console.log(newSlot)
             this.props.createSlot(
-                this.props.data.post.postId, 
+                this.props.data.post.postId,
                 newSlot, 
                 this.props.data.dayNumber, 
                 this.props.isCustom, 
@@ -185,6 +193,18 @@ class CreateSlot extends Component{
                             required
                             error={errors.time}
                             helperText={errors.time}
+                            />
+                            <TextField 
+                            name="description"
+                            type="text"
+                            label="Description"
+                            error={errors.description ? true : false}
+                            helperText={errors.description}
+                            className={classes.textField}
+                            onChange={this.handleChangeDescription}
+                            multiline
+                            fullWidth
+                            required
                             />
                             <TextField
                             label="Capacity"

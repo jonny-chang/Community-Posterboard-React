@@ -66,6 +66,7 @@ class EditSlot extends Component{
         capacity: null,
         startTime: null,
         endTime: null,
+        description: '',
         errors: []
     }
     handleClose = () => {
@@ -74,6 +75,7 @@ class EditSlot extends Component{
             capacity: this.props.data.post.defaultCapacity,
             startTime: null,
             endTime: null,
+            description: '',
             errors: []
         })
     }
@@ -111,6 +113,7 @@ class EditSlot extends Component{
             capacity: slot.capacity,
             startTime: startTime,
             endTime: endTime,
+            description: slot.description
         })
     }
     handleOpen = () => {
@@ -132,6 +135,11 @@ class EditSlot extends Component{
             endTime: event.target.value,
         })
     }
+    handleChangeDescription = (event) => {
+        this.setState({
+            description: event.target.value
+        })
+    }
     handleSubmit = (event) => {
         event.preventDefault();
         var startHour = parseInt(this.state.startTime.substring(0, 2))
@@ -146,7 +154,8 @@ class EditSlot extends Component{
                 startTime: newStartTime,
                 endTime: newEndTime,
                 dayNumber: this.props.data.dayNumber,
-                isCustom: this.props.isCustom
+                isCustom: this.props.isCustom,
+                // description: this.state.description
             }
             // console.log(newSlot)
             this.props.editSlot(
@@ -154,6 +163,7 @@ class EditSlot extends Component{
                 this.props.slot.slotId, 
                 newSlot, 
                 this.props.data.dayNumber,
+                this.props.view,
                 this.props.history
             )
         }
@@ -207,6 +217,19 @@ class EditSlot extends Component{
                             required
                             error={errors.time}
                             helperText={errors.time}
+                            />
+                            <TextField 
+                            name="description"
+                            type="text"
+                            label="Description"
+                            error={errors.description ? true : false}
+                            helperText={errors.description}
+                            className={classes.textField}
+                            onChange={this.handleChangeDescription}
+                            value={this.state.description}
+                            multiline
+                            fullWidth
+                            required
                             />
                             <TextField
                             label="Capacity"

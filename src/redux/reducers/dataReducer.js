@@ -1,7 +1,7 @@
 import { LOADING_DATA, SET_POSTS , CREATE_POST, CLEAR_POST, 
     SET_DAY_NUMBER, DELETE_POST, LOADING_STORE_NAME,
     SET_LOCATION, CLEAR_LOCATION, SET_POST, STOP_LOADING_DATA, 
-    SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT, GET_POST_ERROR, GET_SLOT_ERROR
+    SET_SLOTS, CLEAR_CURRENT_SLOTS, CREATE_SLOT, GET_POST_ERROR, GET_SLOT_ERROR, ADD_CUSTOM_DAY
 } from '../types';
 
 const initialState = {
@@ -49,6 +49,18 @@ export default function(state = initialState, action){
                 ...state,
             }
         case CREATE_SLOT:
+            if (action.dayNumber > 6) {
+                if (!state.post.customDays.includes(action.dayNumber)){
+                    state.post.customDays.push(action.dayNumber)
+                }
+            }
+            return{
+                ...state,
+            }
+        case ADD_CUSTOM_DAY:
+            if (!state.post.customDays.includes(action.dayNumber)){
+                state.post.customDays.push(action.dayNumber)
+            }
             return{
                 ...state,
             }
