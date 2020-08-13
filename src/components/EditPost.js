@@ -205,12 +205,12 @@ class EditPost extends Component{
                             <Typography variant="body1" color="textSecondary" className={classes.label}>
                                 Location *
                             </Typography>
+                            <UtilLocationPicker className={classes.position}/>
                             {(errors.longitude || errors.latitude) && (
                                 <Alert severity='error' className={classes.locationError}>
-                                    Invalid Location
+                                    Invalid Map Location
                                 </Alert>
                             )}
-                            <UtilLocationPicker className={classes.position}/>
                             <TextField 
                             name="address"
                             type="text"
