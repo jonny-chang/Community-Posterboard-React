@@ -268,8 +268,8 @@ export const deleteSlot = (postId, slotId, dayNumber, isCustom, history) => (dis
 
 // Edit slot
 export const editSlot = (postId, slotId, newSlot, dayNumber, view, history) => (dispatch) => {
-    console.log(`.edit: /post/${postId}/slot/${slotId}`)
-    console.log(newSlot)
+    // console.log(`.edit: /post/${postId}/slot/${slotId}`)
+    dispatch({ type: LOADING_UI })
     axios.put(`/post/${postId}/slot/${slotId}`, newSlot)
         .then(res => {
             // dispatch(getPost(postId, history))

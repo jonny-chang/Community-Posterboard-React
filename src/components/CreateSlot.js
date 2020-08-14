@@ -228,10 +228,10 @@ class CreateSlot extends Component{
                             variant="contained"
                             color="primary"
                             className={classes.submitButton}
-                            disabled={loading}
+                            disabled={UI.loading}
                             >
                                 Submit
-                                {loading && (
+                                {UI.loading && (
                                     <CircularProgress
                                     size={20}
                                     className={classes.progressSpinner}

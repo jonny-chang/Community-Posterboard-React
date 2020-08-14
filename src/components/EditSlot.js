@@ -178,7 +178,7 @@ class EditSlot extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, data: { loading, post } } = this.props;
+        const { classes, data: { loading, post }, UI } = this.props;
         return (
             <Fragment>
                 <UtilButton tip='Edit slot' onClick={this.handleOpen}>
@@ -253,10 +253,10 @@ class EditSlot extends Component{
                             variant="contained"
                             color="primary"
                             className={classes.submitButton}
-                            disabled={loading}
+                            disabled={UI.loading}
                             >
                                 Submit
-                                {loading && (
+                                {UI.loading && (
                                     <CircularProgress
                                     size={20}
                                     className={classes.progressSpinner}
