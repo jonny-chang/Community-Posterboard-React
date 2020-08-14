@@ -152,7 +152,7 @@ class CreateSlot extends Component{
     }
     render() {
         const { errors } = this.state;
-        const { classes, data: { loading, post } } = this.props;
+        const { classes, data: { loading, post }, UI } = this.props;
         return (
             <Fragment>
                 <UtilButtonFab onClick={this.handleOpen} tip="Add a new slot" color='primary'>
