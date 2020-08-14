@@ -154,7 +154,7 @@ class schedulePage extends Component {
                 })
             }
         }
-        if (nextProps.data.dayNumber > 6){
+        else if (nextProps.data.dayNumber > 6){
             if (nextProps.data.dayNumber !== dayNumber){
                 this.props.getSlots(
                     postId, 
@@ -175,15 +175,15 @@ class schedulePage extends Component {
                 })
             }
         }
-        if (nextProps.data.dayNumber > 7) {
-            if (Array.isArray(customDays)){
-                if (customDays.length > 0) {
-                    this.setState({
-                        custom: customDays.includes(nextProps.data.dayNumber)
-                    })
-                }
-            }
-        }
+        // if (nextProps.data.dayNumber > 6) {
+        //     if (Array.isArray(customDays)){
+        //         if (customDays.length > 0) {
+        //             this.setState({
+        //                 custom: customDays.includes(nextProps.data.dayNumber)
+        //             })
+        //         }
+        //     }
+        // }
     }
     componentWillUnmount(){
         this.props.clearSlots();

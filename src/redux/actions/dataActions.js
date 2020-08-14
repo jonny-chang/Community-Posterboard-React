@@ -218,6 +218,7 @@ export const loadData = () => (dispatch) => {
 // Create custom slot
 export const createSlot = (postId, newSlot, dayNumber, history) => (dispatch) => {
     // console.log(newSlot)
+    dispatch({ type: LOADING_UI })
     axios.post(`/post/${postId}/slot`, newSlot)
         .then(res => {
             dispatch({
