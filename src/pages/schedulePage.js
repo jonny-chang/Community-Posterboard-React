@@ -115,6 +115,9 @@ const styles = {
         bottom: '10px',
         left: '12px',
     },
+    slotError: {
+        marginTop: 10
+    }
 }
 
 function Alert(props) {
@@ -424,7 +427,7 @@ class schedulePage extends Component {
                     </Alert>
                 )}
                 {(getSlotError) && (
-                    <Alert severity="error">
+                    <Alert severity="error" className={classes.slotError}>
                         There was an error retrieving your slots, please refresh the page
                     </Alert>
                 )}       
