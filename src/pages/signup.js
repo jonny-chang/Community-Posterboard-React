@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { signupUser } from '../redux/actions/userActions';
 
 // Images
-import Logo from '../images/Logo.png'
+import NewLogo from '../images/NewLogo.png'
 
 const styles = {
     form: {
@@ -98,7 +98,7 @@ class signup extends Component {
                     <Grid item sm>
                         {/* <Card className={classes.card}>
                             <CardContent className={classes.content}> */}
-                                <img src={Logo} className={classes.image}/>                        
+                                <img src={NewLogo} className={classes.image}/>                        
                                 <Typography variant="h3" className={classes.pageTitle}>
                                     Register
                                 </Typography>

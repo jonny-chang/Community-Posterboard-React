@@ -24,7 +24,7 @@ import { loginUser, setNewUser, resendVerificationEmail, setResendStatus } from 
 import { clearErrors } from '../redux/actions/dataActions';
 
 // Images
-import Logo from '../images/Logo.png'
+import NewLogo from '../images/NewLogo.png'
 
 const styles = {
     form: {
@@ -225,7 +225,7 @@ class login extends Component {
                                 </DialogContent>
                             </Dialog>
                             )}
-                            <img src={Logo} className={classes.image}/>
+                            <img src={NewLogo} className={classes.image}/>
                             <Typography variant="h3" className={classes.pageTitle}>
                                 Login
                             </Typography>

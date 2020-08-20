@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types'
 
 // Images
-import LogoBackground from '../images/LogoBackground.png';
+import NewLogoBackground from '../images/NewLogoBackground.png';
 
 // Mui
 import AppBar from '@material-ui/core/AppBar';
@@ -51,7 +51,7 @@ class Navbar extends Component {
                     <Grid container>
                         <Grid item xs={2}>
                             <a href ='/'>
-                                <img src={LogoBackground} className={classes.image}/>
+                                <img src={NewLogoBackground} className={classes.image}/>
                             </a>
                         </Grid>
                         <Grid item xs={8}>
