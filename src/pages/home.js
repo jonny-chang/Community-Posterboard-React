@@ -110,9 +110,9 @@ class home extends Component {
                     <Grid item xs={3}>
                     </Grid>
                 </Grid>
-                <Typography variant='caption' className={classes.copyright}>
+                {/* <Typography variant='caption' className={classes.copyright}>
                     © Skipt 2020
-                </Typography>
+                </Typography> */}
             </Fragment>
         )
     }

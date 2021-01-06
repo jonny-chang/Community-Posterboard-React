@@ -529,9 +529,9 @@ class schedulePage extends Component {
                         <Grid item xs={1}/>
                     </Grid>
                 )}
-                <Typography variant='caption' className={classes.copyright}>
+                {/* <Typography variant='caption' className={classes.copyright}>
                     © Skipt 2020
-                </Typography>                      
+                </Typography>                       */}
             </Fragment>          
         );
     }

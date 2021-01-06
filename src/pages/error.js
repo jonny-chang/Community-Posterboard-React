@@ -25,9 +25,9 @@ class error extends Component {
                         Error, the page you are looking for does not exist
                     </Typography>
                 </div>
-                    <Typography variant='caption' className={classes.copyright}>
+                    {/* <Typography variant='caption' className={classes.copyright}>
                     © Skipt 2020
-                </Typography>
+                </Typography> */}
             </Fragment>
         )
     }

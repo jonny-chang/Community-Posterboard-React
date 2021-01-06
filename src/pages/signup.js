@@ -160,9 +160,9 @@ class signup extends Component {
                     </Grid>
                     <Grid item sm />
                 </Grid>
-                <Typography variant='caption' className={classes.copyright}>
+                {/* <Typography variant='caption' className={classes.copyright}>
                     © Skipt 2020
-                </Typography>
+                </Typography> */}
             </Fragment>
         )
     }
